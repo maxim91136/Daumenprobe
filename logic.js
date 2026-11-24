@@ -33,6 +33,14 @@
     return raw;
   };
 
+  /* Höchststand der Punkte (nie unter 0): Rang richtet sich danach, damit man beim Abrutschen nichts verliert. */
+  L.peak = function (tips) {
+    const list = (tips || []).filter(function (t) { return t && t.resolved; }).slice().sort(function (a, b) { return (a.measuredAt || a.ts || 0) - (b.measuredAt || b.ts || 0); });
+    let sum = 0, mx = 0;
+    list.forEach(function (t) { sum += t.pts || 0; if (sum > mx) mx = sum; });
+    return mx;
+  };
+
   /* Beleuchteter Anteil des Mondes (0 bis 1), gerechnet aus dem mittleren Mondalter. */
   L.moonIllum = function (ms) {
     const jd = ms / 86400000 + 2440587.5;

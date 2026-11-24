@@ -386,3 +386,9 @@ body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c
   .print-logo { height: 1.9rem; }
   .tagline { font-size: .95rem; }
 }
+
+.coach { margin: 12px 0 0; padding: 10px 14px; border-radius: 14px; background: rgba(0,0,0,.28); font-weight: 750; font-size: .92rem; line-height: 1.35; }
+.lesson { margin: 14px 0; padding: 14px 16px; border-radius: 18px; background: linear-gradient(160deg, rgba(255,228,92,.14), rgba(255,255,255,.04)); border: 1px solid rgba(255,228,92,.35); }
+.lesson b { font-size: 1.05rem; }
+.lesson ol { margin: 8px 0 6px; padding-left: 20px; line-height: 1.45; font-weight: 650; }
+.lesson small { opacity: .8; font-weight: 700; }

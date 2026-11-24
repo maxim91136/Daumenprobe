@@ -74,13 +74,17 @@
         ['Was heißen Leicht, Mittel und Schwer?', 'Leicht: Wörter statt Prozent, halbe Punkte, kein Minus. Mittel: Wörter, drei Viertel der Punkte, Minus höchstens −8. Schwer: Prozent, volle Punkte. Die Stufe ändert nur Bedienung und Punkte, nie die Inhalte.'],
         ['Woher kommen die Daten?', 'Wetter und Luft von Open-Meteo, Erdbeben vom USGS, den Polarlicht-Index (Kp) von der NOAA, die ISS von wheretheiss.at. Mond, Sonnenhöhe und Ortszeit rechnet dein Gerät selbst.'],
         ['Was sind Tagesfrage, Duell und Aufstiegsprüfung?', 'Die Tagesfrage ist für alle auf der Welt dieselbe. Beim Duell spielst du mit einem Freund per Link dieselben 5 Behauptungen. Die Aufstiegsprüfung brauchst du an manchen Rängen: 3 Behauptungen, mindestens 2 Treffer. Alle drei zählen nicht zu den zehn pro Tag.'],
+        ['Ich bin im Minus. Was jetzt?', 'Das gehört zum Lernen. Sag bei Unsicherheit 50 oder 60 %, dann kostet ein Irrtum fast nichts, und geh nur höher, wenn du es wirklich weißt. Dein Rang fällt nie, und die erste Niete jedes Tages ist gratis. Auf Leicht gibt es gar kein Minus.'],
         ['Warum nur zehn Fragen am Tag?', 'Damit es nicht endlos wird. Danach ist Schluss für heute und morgen gibt es neue.'],
         ['Was passiert mit meinen Daten?', 'Alles bleibt in deinem Browser. Kein Konto, kein Tracking. Mit „Sicherung“ kannst du deinen Stand als Datei oder Code speichern und laden.'],
         ['Eine Frage ist unklar oder die Messung stimmt nicht.', 'Auf dem Ergebnis-Bildschirm gibt es „Unklar“, „Langweilig“ und „Messung komisch“. So hilfst du, das Spiel besser zu machen.'],
         ['Kann ich es als App installieren?', 'Ja. Im Browser „Zum Home-Bildschirm“ wählen. Dann startet es wie eine App.'],
         ['Dürfen Kinder mitspielen?', 'Ja. Es gibt nur Spielpunkte, nie Geld, nichts Kritisches, kein Konto und keine Altersabfrage.']
       ],
-      rules_more: ['Zehn Behauptungen pro Tag, danach ist Schluss für heute.', 'Eine Frage zu verwerfen zählt als Versuch.', 'Die Messregel steht vorher fest und wird nach dem Tipp gezeigt.', 'Tagesfrage, Duell und Aufstiegsprüfung zählen nicht zu den zehn.', 'Ehrlich einschätzen lohnt sich: Wer immer „ganz sicher“ sagt, verliert auf Dauer.', 'Es gibt nur Spielpunkte, nie Geld.'],
+      free_note: 'Erste Niete des Tages: gratis', coach_over: 'Bei den letzten {n} Tipps mit mindestens 75 % Sicherheit lagst du {k}-mal daneben. Probier 60 bis 70 %: Da kostet ein Irrtum viel weniger.', coach_easy: 'Oder wechsle auf Leicht, dort kostet Daneben nichts.',
+      lesson_title: 'Im Minus? Das gehört zum Lernen.', lesson_pts: ['Bist du unsicher, sag 50 oder 60 %. Ein Irrtum kostet dann fast nichts.', 'Geh nur höher, wenn du es wirklich weißt.', 'Auf Leicht gibt es kein Minus. Zum Üben ideal.'], peak_note: 'Dein Rang bleibt: Höchststand {n} Punkte.',
+      faq_minus: 'Ich bin im Minus. Was jetzt?',
+      rules_more: ['Zehn Behauptungen pro Tag, danach ist Schluss für heute.', 'Eine Frage zu verwerfen zählt als Versuch.', 'Die Messregel steht vorher fest und wird nach dem Tipp gezeigt.', 'Tagesfrage, Duell und Aufstiegsprüfung zählen nicht zu den zehn.', 'Ehrlich einschätzen lohnt sich: Wer immer „ganz sicher“ sagt, verliert auf Dauer.', 'Dein Rang fällt nie, er richtet sich nach deinem Höchststand.', 'Die erste Niete jedes Tages kostet nichts.', 'Es gibt nur Spielpunkte, nie Geld.'],
       back: 'Antwort ändern',
       first_go: 'Los geht\'s', pr_swipe: 'Wische nach rechts: stimmt. Nach links: stimmt nicht.', pr_conf: 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum.', pr_done: 'Das war nur Übung, hier zählt nichts. Ab jetzt wird echt gemessen.', pr_next: 'Erste echte Frage', pr_unit: 'Übung',
       rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.',
@@ -287,13 +291,17 @@
         ['What do Easy, Medium and Hard mean?', 'Easy: words instead of percent, half points, no minus. Medium: words, three quarters of the points, minus at most −8. Hard: percent, full points. The level only changes controls and points, never the content.'],
         ['Where does the data come from?', 'Weather and air from Open-Meteo, earthquakes from USGS, the aurora index (Kp) from NOAA, the ISS from wheretheiss.at. Your device calculates moon, sun height and local time itself.'],
         ['What are the daily claim, duel and rank exam?', 'The daily claim is the same for everyone worldwide. In a duel you play the same 5 claims as a friend via a link. The rank exam is needed at some ranks: 3 claims, at least 2 hits. None of them count towards the ten per day.'],
+        ['I am in the red. Now what?', 'That is part of learning. When unsure say 50 or 60 %, then a mistake costs almost nothing, and go higher only when you really know. Your rank never drops, and the first miss of each day is free. Easy has no minus at all.'],
         ['Why only ten claims a day?', 'So it does not go on forever. After that you are done for today and there are new ones tomorrow.'],
         ['What happens to my data?', 'Everything stays in your browser. No account, no tracking. With “Backup” you can save and load your progress as a file or code.'],
         ['A claim is unclear or the measurement is wrong.', 'On the result screen there are “Unclear”, “Boring” and “Odd measurement”. That helps make the game better.'],
         ['Can I install it as an app?', 'Yes. Choose “Add to Home Screen” in your browser. Then it starts like an app.'],
         ['Can children play?', 'Yes. There are only play points, never money, nothing critical, no account and no age check.']
       ],
-      rules_more: ['Ten claims per day, then you are done for today.', 'Discarding a claim counts as an attempt.', 'The measuring rule is fixed beforehand and shown after your tip.', 'Daily claim, duel and rank exam do not count towards the ten.', 'Honest guessing pays off: always saying “totally sure” loses in the long run.', 'Play points only, never money.'],
+      free_note: 'First miss of the day: free', coach_over: 'In your last {n} tips with at least 75 % sureness you missed {k} times. Try 60 to 70 %: a mistake costs far less there.', coach_easy: 'Or switch to Easy, where a miss costs nothing.',
+      lesson_title: 'In the red? That is part of learning.', lesson_pts: ['If you are unsure, say 50 or 60 %. A mistake then costs almost nothing.', 'Go higher only when you really know.', 'Easy has no minus. Great for practice.'], peak_note: 'Your rank stays: peak {n} points.',
+      faq_minus: 'I am in the red. Now what?',
+      rules_more: ['Ten claims per day, then you are done for today.', 'Discarding a claim counts as an attempt.', 'The measuring rule is fixed beforehand and shown after your tip.', 'Daily claim, duel and rank exam do not count towards the ten.', 'Honest guessing pays off: always saying “totally sure” loses in the long run.', 'Your rank never drops, it follows your peak.', 'The first miss of each day costs nothing.', 'Play points only, never money.'],
       back: 'Change answer',
       first_go: 'Let\'s go', pr_swipe: 'Swipe right: true. Swipe left: not true.', pr_conf: 'The surer you are, the more a hit earns, but the more a mistake costs.', pr_done: 'That was only practice, nothing counts here. From now on it is measured for real.', pr_next: 'First real claim', pr_unit: 'practice',
       rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.',
@@ -692,6 +700,11 @@
     rec.shown = m.shown;
     rec.pts = DP.points(rec.tip, rec.conf, m.outcome, rec.level);
     rec.measuredAt = Date.now();
+    if (rec.pts < 0 && !rec.daily && !rec.duel && !rec.exam) {
+      const today = DP.dayKey(new Date(rec.measuredAt));
+      const earlier = S.tips.some(function (x) { return x !== rec && x.resolved && !x.daily && !x.duel && !x.exam && !DP.isHit(x.tip, x.outcome) && DP.dayKey(new Date(x.measuredAt || x.ts)) === today; });
+      if (!earlier) { rec.pts = 0; rec.free = true; }
+    }
   }
 
   function submitInstant() {
@@ -810,7 +823,7 @@
     ['duel', '⚔️', function (c) { return c.duelsDone >= 1; }]
   ];
   const SKINS = [['night', 0, '#6a5cff'], ['dawn', 2, '#ff7a1a'], ['aurora', 4, '#19e0a0'], ['storm', 6, '#43c7ff'], ['gold', 8, '#ffd24a']];
-  function rankIndex() { return rankFor(DP.stats(resolvedTips()).pts).i; }
+  function rankIndex() { return rankFor(DP.peak(S.tips)).i; }
   function skinOk(id) { const k = SKINS.filter(function (x) { return x[0] === id; })[0]; return !!k && rankIndex() >= k[1]; }
   function activeSkin() { return skinOk(S.skin) ? S.skin : 'night'; }
   function skinRow() {
@@ -936,7 +949,8 @@
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
     if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<div class="notice">' + esc(t.remind) + '</div>';
 
-    const rk = rankFor(st.pts), sk = streakDays();
+    const peak = DP.peak(S.tips);
+    const rk = rankFor(peak), sk = streakDays();
     h += '<div class="cols"><div class="col col-a">';
     h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
       '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">🔥 ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
@@ -948,6 +962,7 @@
       '<p class="lore">' + esc(t.rank_lore[rk.i]) + '</p></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
+    h += lessonCard(st, peak);
     h += typeCard();
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
@@ -1205,7 +1220,7 @@
     const out = [];
     const all = resolvedTips();
     const total = all.reduce(function (a, x) { return a + (x.pts || 0); }, 0);
-    const before = rankFor(total - (r.pts || 0)), after = rankFor(total);
+    const before = rankFor(DP.peak(all.filter(function (x) { return x !== r; }))), after = rankFor(DP.peak(all));
     newBadges(r).forEach(function (id) {
       const b = BADGE_DEFS.filter(function (x) { return x[0] === id; })[0];
       out.push('<span class="badge up">' + b[1] + ' ' + esc(t.badge_new) + ': ' + esc(t.badges[id][0]) + '</span>');
@@ -1227,6 +1242,20 @@
     return '<div class="report"><span>' + esc(t.rep_q) + '</span>' +
       ['unclear', 'boring', 'odd'].map(function (k) { return '<button class="chip" data-act="report" data-v="' + k + '">' + esc(t['rep_' + k]) + '</button>'; }).join('') + '</div>';
   }
+  /* Lernhilfe: viele Fehlschläge trotz hoher Sicherheit */
+  function coachFor(r) {
+    if (DP.isHit(r.tip, r.outcome) || r.practice) return '';
+    const sure = S.tips.filter(function (x) { return x.resolved && !x.daily && x.conf >= 75; }).sort(function (a, b) { return (a.measuredAt || a.ts) - (b.measuredAt || b.ts); }).slice(-6);
+    const misses = sure.filter(function (x) { return !DP.isHit(x.tip, x.outcome); }).length;
+    if (sure.length < 3 || misses * 2 < sure.length || r.conf < 75) return '';
+    return fill(T().coach_over, { n: sure.length, k: misses }) + (S.level !== 's' ? ' ' + T().coach_easy : '');
+  }
+  function lessonCard(st, peak) {
+    if (st.pts >= 0 || !S.tips.length) return '';
+    const t = T();
+    return '<section class="lesson"><b>' + esc(t.lesson_title) + '</b><ol>' + t.lesson_pts.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' +
+      (peak > 0 ? '<small>' + esc(fill(t.peak_note, { n: peak })) + '</small>' : '') + '</section>';
+  }
   function viewResult() {
     const t = T();
     const r = ui.result;
@@ -1244,9 +1273,11 @@
       '<p class="big-word">' + esc(hit ? t.hit : t.miss) + '</p>' +
       '<div class="points"><span id="pn" data-v="' + r.pts + '">' + signed(r.pts) + '</span><small>' + esc(t.pts_unit) + '</small></div>' +
       '<p class="said">' + esc(r.outcome ? t.truth_yes : t.truth_no) + ' ' + esc((r.level === 's' || r.level === 'm') ? fill(t.you_tipped_w, { tip: r.tip ? t.yes : t.no, conf: confWord(r.conf, r.level).toLowerCase() }) : fill(t.you_tipped, { tip: r.tip ? t.yes : t.no, conf: r.conf })) + '</p>' +
+      (r.free ? '<span class="badge up">🎁 ' + esc(t.free_note) + '</span>' : '') +
       badges(r, hit) +
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
+      (coachFor(r) ? '<p class="coach">' + esc(coachFor(r)) + '</p>' : '') +
       reportRow(r) +
       '<div class="spacer"></div>' +
       (r.exam ? '<button class="btn" data-act="exam-next">' + esc(examRecs(r.exam).length >= 3 ? t.exam_eval : fill(t.exam_next, { i: examRecs(r.exam).length })) + '</button>' : r.duel ? '<button class="btn" data-act="duel-next">' + esc(duelRecs(r.duel).length >= 5 ? t.duel_eval : fill(t.duel_next, { i: duelRecs(r.duel).length })) + '</button>' : r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
@@ -1282,7 +1313,7 @@
   function celebrate(hit) {
     try { if (navigator.vibrate) navigator.vibrate(hit ? 40 : [70, 50, 70]); } catch (e) { /* egal */ }
     sfx(hit ? 'hit' : 'miss');
-    try { const rr = ui.result, tt = resolvedTips().reduce(function (a, x) { return a + (x.pts || 0); }, 0); if (rankFor(tt).i > rankFor(tt - (rr.pts || 0)).i || newBadges(rr).length) setTimeout(function () { sfx('up'); }, 450); } catch (e) { /* egal */ }
+    try { const rr = ui.result; if (rankFor(DP.peak(S.tips)).i > rankFor(DP.peak(S.tips.filter(function (x) { return x !== rr; }))).i || newBadges(rr).length) setTimeout(function () { sfx('up'); }, 450); } catch (e) { /* egal */ }
     if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const app = document.getElementById('app');
     if (!hit) { app.classList.add('shake'); setTimeout(function () { app.classList.remove('shake'); }, 500); return; }
@@ -1409,7 +1440,7 @@
     else if (act === 'duel-continue' || act === 'duel-next') { startDuelClaim(); }
     else if (act === 'exam-start') {
       if (S.examActive) { startExamClaim(); return; }
-      const rk = rankFor(DP.stats(resolvedTips()).pts);
+      const rk = rankFor(DP.peak(S.tips));
       if (!rk.pending || S.examDay === utcKey()) return;
       S.examDay = utcKey(); S.examActive = { key: rk.pending + ':' + utcKey(), g: rk.pending }; save(S); startExamClaim();
     }
