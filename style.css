@@ -392,3 +392,14 @@ body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c
 .lesson b { font-size: 1.05rem; }
 .lesson ol { margin: 8px 0 6px; padding-left: 20px; line-height: 1.45; font-weight: 650; }
 .lesson small { opacity: .8; font-weight: 700; }
+
+/* Desktop: Logo und Name mittig, Knöpfe rechts daneben */
+@media (min-width: 900px) {
+  .top { position: relative; justify-content: center; text-align: center; }
+  .top .brand { justify-content: center; }
+  .top .langs { position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+}
+
+/* Backup-Hinweis: schmal statt volle Breite */
+.notice { display: block; width: fit-content; max-width: 100%; padding: 7px 14px; border-radius: 999px; font-size: .85rem; margin: 0 0 14px; }
+@media (min-width: 900px) { .top ~ .notice, .notice { margin-left: auto; margin-right: auto; } }
