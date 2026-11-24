@@ -1190,7 +1190,9 @@
     document.body.setAttribute('data-skin', activeSkin());
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', THEME_HEX[theme]);
-    root.innerHTML = views[ui.view]();
+    try { root.innerHTML = views[ui.view](); } catch (err) {
+      root.innerHTML = '<main class="stage"><p class="big-word" style="font-size:clamp(2rem,10vw,3.4rem)">Hoppla.</p><p class="said">Hier ist etwas schiefgelaufen. Deine Tipps sind sicher. / Something went wrong. Your tips are safe.</p><button class="btn" data-act="repair">OK</button><p class="small" style="opacity:.6">' + esc(String(err && err.message || err).slice(0, 160)) + '</p></main>';
+    }
     const t = T();
     document.getElementById('foot').innerHTML =
       '<div class="links">' + esc(t.made_by) + ' <a href="https://dreierlabs.com/" rel="noopener"><b>Dreier Labs</b></a> · <a href="https://dreierlabs.com/impressum.html" rel="noopener">' + esc(t.imprint) + '</a> · ' +
@@ -1238,6 +1240,7 @@
     const v = el.getAttribute('data-v');
     if (act === 'lang') { S.lang = v; save(S); render(); }
     else if (act === 'sound') { S.mute = !S.mute; save(S); render(); sfx('tap'); }
+    else if (act === 'repair') { S.current = null; S.duelActive = null; S.examActive = null; ui.view = 'home'; ui.claim = null; ui.result = null; ui.busy = false; save(S); render(); }
     else if (act === 'report') {
       const r = ui.result;
       if (r && ui.view === 'result' && ['unclear', 'boring', 'odd'].indexOf(v) >= 0 && !(S.reports || []).some(function (x) { return x.id === r.id; })) {
