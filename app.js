@@ -18,7 +18,7 @@
 
   const I18N = {
     de: {
-      title: 'Daumenprobe',
+      title: 'Die Daumenprobe',
       tagline: 'Erst tippen, dann messen.',
       swipe_hint: 'Wische oder tippe',
       measure: 'Messen',

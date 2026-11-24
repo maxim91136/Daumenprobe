@@ -643,3 +643,18 @@ body[data-theme="yes"] footer a, body[data-theme="no"] footer a { color: inherit
 body[data-theme="yes"] .small, body[data-theme="no"] .small, body[data-theme="yes"] .ask, body[data-theme="no"] .ask, body[data-theme="yes"] .lbl, body[data-theme="no"] .lbl { color: inherit; opacity: .9; }
 body[data-theme="no"], body[data-theme="miss"] { --bg: #dc3a30; --fg2: rgba(255,255,255,.9); }
 body[data-theme="yes"], body[data-theme="hit"] { --fg2: rgba(3,38,15,.8); }
+@media (max-width: 430px) {
+  .brand .mark, .mark { font-size: 1.3rem; white-space: nowrap; }
+  .brand { min-width: 0; }
+}
+@media (max-width: 380px) {
+  .brand .mark, .mark { font-size: 1.12rem; }
+  .print-logo { height: 1.5rem; }
+  .langs { gap: 3px; }
+  .langs .chip { padding: 5px 8px; font-size: .74rem; }
+  .brand { gap: 5px; }
+}
+@media (min-width: 381px) and (max-width: 430px) {
+  .brand .mark, .mark { font-size: 1.18rem; }
+  .langs .chip { padding: 5px 9px; font-size: .78rem; }
+}
