@@ -93,7 +93,7 @@
       import_ph: 'Code oder Sicherungsdatei-Inhalt hier einfügen',
       import_btn: 'Laden', import_file: 'Datei wählen',
       import_ok: 'Geladen: {n} Tipps.', import_bad: 'Das hat nicht geklappt. Ist es ein Code von Daumenprobe?',
-      remind: '💾 Zeit für ein Backup. Unten sichern.',
+      remind: '💾 Zeit für ein Backup. Jetzt sichern →',
       lang: 'Sprache',
       made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
       privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) und services.swpc.noaa.gov (Polarlicht-Index) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
@@ -312,7 +312,7 @@
       import_ph: 'Paste a code or the contents of a backup file here',
       import_btn: 'Load', import_file: 'Choose file',
       import_ok: 'Loaded: {n} tips.', import_bad: 'That did not work. Is it a Daumenprobe code?',
-      remind: '💾 Time for a backup. Save below.',
+      remind: '💾 Time for a backup. Save now →',
       lang: 'Language',
       made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
       privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) and services.swpc.noaa.gov (aurora index); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
@@ -963,7 +963,7 @@
     let h = header();
 
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
-    if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<div class="notice">' + esc(t.remind) + '</div>';
+    if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<button class="notice" data-act="to-backup">' + esc(t.remind) + '</button>';
 
     const peak = DP.peak(S.tips);
     const rk = rankFor(peak), sk = streakDays();
@@ -1032,7 +1032,7 @@
     });
     h += '</details>';
 
-    h += '<details class=\"dark\"' + '' + '><summary>' + esc(t.backup) + '</summary><p class="small">' + esc(t.backup_help) + '</p>' +
+    h += '<details id="backup" class=\"dark\"' + '' + '><summary>' + esc(t.backup) + '</summary><p class="small">' + esc(t.backup_help) + '</p>' +
       '<button class="btn ghost" data-act="export-file">' + esc(t.export_file) + '</button>' +
       '<button class="btn ghost" data-act="export-code">' + esc(t.export_code) + '</button>' +
       '<h2 style="margin-top:18px">' + esc(t.import_title) + '</h2>' +
@@ -1473,6 +1473,7 @@
       save(S); render();
     }
     else if (act === 'tip') { chooseTip(v === '1'); }
+    else if (act === 'to-backup') { const el = document.getElementById('backup'); if (el) { el.open = true; el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
     else if (act === 'faq') { if (!ui.busy) { ui.faqFrom = ui.view; ui.view = 'faq'; render(); } }
     else if (act === 'faq-close') { ui.view = ui.faqFrom && ui.faqFrom !== 'faq' ? ui.faqFrom : 'home'; render(); }
     else if (act === 'back') { if (ui.view === 'conf' && !ui.busy && ui.backFor !== ui.claim) { ui.backFor = ui.claim; ui.tip = null; ui.error = false; ui.view = 'tip'; render(); } }

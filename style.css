@@ -403,3 +403,4 @@ body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c
 /* Backup-Hinweis: schmal statt volle Breite */
 .notice { display: block; width: fit-content; max-width: 100%; padding: 7px 14px; border-radius: 999px; font-size: .85rem; margin: 0 0 14px; }
 @media (min-width: 900px) { .top ~ .notice, .notice { margin-left: auto; margin-right: auto; } }
+.button.notice, button.notice { border: 0; cursor: pointer; font-family: inherit; text-align: left; }
