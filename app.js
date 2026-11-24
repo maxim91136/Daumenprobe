@@ -187,7 +187,7 @@
       skin_title: 'Farbwelt', skins: { night: 'Nacht', dawn: 'Morgenrot', aurora: 'Polarlicht', storm: 'Gewitter', gold: 'Gold' }, skin_locked: 'Ab Rang {r}',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
-      share_head: 'Daumenprobe #{n}', share_pts: '{p} Punkte',
+      share_head: 'Daumenprobe · Frage des Tages #{n}', share_pts: '{p} Punkte. Schaffst du das auch?',
       ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumenschnipper', 'Daumen-Kenner', 'Wetterprophet', 'Daumen-Profi', 'Seher', 'Orakel', 'Großes Orakel', 'Daumen-Legende', 'Daumenprobe-Meister'],
       streak_n: '{n} Tage in Folge', streak_1: '1 Tag', combo_n: '{n} Treffer in Folge', rankup: 'Neuer Rang: {r}', to_next: 'noch {n} bis {r}', top_rank: 'Höchster Rang', sound_on: 'Ton an', sound_off: 'Ton aus',
       dir: { N: 'Norden', E: 'Osten', S: 'Süden', W: 'Westen' },
@@ -408,7 +408,7 @@
       skin_title: 'Theme', skins: { night: 'Night', dawn: 'Dawn', aurora: 'Aurora', storm: 'Storm', gold: 'Gold' }, skin_locked: 'From rank {r}',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
-      share_head: 'Daumenprobe #{n}', share_pts: '{p} points',
+      share_head: 'Daumenprobe · Daily claim #{n}', share_pts: '{p} points. Can you do that too?',
       ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Flicker', 'Thumb Expert', 'Weather Prophet', 'Thumb Pro', 'Seer', 'Oracle', 'Grand Oracle', 'Thumb Legend', 'Thumb Master'],
       streak_n: '{n} days in a row', streak_1: '1 day', combo_n: '{n} hits in a row', rankup: 'New rank: {r}', to_next: '{n} to {r}', top_rank: 'Top rank', sound_on: 'Sound on', sound_off: 'Sound off',
       dir: { N: 'north', E: 'east', S: 'south', W: 'west' },
@@ -1225,7 +1225,8 @@
   function shareDaily() {
     const t = T(), key = utcKey(), d = dailyTip(key);
     if (!d || !d.resolved) return;
-    const text = fill(t.share_head, { n: dailyNumber(key) }) + ' ' + dailyRow() + '\n' + claimText(d.claim, S.lang) + '\n' +
+    const hit = DP.isHit(d.tip, d.outcome), row = dailyRow();
+    const text = fill(t.share_head, { n: dailyNumber(key) }) + ' ' + (row.replace(/⬜/g, '').length > 2 ? row : hit ? '🟩' : '🟥') + '\n' + claimText(d.claim, S.lang) + '\n' +
       fill(t.share_pts, { p: signed(d.pts) }) + '\n' + location.origin + location.pathname;
     if (navigator.share) { navigator.share({ text: text }).catch(function () { /* abgebrochen */ }); return; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say(t.share_copied); });
