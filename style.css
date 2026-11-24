@@ -315,3 +315,6 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 .brand .mark { font-size: clamp(1.8rem, 8vw, 3rem); }
 .langs { flex: none; gap: 4px; }
 .langs .chip { padding: 4px 10px; }
+
+.rank small.warn { color: var(--pink); opacity: 1; font-weight: 800; display: block; margin-top: 6px; }
+.rank .btn { margin-top: 10px; padding: 14px 20px; font-size: 1.1rem; }

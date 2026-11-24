@@ -114,7 +114,8 @@
         d3: ['Dranbleiber', '3 Tage in Folge gespielt.'],
         d7: ['Wochenmeister', '7 Tage in Folge gespielt.'],
         full: ['Volles Haus', 'Alle fünf Behauptungen an einem Tag gespielt.'],
-        world: ['Weltenbummler', 'Fünf verschiedene Themen gespielt.']
+        world: ['Weltenbummler', 'Fünf verschiedene Themen gespielt.'],
+        exam: ['Geprüft', 'Eine Aufstiegsprüfung bestanden.']
       },
       story_title: 'Der Orden der Daumen',
       story: 'Es gibt einen alten Brauch: Wer wissen will, woher der Wind weht, hält den Daumen hoch. Du bist neu im Orden der Daumen. Tippe, lass die Welt nachmessen und steige auf, bis du den Himmel lesen kannst wie ein Buch.',
@@ -144,6 +145,8 @@
         fox: ['🦊', 'Der Fuchs', 'Du schätzt dich fast genau richtig ein. Das ist die Kunst.']
       },
       type_title: 'Dein Daumen-Typ', type_more: 'Noch {n} Tipps bis dein Typ feststeht.', type_stats: 'Ø Sicherheit {c} % · Trefferquote {h} %', type_share: 'Mein Daumen-Typ: {e} {n}. {d}',
+      exam_title: 'Aufstiegsprüfung', exam_ready: 'Prüfung für {r}: 3 schwere Behauptungen, mindestens 2 Treffer.', exam_start: 'Prüfung starten', exam_cont: 'Prüfung fortsetzen ({i}/3)',
+      exam_tomorrow: 'Nicht bestanden. Neuer Versuch morgen.', exam_next: 'Weiter ({i}/3)', exam_eval: 'Auswerten', exam_pass: 'Bestanden!', exam_fail: 'Nicht bestanden.', exam_newrank: 'Neuer Rang: {r}', exam_again: 'Du brauchtest 2 Treffer. Morgen gibt es einen neuen Versuch.',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} Punkte',
@@ -276,7 +279,8 @@
         d3: ['Keeping at it', 'Played 3 days in a row.'],
         d7: ['Week master', 'Played 7 days in a row.'],
         full: ['Full house', 'Played all five claims in one day.'],
-        world: ['Globetrotter', 'Played five different topics.']
+        world: ['Globetrotter', 'Played five different topics.'],
+        exam: ['Examined', 'Passed a rank exam.']
       },
       story_title: 'The Order of the Thumbs',
       story: 'There is an old custom: whoever wants to know where the wind blows holds up a thumb. You are new to the Order of the Thumbs. Tip, let the world measure itself and climb until you can read the sky like a book.',
@@ -306,6 +310,8 @@
         fox: ['🦊', 'The Fox', 'You judge yourself almost exactly right. That is the art.']
       },
       type_title: 'Your thumb type', type_more: '{n} more tips until your type is set.', type_stats: 'Avg. confidence {c} % · hit rate {h} %', type_share: 'My thumb type: {e} {n}. {d}',
+      exam_title: 'Rank exam', exam_ready: 'Exam for {r}: 3 hard claims, at least 2 hits.', exam_start: 'Start exam', exam_cont: 'Continue exam ({i}/3)',
+      exam_tomorrow: 'Not passed. Try again tomorrow.', exam_next: 'Next ({i}/3)', exam_eval: 'See result', exam_pass: 'Passed!', exam_fail: 'Not passed.', exam_newrank: 'New rank: {r}', exam_again: 'You needed 2 hits. A new attempt opens tomorrow.',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} points',
@@ -477,7 +483,7 @@
 
   /* ---------- Speicher ---------- */
   let memory = null;
-  function blank() { return { v: 1, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -495,7 +501,7 @@
 
   let S = load();
   if (!S.lang) S.lang = (navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
-  const ui = { duel: null, duelEnd: null, invite: null, daily: null, view: 'home', claim: null, tip: null, conf: null, result: null, error: false, busy: false, msg: '' };
+  const ui = { exam: null, duel: null, duelEnd: null, invite: null, daily: null, view: 'home', claim: null, tip: null, conf: null, result: null, error: false, busy: false, msg: '' };
 
   function T() { return I18N[S.lang]; }
   function esc(s) {
@@ -507,7 +513,7 @@
   function todayCount() {
     const k = DP.dayKey();
     const drawn = (S.draws || []).filter(function (ts) { return DP.dayKey(new Date(ts)) === k; }).length;
-    const tipped = S.tips.filter(function (t) { return !t.daily && !t.duel && DP.dayKey(new Date(t.ts)) === k; }).length;
+    const tipped = S.tips.filter(function (t) { return !t.daily && !t.duel && !t.exam && DP.dayKey(new Date(t.ts)) === k; }).length;
     return Math.max(drawn, tipped);
   }
   function resolvedTips() { return S.tips.filter(function (t) { return t.resolved; }); }
@@ -525,7 +531,7 @@
   function submitInstant() {
     ui.busy = true; ui.error = false; render();
     measure(ui.claim).then(function (m) {
-      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: ui.duel ? 'l' : S.level, daily: ui.daily || undefined, duel: ui.duel ? ui.duel.seed : undefined, ts: Date.now(), resolved: false };
+      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: (ui.duel || ui.exam) ? 'l' : S.level, daily: ui.daily || undefined, duel: ui.duel ? ui.duel.seed : undefined, exam: ui.exam ? ui.exam.key : undefined, ts: Date.now(), resolved: false };
       finishTip(rec, m);
       S.tips.push(rec); S.current = null; save(S);
       ui.result = rec; ui.view = 'result'; ui.busy = false; render();
@@ -535,7 +541,7 @@
   }
 
   function submitLater() {
-    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: ui.duel ? 'l' : S.level, daily: ui.daily || undefined, duel: ui.duel ? ui.duel.seed : undefined, ts: Date.now(), resolved: false };
+    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: (ui.duel || ui.exam) ? 'l' : S.level, daily: ui.daily || undefined, duel: ui.duel ? ui.duel.seed : undefined, exam: ui.exam ? ui.exam.key : undefined, ts: Date.now(), resolved: false };
     S.tips.push(rec); S.current = null; save(S);
     ui.result = rec; ui.view = 'later'; render();
   }
@@ -561,7 +567,7 @@
     if (ui.view === 'conf') return ui.tip ? 'yes' : 'no';
     if (ui.view === 'result') return DP.isHit(ui.result.tip, ui.result.outcome) ? 'hit' : 'miss';
     if (ui.view === 'later') return 'wait';
-    if (ui.view === 'duelend') return 'wait';
+    if (ui.view === 'duelend' || ui.view === 'examend') return 'wait';
     return 'home';
   }
   const STEPS = { s: [50, 75, 100], m: [50, 60, 70, 80, 90, 100], l: [50, 60, 70, 80, 90, 100] };
@@ -574,13 +580,18 @@
     const i = st.indexOf(c);
     return T().words[L2][i < 0 ? 0 : i];
   }
+  const EXAM_GATES = [4, 6, 8, 10];
   const RANK_AT = [0, 15, 40, 80, 140, 220, 320, 450, 650, 900, 1300, 2000];
   function rankFor(pts) {
-    let i = 0;
+    let i = 0, pending = null;
     RANK_AT.forEach(function (v, k) { if (pts >= v) i = k; });
+    for (let q = 0; q < EXAM_GATES.length; q++) {
+      const g = EXAM_GATES[q];
+      if (i >= g && (S.exams || []).indexOf(g) < 0) { i = g - 1; pending = g; break; }
+    }
     const next = i < RANK_AT.length - 1 ? RANK_AT[i + 1] : null;
-    return { i: i, name: T().ranks[i], next: next, nextName: next === null ? null : T().ranks[i + 1], toNext: next === null ? 0 : next - pts,
-      pct: next === null ? 100 : Math.max(0, Math.round((pts - RANK_AT[i]) / (next - RANK_AT[i]) * 100)) };
+    return { i: i, name: T().ranks[i], next: next, nextName: next === null ? null : T().ranks[i + 1], toNext: next === null || pending ? 0 : next - pts, pending: pending,
+      pct: pending || next === null ? 100 : Math.max(0, Math.round((pts - RANK_AT[i]) / (next - RANK_AT[i]) * 100)) };
   }
   function streakDays() {
     const days = {};
@@ -603,7 +614,7 @@
   }
   function todaySlots() {
     const k = DP.dayKey();
-    const todays = S.tips.filter(function (x) { return !x.daily && !x.duel && DP.dayKey(new Date(x.ts)) === k; }).sort(function (a, b) { return a.ts - b.ts; });
+    const todays = S.tips.filter(function (x) { return !x.daily && !x.duel && !x.exam && DP.dayKey(new Date(x.ts)) === k; }).sort(function (a, b) { return a.ts - b.ts; });
     const out = [];
     for (let i = 0; i < DAILY_LIMIT; i++) {
       const x = todays[i];
@@ -627,7 +638,8 @@
     ['d3', '📅', function (c) { return c.maxDays >= 3; }],
     ['d7', '👑', function (c) { return c.maxDays >= 7; }],
     ['full', '🃏', function (c) { return c.maxPerDay >= 5; }],
-    ['world', '🌍', function (c) { return c.topics >= 5; }]
+    ['world', '🌍', function (c) { return c.topics >= 5; }],
+    ['exam', '🎓', function (c) { return c.exams >= 1; }]
   ];
   function badgeCtx(list) {
     const rs = list.filter(function (r) { return r.resolved; }).sort(function (a, b) { return a.ts - b.ts; });
@@ -646,7 +658,7 @@
     days.forEach(function (d) { run = prev && DP.addDays(prev, 1) === d ? run + 1 : 1; if (run > maxDays) maxDays = run; prev = d; });
     const st = DP.stats(rs);
     return { n: rs.length, hits: st.hits, cal: st.calibration, maxCombo: maxCombo, bold: bold, ouch: ouch, maxDays: maxDays,
-      maxPerDay: Math.max(0, Math.max.apply(null, days.map(function (d) { return perDay[d]; }).concat([0]))), topics: Object.keys(topics).length };
+      exams: (S.exams || []).length, maxPerDay: Math.max(0, Math.max.apply(null, days.map(function (d) { return perDay[d]; }).concat([0]))), topics: Object.keys(topics).length };
   }
   function earnedBadges(list) {
     const c = badgeCtx(list);
@@ -733,7 +745,10 @@
     h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
       '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">🔥 ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
       '<div class="rank-bar" role="img" aria-label="' + esc(rk.name) + '"><i style="width:' + rk.pct + '%"></i></div>' +
-      '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + '</small>' +
+      (rk.pending ? '<small>' + esc(fill(t.exam_ready, { r: T().ranks[rk.pending] })) + '</small>' +
+        (S.examActive ? '<button class="btn pulse" data-act="exam-start">' + esc(fill(t.exam_cont, { i: examRecs(S.examActive.key).length })) + '</button>'
+          : S.examDay === utcKey() ? '<small class="warn">' + esc(t.exam_tomorrow) + '</small>' : '<button class="btn pulse" data-act="exam-start">' + esc(t.exam_start) + '</button>')
+        : '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + '</small>') +
       '<p class="lore">' + esc(t.rank_lore[rk.i]) + '</p></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
@@ -892,6 +907,36 @@
     return h;
   }
 
+  /* ---------- Aufstiegsprüfung: ab Daumen-Kenner schalten Ränge erst nach drei schweren Behauptungen frei ---------- */
+  function examClaims(key) { return claimsFromSeed('pruefung:' + key, 3); }
+  function examRecs(key) { return S.tips.filter(function (t) { return t.exam === key; }).sort(function (a, b) { return a.ts - b.ts; }); }
+  function startExamClaim() {
+    const a = S.examActive;
+    if (!a) return;
+    const i = examRecs(a.key).length;
+    if (i >= 3) { finishExam(); return; }
+    ui.exam = { key: a.key, i: i }; ui.daily = null; ui.duel = null; ui.claim = examClaims(a.key)[i];
+    ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip'; render();
+  }
+  function finishExam() {
+    const a = S.examActive;
+    const hits = examRecs(a.key).filter(function (r) { return DP.isHit(r.tip, r.outcome); }).length;
+    const passed = hits >= 2;
+    if (passed && (S.exams || []).indexOf(a.g) < 0) S.exams = (S.exams || []).concat(a.g);
+    S.examResult = { g: a.g, passed: passed, hits: hits, row: examRecs(a.key).map(function (r) { return DP.isHit(r.tip, r.outcome) ? 'h' : 'm'; }).join('') };
+    S.examActive = null; save(S);
+    ui.exam = null; ui.view = 'examend'; render();
+  }
+  function viewExamEnd() {
+    const t = T(), r = S.examResult;
+    let h = topbar() + '<main class="stage"><p class="small-claim">' + esc(t.exam_title) + '</p>' +
+      '<p class="big-word" style="font-size:clamp(3rem,15vw,5rem)">' + esc(r.passed ? t.exam_pass : t.exam_fail) + '</p>' +
+      '<div class="vs"><div><small>' + r.hits + ' / 3</small><b>' + rowEmoji(r.row) + '</b></div></div>' +
+      '<p class="said">' + esc(r.passed ? fill(t.exam_newrank, { r: t.ranks[r.g] }) + '. ' + t.rank_lore[r.g] : t.exam_again) + '</p>' +
+      '<div class="spacer"></div><button class="btn" data-act="home">' + esc(t.home) + '</button></main>';
+    return h;
+  }
+
   function duelCard() {
     const t = T();
     let inner, a = S.duelActive;
@@ -980,7 +1025,7 @@
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
       '<div class="spacer"></div>' +
-      (r.duel ? '<button class="btn" data-act="duel-next">' + esc(duelRecs(r.duel).length >= 5 ? t.duel_eval : fill(t.duel_next, { i: duelRecs(r.duel).length })) + '</button>' : r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
+      (r.exam ? '<button class="btn" data-act="exam-next">' + esc(examRecs(r.exam).length >= 3 ? t.exam_eval : fill(t.exam_next, { i: examRecs(r.exam).length })) + '</button>' : r.duel ? '<button class="btn" data-act="duel-next">' + esc(duelRecs(r.duel).length >= 5 ? t.duel_eval : fill(t.duel_next, { i: duelRecs(r.duel).length })) + '</button>' : r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
       '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
   }
 
@@ -1039,7 +1084,7 @@
   function render() {
     const root = document.getElementById('app');
     document.documentElement.lang = S.lang;
-    const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd };
+    const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd, examend: viewExamEnd };
     const theme = themeFor();
     document.body.setAttribute('data-theme', theme);
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -1092,10 +1137,10 @@
     else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {
       if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {
-        if (ui.error && !ui.daily && !ui.duel && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
+        if (ui.error && !ui.daily && !ui.duel && !ui.exam && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
         S.current = null; save(S);
       }
-      ui.daily = null; ui.duel = null; ui.duelEnd = null; ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
+      ui.daily = null; ui.duel = null; ui.exam = null; ui.duelEnd = null; ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
     }
     else if (act === 'daily') {
       const key = utcKey();
@@ -1119,6 +1164,13 @@
       ui.invite = null; save(S); startDuelClaim();
     }
     else if (act === 'duel-continue' || act === 'duel-next') { startDuelClaim(); }
+    else if (act === 'exam-start') {
+      if (S.examActive) { startExamClaim(); return; }
+      const rk = rankFor(DP.stats(resolvedTips()).pts);
+      if (!rk.pending || S.examDay === utcKey()) return;
+      S.examDay = utcKey(); S.examActive = { key: rk.pending + ':' + utcKey(), g: rk.pending }; save(S); startExamClaim();
+    }
+    else if (act === 'exam-next') { startExamClaim(); }
     else if (act === 'duel-show') { ui.duelEnd = v; ui.view = 'duelend'; render(); }
     else if (act === 'start') {
       ui.daily = null;
