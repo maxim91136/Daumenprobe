@@ -211,6 +211,10 @@
       const mins = data.hour * 60 + data.minute;
       return { outcome: mins > claim.H * 60, shown: mins };
     },
+    wiki: function (claim, data) {
+      if (!data || typeof data.a !== 'number' || typeof data.b !== 'number' || !isFinite(data.a) || !isFinite(data.b)) return null;
+      return { outcome: data.a > data.b, shown: { a: data.a, b: data.b } };
+    },
     aurora: function (claim, data) {
       /* NOAA SWPC: altes Format = erste Zeile Spaltennamen, neues Format = Liste von Objekten mit time_tag. Beides lesen. */
       if (!Array.isArray(data) || data.length < 1) return null;

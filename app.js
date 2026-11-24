@@ -73,7 +73,7 @@
         ['Warum kostet „ganz sicher“ so viel?', 'Wer immer „ganz sicher“ sagt, soll auf Dauer verlieren. Wer ehrlich einschätzt, steht am besten da. Darum geht es im Spiel.'],
         ['Ich habe mich verklickt.', 'Einmal pro Frage kannst du vor dem Messen mit „Antwort ändern“ zurück und neu antworten.'],
         ['Was heißen Leicht, Mittel und Schwer?', 'Leicht: Wörter statt Prozent, halbe Punkte, kein Minus. Mittel: Wörter, drei Viertel der Punkte, Minus höchstens −8. Schwer: Prozent, volle Punkte. Die Stufe ändert nur Bedienung und Punkte, nie die Inhalte.'],
-        ['Woher kommen die Daten?', 'Wetter und Luft von Open-Meteo, Erdbeben vom USGS, den Polarlicht-Index (Kp) von der NOAA, die ISS von wheretheiss.at. Mond, Sonnenhöhe und Ortszeit rechnet dein Gerät selbst.'],
+        ['Woher kommen die Daten?', 'Wetter und Luft von Open-Meteo, Erdbeben vom USGS, den Polarlicht-Index (Kp) von der NOAA, die ISS von wheretheiss.at, Wikipedia-Aufrufe von Wikimedia. Mond, Sonnenhöhe und Ortszeit rechnet dein Gerät selbst.'],
         ['Was sind Tagesfrage, Duell und Aufstiegsprüfung?', 'Die Tagesfrage ist für alle auf der Welt dieselbe. Beim Duell spielst du mit einem Freund per Link dieselben 5 Behauptungen. Die Aufstiegsprüfung brauchst du an manchen Rängen: 3 Behauptungen, mindestens 2 Treffer. Alle drei zählen nicht zu den zehn pro Tag.'],
         ['Ich bin im Minus. Was jetzt?', 'Das gehört zum Lernen. Sag bei Unsicherheit 50 oder 60 %, dann kostet ein Irrtum fast nichts, und geh nur höher, wenn du es wirklich weißt. Dein Rang fällt nie, und die erste Niete jedes Tages ist gratis. Auf Leicht gibt es gar kein Minus.'],
         ['Warum nur zehn Fragen am Tag?', 'Damit es nicht endlos wird. Danach ist Schluss für heute und morgen gibt es neue.'],
@@ -99,8 +99,8 @@
       remind: 'Zeit für ein Backup. Tippen zum Sichern →',
       lang: 'Sprache',
       made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
-      privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) und services.swpc.noaa.gov (Polarlicht-Index) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
-      data_credit: 'Beta: Das Spiel ist noch in Entwicklung. Regeln, Punkte und Fragen können sich jederzeit ändern. Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Erdbeben: USGS. Polarlicht-Index: NOAA SWPC. Nur Spielpunkte, nie Geld.',
+      privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) services.swpc.noaa.gov (Polarlicht-Index) und wikimedia.org (Wikipedia-Aufrufe) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
+      data_credit: 'Beta: Das Spiel ist noch in Entwicklung. Regeln, Punkte und Fragen können sich jederzeit ändern. Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Erdbeben: USGS. Polarlicht-Index: NOAA SWPC. Wikipedia-Aufrufe: Wikimedia. Nur Spielpunkte, nie Geld.',
       measure_msg: {
         quake: 'Der USGS meldet {v} Beben ab Stärke 4,5 in den letzten 24 Stunden.',
         quakemax: 'Das stärkste Beben hatte Stärke {v}.',
@@ -115,6 +115,7 @@
         sunhigh: 'In {city} steht die Sonne {a}° hoch, in {city2} {b}°.',
         clock: 'In {city} ist es jetzt {v} Uhr.',
         aurora: 'Der Kp-Index liegt gerade bei {v}.',
+        wiki: 'Vorgestern: „{X}“ {a} Aufrufe, „{Y}“ {b} Aufrufe.',
         moon: 'Der Mond ist zu {v} % beleuchtet.',
         temp: 'In {city} sind es {v} °C.',
         isday: 'In {city} steht die Sonne gerade {v}.',
@@ -209,6 +210,7 @@
         sunhigh: 'Die Sonne steht gerade in {city} höher am Himmel als in {city2}.',
         clock: 'In {city} ist es gerade später als {H} Uhr (Ortszeit).',
         aurora: 'Der Kp-Index (Maß für Polarlicht-Chancen) liegt gerade über {K}.',
+        wiki: 'Auf der deutschen Wikipedia wurde „{X}“ vorgestern öfter aufgerufen als „{Y}“.',
         moon: 'Der Mond ist gerade mehr als halb beleuchtet.',
         temp: 'In {city} sind es gerade mehr als {T} °C.',
         isday: 'In {city} steht die Sonne gerade über dem Horizont.',
@@ -231,6 +233,7 @@
         sunhigh: 'Stimmt, wenn der Winkel der Sonne über dem Horizont jetzt in {city} größer ist als in {city2}. Minuswerte heißen: Die Sonne ist unten. Berechnet aus Ort und Uhrzeit.',
         clock: 'Stimmt, wenn die Uhrzeit vor Ort jetzt nach {H}:00 Uhr liegt. Das Gerät kennt die Zeitzone der Stadt.',
         aurora: 'Stimmt, wenn der Kp-Index der NOAA (0 bis 9, misst die Unruhe im Magnetfeld der Erde) im jüngsten Wert über {K} liegt. Ab 5 gibt es Polarlicht weit im Süden.',
+        wiki: 'Stimmt, wenn der Artikel „{X}“ am vorletzten Tag (nach UTC) mehr Aufrufe hatte als „{Y}“. Gezählt werden Aufrufe durch Menschen auf der deutschen Wikipedia (Wikimedia Pageviews). Bei Gleichstand stimmt es nicht.',
         moon: 'Stimmt, wenn der Mond jetzt zu mehr als 50 % beleuchtet ist. Das wird aus dem Mondalter gerechnet, nicht gemessen.',
         temp: 'Stimmt, wenn die gemessene Temperatur über {T} °C liegt (Open-Meteo, aktueller Wert).',
         isday: 'Stimmt, wenn die Sonne am Ort laut Open-Meteo jetzt über dem Horizont steht. Dämmerung nach Sonnenuntergang zählt als nein.',
@@ -296,7 +299,7 @@
         ['Why does “totally sure” cost so much?', 'If you always say “totally sure” you should lose in the long run. Honest guessing wins. That is the game.'],
         ['I tapped the wrong thing.', 'Once per claim you can go back with “Change answer” before measuring and answer again.'],
         ['What do Easy, Medium and Hard mean?', 'Easy: words instead of percent, half points, no minus. Medium: words, three quarters of the points, minus at most −8. Hard: percent, full points. The level only changes controls and points, never the content.'],
-        ['Where does the data come from?', 'Weather and air from Open-Meteo, earthquakes from USGS, the aurora index (Kp) from NOAA, the ISS from wheretheiss.at. Your device calculates moon, sun height and local time itself.'],
+        ['Where does the data come from?', 'Weather and air from Open-Meteo, earthquakes from USGS, the aurora index (Kp) from NOAA, the ISS from wheretheiss.at, Wikipedia page views from Wikimedia. Your device calculates moon, sun height and local time itself.'],
         ['What are the daily claim, duel and rank exam?', 'The daily claim is the same for everyone worldwide. In a duel you play the same 5 claims as a friend via a link. The rank exam is needed at some ranks: 3 claims, at least 2 hits. None of them count towards the ten per day.'],
         ['I am in the red. Now what?', 'That is part of learning. When unsure say 50 or 60 %, then a mistake costs almost nothing, and go higher only when you really know. Your rank never drops, and the first miss of each day is free. Easy has no minus at all.'],
         ['Why only ten claims a day?', 'So it does not go on forever. After that you are done for today and there are new ones tomorrow.'],
@@ -322,8 +325,8 @@
       remind: 'Time for a backup. Tap to save →',
       lang: 'Language',
       made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
-      privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) and services.swpc.noaa.gov (aurora index); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
-      data_credit: 'Beta: the game is still in development. Rules, points and claims can change at any time. Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Earthquakes: USGS. Aurora index: NOAA SWPC. Play points only, never money.',
+      privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) services.swpc.noaa.gov (aurora index) and wikimedia.org (Wikipedia page views); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
+      data_credit: 'Beta: the game is still in development. Rules, points and claims can change at any time. Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Earthquakes: USGS. Aurora index: NOAA SWPC. Wikipedia page views: Wikimedia. Play points only, never money.',
       measure_msg: {
         quake: 'The USGS reports {v} quakes of magnitude 4.5+ in the last 24 hours.',
         quakemax: 'The strongest quake had magnitude {v}.',
@@ -338,6 +341,7 @@
         sunhigh: 'In {city} the sun is {a}° high, in {city2} {b}°.',
         clock: 'In {city} it is {v} right now.',
         aurora: 'The Kp index is {v} right now.',
+        wiki: 'Day before yesterday: “{X}” {a} views, “{Y}” {b} views.',
         moon: 'The moon is {v} % lit.',
         temp: 'It is {v} °C in {city}.',
         isday: 'In {city} the sun is {v} right now.',
@@ -434,6 +438,7 @@
         sunhigh: 'Right now the sun is higher in the sky in {city} than in {city2}.',
         clock: 'In {city} it is later than {H}:00 local time right now.',
         aurora: 'The Kp index (a measure of aurora chances) is above {K} right now.',
+        wiki: 'On the German Wikipedia, “{X}” was viewed more often than “{Y}” the day before yesterday.',
         moon: 'The moon is more than half lit right now.',
         temp: 'It is warmer than {T} °C in {city} right now.',
         isday: 'The sun is above the horizon in {city} right now.',
@@ -456,6 +461,7 @@
         sunhigh: 'True if the angle of the sun above the horizon is bigger in {city} than in {city2} right now. Negative values mean the sun is down. Calculated from place and time.',
         clock: 'True if the local time in {city} is after {H}:00 right now. Your device knows the time zone of the city.',
         aurora: 'True if the NOAA Kp index (0 to 9, measures how restless Earth\'s magnetic field is) is above {K} in its latest value. From 5 up, aurora reaches far south.',
+        wiki: 'True if the article “{X}” had more views than “{Y}” on the day before yesterday (UTC). Human views on the German Wikipedia are counted (Wikimedia Pageviews). A tie counts as false.',
         moon: 'True if the moon is more than 50 % lit right now. This is calculated from the moon age, not measured.',
         temp: 'True if the measured temperature is above {T} °C (Open-Meteo, current value).',
         isday: 'True if, per Open-Meteo, the sun is above the horizon at the place right now. Twilight after sunset counts as no.',
@@ -480,9 +486,9 @@
     };
   }
   /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
-  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora'];
+  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora', 'wiki'];
   /* Erst die Kategorie, dann das Thema: Wetter, Luft, Erde, Weltraum, Himmel, Zeit wechseln sich ab. */
-  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'luft', quake: 'erde', quakemax: 'erde', iss: 'raum', aurora: 'raum', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
+  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'luft', quake: 'erde', quakemax: 'erde', iss: 'raum', aurora: 'raum', wiki: 'wissen', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
   function balanced(pool, used) {
     const cats = {};
     pool.forEach(function (t) { (cats[CAT_OF[t]] = cats[CAT_OF[t]] || []).push(t); });
@@ -569,6 +575,12 @@
       return { tpl: 'sunhigh', city: a.id, city2: b.id };
     },
     aurora: function () { return { tpl: 'aurora', K: pick([1, 2, 3]) }; },
+    wiki: function () {
+      const g = HARD ? pick(WIKI_GROUPS) : WIKI_ALL;
+      const x = pick(g); let y = pick(g);
+      while (y === x) y = pick(g);
+      return { tpl: 'wiki', x: x, y: y };
+    },
     clock: function () { return { tpl: 'clock', city: pick(foreign()).id, H: pick([6, 12, 18, 21]) }; },
     moon: function () { return { tpl: 'moon' }; },
     tomorrow: function () {
@@ -578,11 +590,21 @@
     }
   };
   const POOLS = {
-    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora'],
-    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora'],
-    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'aurora']
+    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki'],
+    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki'],
+    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'aurora', 'wiki']
   };
-  const NOCITY = { iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
+  /* Wikipedia-Vergleich: feste, kinderfreundliche Liste (deutsche Titel, Unterstrich statt Leerzeichen). Nur diese Titel werden abgefragt. */
+  const WIKI_GROUPS = [
+    ['Hauskatze', 'Haushund', 'Pferd', 'Löwe', 'Eisbär', 'Braunbär', 'Pinguine', 'Blauwal', 'Weißer_Hai', 'Elefanten'],
+    ['Mond', 'Sonne', 'Mars_(Planet)', 'Venus_(Planet)', 'Jupiter_(Planet)', 'Saturn_(Planet)', 'Erde', 'Merkur_(Planet)', 'Milchstraße', 'Komet'],
+    ['Mount_Everest', 'Alpen', 'Rhein', 'Donau', 'Nordsee', 'Ostsee', 'Sahara', 'Vulkan', 'Regenwald'],
+    ['Pizza', 'Schokolade', 'Kaffee', 'Tee', 'Brot', 'Apfel', 'Banane', 'Käse', 'Honig', 'Speiseeis'],
+    ['Fußball', 'Tennis', 'Schach', 'Basketball', 'Handball', 'Schwimmsport', 'Radsport']
+  ];
+  const WIKI_ALL = [].concat.apply([], WIKI_GROUPS);
+  function wikiDay() { const d = new Date(Date.now() - 2 * 864e5); return d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCDate()).padStart(2, '0'); }
+  const NOCITY = { wiki: 1, iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
 
   /* Abwechslung: heute noch nicht gespielte Themen zuerst, und keine Stadt aus den letzten drei Behauptungen. */
   function firstRun() { return !S.onbDone && !S.tips.length; }
@@ -604,6 +626,7 @@
     if (!c || !MAKERS[c.tpl]) return false;
     if (!NOCITY[c.tpl] && !cityById(c.city)) return false;
     if ((c.tpl === 'daylen' || c.tpl === 'warmer' || c.tpl === 'sunhigh') && !cityById(c.city2)) return false;
+    if (c.tpl === 'wiki' && (WIKI_ALL.indexOf(c.x) < 0 || WIKI_ALL.indexOf(c.y) < 0 || c.x === c.y)) return false;
     if (c.tpl === 'winddir' && ['N', 'E', 'S', 'W'].indexOf(c.D) < 0) return false;
     if (c.tpl === 'tomorrow' && !(/^\d{4}-\d{2}-\d{2}$/.test(c.created) && /^\d{4}-\d{2}-\d{2}$/.test(c.due))) return false;
     return true;
@@ -616,6 +639,7 @@
     const c = claim.city ? cityById(claim.city) : null;
     const c2 = claim.city2 ? cityById(claim.city2) : null;
     return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A, P: claim.P, H: claim.H, K: claim.K, P: claim.P, H: claim.H,
+      X: claim.x ? String(claim.x).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined, Y: claim.y ? String(claim.y).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined,
       M: claim.M === undefined ? undefined : num(claim.M, lang, 1), D: claim.D ? I18N[lang].dir[claim.D] : undefined };
   }
   function claimText(claim, lang) { return fill(I18N[lang].claims[claim.tpl], claimVars(claim, lang)); }
@@ -628,6 +652,7 @@
     const vars = claimVars(claim, lang);
     if (claim.tpl === 'tomorrow') { vars.a = num(shown.today, lang); vars.b = num(shown.tomorrow, lang); }
     else if (claim.tpl === 'daylen' || claim.tpl === 'warmer') { vars.a = num(shown.a, lang); vars.b = num(shown.b, lang); }
+    else if (claim.tpl === 'wiki') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
     else if (claim.tpl === 'sunhigh') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
     else if (claim.tpl === 'clock') { vars.v = String(Math.floor(shown / 60)).padStart(2, '0') + ':' + String(shown % 60).padStart(2, '0'); }
     else if (claim.tpl === 'winddir') { vars.v = Math.round(shown); vars.dir = t.dir[['N', 'E', 'S', 'W'].filter(function (k) { return DP.inSector(shown, k); })[0]]; }
@@ -649,6 +674,14 @@
     if (claim.tpl === 'iss') return fetchJson('https://api.wheretheiss.at/v1/satellites/25544');
     if (claim.tpl === 'quake' || claim.tpl === 'quakemax') return fetchJson('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson');
     if (claim.tpl === 'aurora') return fetchJson('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
+    if (claim.tpl === 'wiki') {
+      const day = wikiDay();
+      const views = function (t) {
+        return fetchJson('https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/de.wikipedia/all-access/user/' + encodeURIComponent(t) + '/daily/' + day + '/' + day)
+          .then(function (j) { return j && j.items && j.items[0] ? j.items[0].views : null; });
+      };
+      return Promise.all([views(claim.x), views(claim.y)]).then(function (r) { return { a: r[0], b: r[1] }; });
+    }
     if (claim.tpl === 'moon') return Promise.resolve({ now: Date.now() });
     if (claim.tpl === 'sunhigh') { const a = cityById(claim.city), b = cityById(claim.city2); return Promise.resolve({ now: Date.now(), a: { lat: a.lat, lon: a.lon }, b: { lat: b.lat, lon: b.lon } }); }
     if (claim.tpl === 'clock') {
