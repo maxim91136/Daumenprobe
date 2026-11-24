@@ -64,6 +64,7 @@
       none: 'Noch nichts getippt.',
       backup: 'Sichern und laden',
       backup_help: 'Dein Spielstand liegt nur in diesem Browser. Sichere ihn ab und zu, falls der Browser Daten löscht (Safari kann das nach etwa 7 Tagen ohne Besuch).',
+      first_go: 'Los geht\'s', pr_swipe: 'Wische nach rechts: stimmt. Nach links: stimmt nicht.', pr_conf: 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum.', pr_done: 'Das war nur Übung, hier zählt nichts. Ab jetzt wird echt gemessen.', pr_next: 'Erste echte Frage', pr_unit: 'Übung',
       rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.',
       export_file: 'Datei sichern', export_code: 'Code kopieren', copied: 'Kopiert.',
       import_title: 'Laden',
@@ -81,6 +82,7 @@
         aqi: 'In {city} liegt der Luftindex bei {v}.',
         winddir: 'In {city} kommt der Wind aus {v}° ({dir}).',
         daylen: 'Sonnenaufgang bis Sonnenuntergang: {city} {a} Stunden, {city2} {b} Stunden.',
+        practice: 'Die Sonne geht im Osten auf.',
         pressure: 'In {city} liegt der Luftdruck bei {v} hPa.',
         humidity: 'In {city} liegt die Luftfeuchtigkeit bei {v} %.',
         cloud: 'In {city} sind {v} % des Himmels bewölkt.',
@@ -168,6 +170,7 @@
         aqi: 'Die Luft in {city} ist gerade besser als Stufe {A} (EU-Luftindex, kleiner ist besser).',
         winddir: 'In {city} kommt der Wind gerade aus {D}.',
         daylen: 'Heute vergeht zwischen Sonnenaufgang und Sonnenuntergang in {city} mehr Zeit als in {city2}.',
+        practice: 'Die Sonne geht im Osten auf.',
         pressure: 'Der Luftdruck in {city} (auf Meereshöhe umgerechnet) liegt gerade über {P} hPa.',
         humidity: 'Die Luftfeuchtigkeit in {city} liegt gerade über {H} %.',
         cloud: 'In {city} ist der Himmel gerade mehr als zur Hälfte bewölkt.',
@@ -186,6 +189,7 @@
         aqi: 'Stimmt, wenn der europäische Luftqualitäts-Index laut Open-Meteo jetzt unter {A} liegt.',
         winddir: 'Stimmt, wenn die gemessene Windrichtung im Sektor {D} liegt (90° breit, Open-Meteo).',
         daylen: 'Stimmt, wenn die Zeit von Sonnenaufgang bis Sonnenuntergang heute in {city} länger ist als in {city2}. Wolken zählen nicht (Open-Meteo).',
+        practice: 'Das stimmt immer.',
         pressure: 'Stimmt, wenn der auf Meereshöhe umgerechnete Luftdruck in {city} jetzt über {P} hPa liegt (Open-Meteo).',
         humidity: 'Stimmt, wenn die relative Luftfeuchtigkeit in {city} jetzt über {H} % liegt (Open-Meteo).',
         cloud: 'Stimmt, wenn der Bewölkungsgrad in {city} jetzt über 50 % liegt (Open-Meteo).',
@@ -246,6 +250,7 @@
       none: 'No tips yet.',
       backup: 'Save and load',
       backup_help: 'Your progress lives only in this browser. Save it now and then in case the browser clears data (Safari can do that after about 7 days without a visit).',
+      first_go: 'Let\'s go', pr_swipe: 'Swipe right: true. Swipe left: not true.', pr_conf: 'The surer you are, the more a hit earns, but the more a mistake costs.', pr_done: 'That was only practice, nothing counts here. From now on it is measured for real.', pr_next: 'First real claim', pr_unit: 'practice',
       rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.',
       export_file: 'Save file', export_code: 'Copy code', copied: 'Copied.',
       import_title: 'Load',
@@ -263,6 +268,7 @@
         aqi: 'The air index in {city} is {v}.',
         winddir: 'In {city} the wind comes from {v}° ({dir}).',
         daylen: 'Sunrise to sunset: {city} {a} hours, {city2} {b} hours.',
+        practice: 'The sun rises in the east.',
         pressure: 'In {city} the air pressure is {v} hPa.',
         humidity: 'In {city} the humidity is {v} %.',
         cloud: 'In {city} {v} % of the sky is covered by clouds.',
@@ -350,6 +356,7 @@
         aqi: 'The air in {city} is better than level {A} right now (EU air index, lower is better).',
         winddir: 'The wind in {city} is coming from the {D} right now.',
         daylen: 'Today, more time passes between sunrise and sunset in {city} than in {city2}.',
+        practice: 'The sun rises in the east.',
         pressure: 'The air pressure in {city} (sea level) is above {P} hPa right now.',
         humidity: 'The humidity in {city} is above {H} % right now.',
         cloud: 'The sky in {city} is more than half covered by clouds right now.',
@@ -368,6 +375,7 @@
         aqi: 'True if the European air quality index per Open-Meteo is below {A} right now.',
         winddir: 'True if the measured wind direction is within the {D} sector (90° wide, Open-Meteo).',
         daylen: 'True if the time from sunrise to sunset today is longer in {city} than in {city2}. Clouds do not matter (Open-Meteo).',
+        practice: 'Always true.',
         pressure: 'True if the sea-level air pressure in {city} is above {P} hPa right now (Open-Meteo).',
         humidity: 'True if the relative humidity in {city} is above {H} % right now (Open-Meteo).',
         cloud: 'True if cloud cover in {city} is above 50 % right now (Open-Meteo).',
@@ -454,6 +462,7 @@
   const NOCITY = { iss: 1, quake: 1, quakemax: 1, moon: 1 };
 
   /* Abwechslung: heute noch nicht gespielte Themen zuerst, und keine Stadt aus den letzten drei Behauptungen. */
+  function firstRun() { return !S.onbDone && !S.tips.length; }
   function newClaim() {
     const pool = POOLS[S.level] || POOLS.l;
     const k = DP.dayKey();
@@ -807,7 +816,7 @@
 
   function rulesSheet() {
     const t = T();
-    let h = '<details class="sheet"' + (S.tips.length ? '' : ' open') + '><summary>' + esc(t.rules_title) + '</summary><ol class="howto">';
+    let h = '<details class="sheet"' + '><summary>' + esc(t.rules_title) + '</summary><ol class="howto">';
     const lv = t.lv[lvl()];
     t.howto.forEach(function (r, i) { h += '<li>' + esc(i === 2 && lv ? lv.how3 : r) + '</li>'; });
     h += '</ol><p class="goal">' + esc(lv ? lv.goal : t.rules_goal) + '</p>';
@@ -847,7 +856,7 @@
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
     h += skinRow();
-    if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(t.go) + '</button>';
+    if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(firstRun() ? t.first_go : t.go) + '</button>';
     const dKey = utcKey(), dDone = dailyTip(dKey);
     h += '<section class="daily"><div><b>' + esc(t.daily_title) + ' #' + dailyNumber(dKey) + '</b><small>' + esc(t.daily_sub) + '</small></div>' +
       (dDone && dDone.resolved ? '<div class="daily-res"><span>' + dailyRow() + '</span><button class="chip" data-act="share-daily">' + esc(t.share) + '</button></div>'
@@ -912,12 +921,12 @@
     return topbar() + '<main class="stage"><div class="deck"><div class="swipe" id="swipe">' +
       '<div class="tint yes"></div><div class="tint no"></div>' +
       '<span class="stamp yes">' + esc(t.yes) + '!</span><span class="stamp no">' + esc(t.no) + '!</span>' +
-      '<p class="claim-big" lang="' + S.lang + '">' + esc(claimText(ui.claim, S.lang)) + '</p></div></div>' +
-      '<p class="hint">' + esc(t.swipe_hint) + '</p>' +
+      '<p class="claim-big" lang="' + S.lang + '">' + esc(claimText(ui.claim, S.lang)) + '</p>' + (ui.practice ? '<span class="finger" aria-hidden="true">👆</span>' : '') + '</div></div>' +
+      (ui.practice ? '<p class="hint practice">' + esc(t.pr_swipe) + '</p>' : '<p class="hint">' + esc(t.swipe_hint) + '</p>') +
       '<div class="thumbs">' +
       '<button class="thumb" data-act="tip" data-v="0"><span class="emoji" aria-hidden="true">👎</span>' + esc(t.no) + '</button>' +
       '<button class="thumb" data-act="tip" data-v="1"><span class="emoji" aria-hidden="true">👍</span>' + esc(t.yes) + '</button></div>' +
-      '<button class="linkbtn" data-act="home">' + esc(t.cancel) + '</button></main>';
+      '<button class="linkbtn" data-act="home">' + esc(ui.practice ? t.home : t.cancel) + '</button></main>';
   }
 
   function stakeFor(c) {
@@ -940,12 +949,12 @@
       '<input id="sl" class="slider" type="range" min="0" max="' + (steps().length - 1) + '" step="1" value="0" style="--p:0%" aria-label="' + esc(t.confTitle) + '"' + (ui.busy ? ' disabled' : '') + '>' +
       '<div class="stake"><div class="plus"><span>' + esc(t.rules_cols[1]) + '</span><b id="pHit">' + signed(s.hit) + '</b></div>' +
       '<div class="minus"><span>' + esc(t.rules_cols[2]) + '</span><b id="pMiss">' + signed(s.miss) + '</b></div></div>' +
-      '<p class="small" style="margin-top:10px">' + esc(t.lv[lvl()] ? t.lv[lvl()].hint : t.conf_hint) + '</p>' +
+      '<p class="small' + (ui.practice ? ' practice' : '') + '" style="margin-top:10px">' + esc(ui.practice ? t.pr_conf : (t.lv[lvl()] ? t.lv[lvl()].hint : t.conf_hint)) + '</p>' +
       '<div class="spacer"></div>';
     if (ui.busy) h += '<p class="hint" style="margin-top:12px">' + esc(t.measuring) + '</p>';
     if (ui.error) h += '<div class="notice" style="margin-top:12px">' + esc(t.err) + '</div><button class="btn" data-act="retry">' + esc(t.retry) + '</button>';
     else h += '<button class="btn" data-act="measure"' + (ui.busy ? ' disabled' : '') + '>' + esc(t.measure) + '</button>';
-    h += '<button class="linkbtn" data-act="home">' + esc(t.cancel) + '</button></main>';
+    h += '<button class="linkbtn" data-act="home">' + esc(ui.practice ? t.home : t.cancel) + '</button></main>';
     return h;
   }
 
@@ -1115,6 +1124,14 @@
     const t = T();
     const r = ui.result;
     const hit = DP.isHit(r.tip, r.outcome);
+    if (r.practice) {
+      return topbar() + '<main class="stage"><p class="small-claim">' + esc(claimText(r.claim, S.lang)) + '</p>' +
+        '<p class="big-word">' + esc(hit ? t.hit : t.miss) + '</p>' +
+        '<div class="points"><span id="pn" data-v="0">0</span><small>' + esc(t.pr_unit) + '</small></div>' +
+        '<p class="said">' + esc(t.pr_done) + '</p><div class="spacer"></div>' +
+        '<button class="btn" data-act="start">' + esc(t.pr_next) + '</button>' +
+        '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
+    }
     return topbar() + '<main class="stage">' +
       '<p class="small-claim">' + esc(claimText(r.claim, S.lang)) + '</p>' +
       '<p class="big-word">' + esc(hit ? t.hit : t.miss) + '</p>' +
@@ -1253,6 +1270,7 @@
     else if (act === 'skin') { if (skinOk(v)) { S.skin = v; save(S); render(); } }
     else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {
+      ui.practice = false;
       if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {
         if (ui.error && !ui.daily && !ui.duel && !ui.exam && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
         S.current = null; save(S);
@@ -1291,6 +1309,7 @@
     else if (act === 'duel-show') { ui.duelEnd = v; ui.view = 'duelend'; render(); }
     else if (act === 'start') {
       ui.daily = null;
+      if (firstRun()) { ui.practice = true; ui.claim = { tpl: 'practice' }; ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip'; render(); return; }
       if (todayCount() >= DAILY_LIMIT) return;
       ui.claim = newClaim(); ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip';
       S.current = { claim: ui.claim, ts: Date.now() };
@@ -1302,6 +1321,7 @@
       if (ui.busy) return;
       const sl = document.getElementById('sl');
       ui.conf = sl ? steps()[Number(sl.value)] : 50;
+      if (ui.practice) { ui.practice = false; S.onbDone = true; save(S); ui.result = { practice: true, claim: ui.claim, tip: ui.tip, conf: ui.conf, outcome: true, pts: 0, level: S.level }; ui.view = 'result'; render(); return; }
       if (isLater(ui.claim)) submitLater(); else submitInstant();
     }
     else if (act === 'retry') { submitInstant(); }

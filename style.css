@@ -344,3 +344,10 @@ body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c
 .report { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; font-size: .85rem; font-weight: 700; opacity: .85; }
 .report.done { opacity: .7; }
 .report .chip { font-size: .8rem; padding: 3px 10px; }
+
+.finger { position: absolute; left: 50%; bottom: 14%; font-size: 2.8rem; pointer-events: none; transform: translateX(-50%); }
+.hint.practice, .small.practice { font-weight: 850; opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .finger { animation: finger 2.4s ease-in-out .4s infinite; }
+  @keyframes finger { 0%, 100% { transform: translateX(-50%) rotate(0); } 25% { transform: translateX(calc(-50% + 64px)) rotate(14deg); } 50% { transform: translateX(-50%) rotate(0); } 75% { transform: translateX(calc(-50% - 64px)) rotate(-14deg); } }
+}
