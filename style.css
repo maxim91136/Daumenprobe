@@ -22,15 +22,16 @@
   font-family: "Bricolage", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
 }
 
-/* Jede Ansicht hat ihre eigene Farbfläche. */
-body[data-theme="home"] { --bg: var(--ultra); --fg: #fff; --btn-bg: var(--lemon); --btn-fg: var(--night); }
-body[data-theme="c0"] { --bg: var(--ultra); --fg: #fff; }
-body[data-theme="c1"] { --bg: var(--lemon); --fg: var(--night); }
-body[data-theme="c2"] { --bg: var(--orange); --fg: var(--night); }
-body[data-theme="c3"] { --bg: var(--sky); --fg: var(--night); }
-body[data-theme="yes"], body[data-theme="hit"] { --bg: var(--mint); --fg: var(--night); }
-body[data-theme="no"], body[data-theme="miss"] { --bg: var(--pink); --fg: var(--night); }
-body[data-theme="wait"] { --bg: var(--lemon); --fg: var(--night); }
+/* Dunkle Basis, pro Ansicht nur ein Akzent. Voll leuchten nur Ergebnis und Wisch-Antwort. */
+body { --accent: var(--ultra); --fg: #fff; --btn-bg: var(--lemon); --btn-fg: var(--night); --surface: #15141f; --line: rgba(255,255,255,.12); --bg: var(--night); }
+body[data-theme="home"] { --accent: #6a5cff; }
+body[data-theme="c0"] { --accent: #6a5cff; }
+body[data-theme="c1"] { --accent: #ffe45c; }
+body[data-theme="c2"] { --accent: #ff7a1a; }
+body[data-theme="c3"] { --accent: #43c7ff; }
+body[data-theme="wait"] { --accent: #ffe45c; }
+body[data-theme="yes"], body[data-theme="hit"] { --bg: var(--mint); --fg: var(--night); --btn-bg: var(--night); --btn-fg: #fff; --accent: var(--night); }
+body[data-theme="no"], body[data-theme="miss"] { --bg: var(--pink); --fg: var(--night); --btn-bg: var(--night); --btn-fg: #fff; --accent: var(--night); }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -173,3 +174,60 @@ footer details { margin: 0 0 8px; }
 footer summary { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; width: fit-content; }
 footer details p { margin-top: 6px; }
 footer .credit { opacity: .8; font-size: .75rem; }
+
+/* ===== v3: erwachsen, dunkel, mit Bewegung ===== */
+body::before { content: ""; position: fixed; inset: -20vmax; z-index: 0; pointer-events: none; opacity: .55;
+  background: radial-gradient(40vmax 40vmax at 20% 10%, var(--accent), transparent 70%), radial-gradient(34vmax 34vmax at 90% 85%, var(--accent), transparent 70%); filter: blur(30px); }
+body[data-theme="yes"]::before, body[data-theme="hit"]::before, body[data-theme="no"]::before, body[data-theme="miss"]::before { opacity: 0; }
+#app, footer { position: relative; z-index: 1; }
+.mark { font-weight: 800; letter-spacing: -.03em; }
+.tagline { font-weight: 600; opacity: .7; font-size: 1rem; }
+.hero { margin: 8px 0 18px; }
+.hero-n { display: block; font-size: clamp(5.5rem, 30vw, 9rem); font-weight: 900; font-stretch: 75%; letter-spacing: -.05em; line-height: .9; }
+.hero-l { font-weight: 700; opacity: .7; }
+.hero-sub { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.hero-sub span { border: 1px solid var(--line); background: rgba(255,255,255,.06); border-radius: 999px; padding: 6px 14px; font-size: .9rem; font-weight: 700; }
+.btn { box-shadow: 0 10px 40px -10px var(--accent); }
+.btn.ghost { border-width: 1.5px; border-color: var(--line); box-shadow: none; }
+.chip { border-width: 1.5px; }
+
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+.sheet, .dark { background: var(--surface); color: #fff; border: 1px solid var(--line); border-radius: 28px; padding: 18px 20px; margin-top: 14px; }
+.sheet > summary, .dark > summary { font-size: 1.35rem; font-weight: 850; font-stretch: 80%; letter-spacing: -.01em; display: flex; justify-content: space-between; align-items: center; }
+.sheet > summary::after, .dark > summary::after { content: "+"; font-size: 1.6rem; font-weight: 600; opacity: .7; }
+.sheet[open] > summary::after, .dark[open] > summary::after { content: "–"; }
+.sheet[open] > summary, .dark[open] > summary { margin-bottom: 14px; }
+.howto li::before { background: var(--lemon); color: var(--night); }
+.scale td { background: rgba(255,255,255,.06); }
+.scale .hit { color: var(--mint); }
+.scale .miss { color: var(--pink); }
+.goal { color: var(--night); }
+
+.swipe { background: linear-gradient(160deg, #1d1c2b, #121119); color: #fff; border: 1px solid var(--line); box-shadow: 0 30px 80px -30px var(--accent), inset 0 0 0 1px rgba(255,255,255,.04); }
+.swipe::before { content: ""; position: absolute; width: 70%; aspect-ratio: 1; right: -25%; top: -20%; border-radius: 50%; background: var(--accent); opacity: .35; filter: blur(50px); pointer-events: none; }
+.claim-big { position: relative; }
+.stamp { border-color: var(--night); color: var(--night); background: #fff; }
+.thumb { background: var(--surface); border: 1px solid var(--line); color: #fff; }
+.thumb:active { background: #23222f; }
+
+.slider { background: linear-gradient(to right, var(--accent) var(--p, 0%), rgba(255,255,255,.16) var(--p, 0%)); }
+.slider::-webkit-slider-thumb { background: #fff; border: 7px solid var(--accent); }
+.slider::-moz-range-thumb { background: #fff; border: 7px solid var(--accent); }
+.stake div { background: var(--surface); border: 1px solid var(--line); }
+
+.measure { background: var(--night); }
+:focus-visible { outline-color: var(--lemon); }
+body[data-theme="hit"] :focus-visible, body[data-theme="miss"] :focus-visible, body[data-theme="yes"] :focus-visible, body[data-theme="no"] :focus-visible { outline-color: var(--night); }
+
+.confetti { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5; }
+@media (prefers-reduced-motion: no-preference) {
+  body::before { animation: drift 18s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate3d(6vmax, 4vmax, 0) scale(1.08); } }
+  .big-word { animation: slam .45s cubic-bezier(.2,1.6,.4,1) both; }
+  @keyframes slam { from { transform: scale(2.2) rotate(-4deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  .shake { animation: shake .5s ease; }
+  @keyframes shake { 20%,60% { transform: translateX(-12px); } 40%,80% { transform: translateX(12px); } }
+  .swipe { animation: deal .35s cubic-bezier(.2,1.2,.4,1) backwards; }
+  @keyframes deal { from { transform: translateY(40px) rotate(3deg); opacity: 0; } to { transform: none; opacity: 1; } }
+}

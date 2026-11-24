@@ -363,7 +363,7 @@
 
   function rulesSheet() {
     const t = T();
-    let h = '<section class="sheet"><h2>' + esc(t.rules_title) + '</h2><ol class="howto">';
+    let h = '<details class="sheet"' + (S.tips.length ? '' : ' open') + '><summary>' + esc(t.rules_title) + '</summary><ol class="howto">';
     t.howto.forEach(function (r) { h += '<li>' + esc(r) + '</li>'; });
     h += '</ol><p class="goal">' + esc(t.rules_goal) + '</p>';
     h += '<table class="scale"><thead><tr><th>' + esc(t.rules_cols[0]) + '</th><th>' + esc(t.rules_cols[1]) + '</th><th>' + esc(t.rules_cols[2]) + '</th></tr></thead><tbody>';
@@ -371,7 +371,7 @@
       const label = c + ' %' + (c === 50 ? ' (' + t.conf50 + ')' : c === 100 ? ' (' + t.conf100 + ')' : '');
       h += '<tr><td>' + esc(label) + '</td><td class="hit">' + signed(DP.points(true, c, true)) + '</td><td class="miss">' + signed(DP.points(true, c, false)) + '</td></tr>';
     });
-    h += '</tbody></table><p class="small">' + esc(t.rules_foot) + '</p></section>';
+    h += '</tbody></table><p class="small">' + esc(t.rules_foot) + '</p></details>';
     return h;
   }
 
@@ -386,17 +386,16 @@
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
     if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<div class="notice">' + esc(t.remind) + '</div>';
 
-    h += '<div class="stats">' +
-      '<div class="stat"><b>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + '</b><span>' + esc(t.stat_hit) + '</span></div>' +
-      '<div class="stat"><b>' + signed(st.pts) + '</b><span>' + esc(t.stat_pts) + '</span></div>' +
-      '<div class="stat"><b>' + (st.calibration === null ? '–' : st.calibration + ' %') + '</b><span>' + esc(t.stat_cal) + '</span></div></div>';
+    h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
+      '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
+      '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
     if (left > 0) h += '<button class="btn" data-act="start">' + esc(t.go) + '</button><p class="hint" style="margin-top:10px">' + esc(fill(t.left, { n: left })) + '</p>';
     else h += '<p class="small" style="margin-top:14px">' + esc(t.goDone) + '</p>';
 
     h += rulesSheet();
 
     if (open.length) {
-      h += '<section class="dark"><h2>' + esc(t.open_title) + '</h2>';
+      h += '<details class=\"dark\"' + '' + '><summary>' + esc(t.open_title) + '</summary>';
       open.forEach(function (o) {
         const ready = today > o.claim.due;
         h += '<div class="row"><div>' + esc(claimText(o.claim, S.lang)) +
@@ -406,29 +405,29 @@
           '</div></div>';
       });
       if (ui.msg) h += '<p class="small">' + esc(ui.msg) + '</p>';
-      h += '</section>';
+      h += '</details>';
     }
 
     if (st.total >= 5) {
-      h += '<section class="dark"><h2>' + esc(t.cal_title) + '</h2><div class="bars">';
+      h += '<details class=\"dark\"' + '' + '><summary>' + esc(t.cal_title) + '</summary><div class="bars">';
       st.buckets.forEach(function (b) {
         if (!b.n) return;
         h += '<div class="bar"><span>' + b.range[0] + '–' + b.range[1] + '</span><div class="track"><div class="fill" style="width:' +
           Math.round(b.hitRate * 100) + '%"></div><div class="mark-line" style="left:calc(' + Math.round(b.avgConf * 100) + '% - 2px)"></div></div><span>' +
           Math.round(b.hitRate * 100) + '%</span></div>';
       });
-      h += '</div><p class="small" style="margin-top:10px">' + esc(t.cal_help) + '</p></section>';
+      h += '</div><p class="small" style="margin-top:10px">' + esc(t.cal_help) + '</p></details>';
     }
 
-    h += '<section class="dark"><h2>' + esc(t.history) + '</h2>';
+    h += '<details class=\"dark\"' + '' + '><summary>' + esc(t.history) + '</summary>';
     const recent = resolvedTips().slice(-8).reverse();
     if (!recent.length) h += '<p class="small">' + esc(t.none) + '</p>';
     recent.forEach(function (r) {
       h += '<div class="row"><span>' + esc(claimText(r.claim, S.lang)) + '</span><span class="' + (r.pts >= 0 ? 'pts-pos' : 'pts-neg') + '">' + signed(r.pts) + '</span></div>';
     });
-    h += '</section>';
+    h += '</details>';
 
-    h += '<section class="dark"><h2>' + esc(t.backup) + '</h2><p class="small">' + esc(t.backup_help) + '</p>' +
+    h += '<details class=\"dark\"' + '' + '><summary>' + esc(t.backup) + '</summary><p class="small">' + esc(t.backup_help) + '</p>' +
       '<button class="btn ghost" data-act="export-file">' + esc(t.export_file) + '</button>' +
       '<button class="btn ghost" data-act="export-code">' + esc(t.export_code) + '</button>' +
       '<h2 style="margin-top:18px">' + esc(t.import_title) + '</h2>' +
@@ -436,7 +435,7 @@
       '<button class="btn ghost" data-act="import-text">' + esc(t.import_btn) + '</button>' +
       '<button class="btn ghost" data-act="import-file">' + esc(t.import_file) + '</button>' +
       '<input id="impfile" type="file" accept="application/json,.json,.txt" hidden>' +
-      '<p class="small" id="bmsg" style="margin-top:10px"></p></section>';
+      '<p class="small" id="bmsg" style="margin-top:10px"></p></details>';
     return h;
   }
 
@@ -522,6 +521,30 @@
     })(t0);
   }
 
+  function celebrate(hit) {
+    try { if (navigator.vibrate) navigator.vibrate(hit ? 40 : [70, 50, 70]); } catch (e) { /* egal */ }
+    if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const app = document.getElementById('app');
+    if (!hit) { app.classList.add('shake'); setTimeout(function () { app.classList.remove('shake'); }, 500); return; }
+    const cv = document.createElement('canvas');
+    if (!cv.getContext) return;
+    cv.className = 'confetti';
+    cv.width = window.innerWidth; cv.height = window.innerHeight;
+    document.body.appendChild(cv);
+    const cx = cv.getContext('2d');
+    if (!cx) { cv.remove(); return; }
+    const cols = ['#0d0b1f', '#ffffff', '#ffe45c', '#3a2cff', '#ff3b8d'];
+    const ps = [];
+    for (let i = 0; i < 90; i++) ps.push({ x: cv.width / 2, y: cv.height * 0.35, vx: (Math.random() - .5) * 16, vy: -Math.random() * 15 - 4, r: Math.random() * 6 + 4, c: cols[i % cols.length], a: Math.random() * 6, va: (Math.random() - .5) * .4 });
+    const t0 = performance.now();
+    (function frame(now) {
+      const el = (now || performance.now()) - t0;
+      cx.clearRect(0, 0, cv.width, cv.height);
+      ps.forEach(function (p) { p.vy += .45; p.x += p.vx; p.y += p.vy; p.a += p.va; cx.save(); cx.translate(p.x, p.y); cx.rotate(p.a); cx.fillStyle = p.c; cx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); cx.restore(); });
+      if (el < 1700) requestAnimationFrame(frame); else cv.remove();
+    })(t0);
+  }
+
   function render() {
     const root = document.getElementById('app');
     document.documentElement.lang = S.lang;
@@ -537,7 +560,7 @@
       '<details><summary>' + esc(t.privacy) + '</summary><p>' + esc(t.privacy_text) + '</p></details>' +
       '<p class="credit">' + esc(t.data_credit) + '</p>';
     window.scrollTo(0, 0);
-    if (ui.view === 'result') countUp();
+    if (ui.view === 'result') { countUp(); celebrate(DP.isHit(ui.result.tip, ui.result.outcome)); }
   }
 
   function chooseTip(yes) {
