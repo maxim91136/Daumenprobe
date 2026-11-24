@@ -41,7 +41,7 @@ Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
 
 ## Spielgefühl
 
-Ränge (12 Stufen, an vier Stufen mit Aufstiegsprüfung), 20 Abzeichen (u. a. „Besser eingeschätzt“ und „Wieder da“ fürs Aufholen), Serie mit einem Joker-Tag, Story, Töne und Vibration (abschaltbar), Farbwelten (freigeschaltet über Ränge), Daumen-Typ ab 10 Tipps, Weltreise-Pass (Stempel pro Stadt, 20 Städte, Abzeichen ab 12).
+Ränge (12 Stufen, an vier Stufen mit Aufstiegsprüfung), 21 Abzeichen (u. a. „Besser eingeschätzt“ und „Wieder da“ fürs Aufholen), Serie mit einem Joker-Tag, Story, Töne und Vibration (abschaltbar), Farbwelten (freigeschaltet über Ränge), Daumen-Typ ab 10 Tipps, Weltreise-Pass (Stempel pro Stadt, 20 Städte, Abzeichen ab 12).
 
 - Tagesfrage: dieselbe Frage für alle auf der Welt (aus dem Datum abgeleitet).
 - Duell per Link: 5 gleiche Behauptungen, das Ergebnis steckt im Link nach dem `#` und geht nie an einen Server. Ein Duell pro Tag.
@@ -82,3 +82,7 @@ Nur Spielpunkte, nie echtes Geld. Nur messbare Behauptungen mit Datenquelle und 
 
 ## Schwierigkeit „Schwer“
 Grenzen liegen nahe am Üblichen (Monatsmittel der Stadt für Temperatur, typische Werte für Wind, Luft, Erdbeben, Druck). Wer das Klima kennt, hat einen Vorteil; volle Punkte. Leicht und Mittel behalten die groben Grenzen. Die Monatsmittel sind gerundete Näherungswerte (siehe NORMS in app.js).
+
+## Almanach (Nebenspiel)
+
+Drei Fragen pro Tag, für alle am selben Tag gleich: Ein Ereignis aus Wikipedias „Was geschah am“ (api.wikimedia.org) mit Jahr, das stimmt oder um einige Jahre verschoben ist. Stimmt es oder nicht? Treffer: 10 Sonderpunkte, alle drei richtig: 10 extra. Nie Minuspunkte, zählt nicht zum Tageslimit und nicht zum Rang. Kinderfreundlich gefiltert (Krieg, Tod, Unglücke usw. werden aussortiert). Ohne Netz erscheint eine Meldung. Abzeichen „Zeitreisender“ (das 21.).

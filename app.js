@@ -172,7 +172,8 @@
         pass: ['Weltreisender', 'In zwölf Städten einen Stempel geholt.'],
         duel: ['Duellant', 'Ein Duell zu Ende gespielt.'],
         better: ['Besser eingeschätzt', 'Deine letzten 10 Tipps sind mindestens 10 Punkte ehrlicher kalibriert als deine ersten 10.'],
-        comeback: ['Wieder da', 'Aus dem Minus (ab −10) zurück auf null oder mehr.']
+        comeback: ['Wieder da', 'Aus dem Minus (ab −10) zurück auf null oder mehr.'],
+        alm: ['Zeitreisender', 'Einen Almanach-Tag mit allen drei Fragen zu Ende gespielt.']
       },
       story_title: 'Der Orden der Daumen',
       story: 'Es gibt einen alten Brauch: Wer wissen will, woher der Wind weht, hält den Daumen hoch. Du bist neu im Orden der Daumen. Tippe, lass die Welt nachmessen und steige auf, bis du den Himmel lesen kannst wie ein Buch.',
@@ -207,6 +208,7 @@
       pass_title: 'Weltreise-Pass', pass_help: 'Triff einmal in jeder Stadt, dann bekommst du den Stempel.',
       skin_title: 'Farbwelt', skins: { night: 'Nacht', dawn: 'Morgenrot', aurora: 'Polarlicht', storm: 'Gewitter', gold: 'Gold' }, skin_locked: 'Ab Rang {r}',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
+      alm_title: 'Almanach', alm_sub: 'Was geschah an diesem Tag? Nur Bonus, nie Minus.', alm_go: 'Spielen', alm_cont: 'Weiter', alm_done: 'Heute erledigt', alm_pts: 'Sonderpunkte', alm_q: 'Frage {i} von {n}', alm_true: 'Stimmt', alm_false: 'Stimmt nicht', alm_right: 'Richtig', alm_wrong: 'Knapp daneben', alm_nominus: 'Kein Abzug.', alm_real: 'Es war das Jahr {y}.', alm_next: 'Nächste Frage', alm_end: 'Fertig', alm_all: 'Alle drei richtig: {n} Extra-Punkte', alm_err: 'Der Almanach kommt aus Wikipedia und ist gerade nicht erreichbar. Versuch es später noch einmal.', alm_retry: 'Nochmal versuchen', alm_src: 'Quelle: Wikipedia, „Was geschah am“. Nur Spielpunkte.', alm_claim: 'Am {date}: {text}',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe · Frage des Tages #{n}', share_pts: '{p} Punkte. Schaffst du das auch?',
       ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumenschnipper', 'Daumen-Kenner', 'Wetterprophet', 'Daumen-Profi', 'Seher', 'Orakel', 'Großes Orakel', 'Daumen-Legende', 'Daumenprobe-Meister'],
@@ -416,7 +418,8 @@
         comeback: ['Back on top', 'Climbed out of the red (from −10) back to zero or more.'],
         duel: ['Duelist', 'Finished a duel.'],
         better: ['Better judge', 'Your last 10 tips are calibrated at least 10 points more honestly than your first 10.'],
-        comeback: ['Back on top', 'Climbed out of the red (from −10) back to zero or more.']
+        comeback: ['Back on top', 'Climbed out of the red (from −10) back to zero or more.'],
+        alm: ['Time traveller', 'Finished an Almanac day with all three questions.']
       },
       story_title: 'The Order of the Thumbs',
       story: 'There is an old custom: whoever wants to know where the wind blows holds up a thumb. You are new to the Order of the Thumbs. Tip, let the world measure itself and climb until you can read the sky like a book.',
@@ -451,6 +454,7 @@
       pass_title: 'World pass', pass_help: 'Hit once in every city to earn its stamp.',
       skin_title: 'Theme', skins: { night: 'Night', dawn: 'Dawn', aurora: 'Aurora', storm: 'Storm', gold: 'Gold' }, skin_locked: 'From rank {r}',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
+      alm_title: 'Almanac', alm_sub: 'What happened on this day? Bonus only, never minus.', alm_go: 'Play', alm_cont: 'Continue', alm_done: 'Done today', alm_pts: 'bonus points', alm_q: 'Question {i} of {n}', alm_true: 'True', alm_false: 'Not true', alm_right: 'Right', alm_wrong: 'Close', alm_nominus: 'No deduction.', alm_real: 'It was the year {y}.', alm_next: 'Next question', alm_end: 'Done', alm_all: 'All three right: {n} extra points', alm_err: 'The almanac comes from Wikipedia and cannot be reached right now. Please try again later.', alm_retry: 'Try again', alm_src: 'Source: Wikipedia, “On this day”. Play points only.', alm_claim: 'On {date}: {text}',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe · Daily claim #{n}', share_pts: '{p} points. Can you do that too?',
       ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Flicker', 'Thumb Expert', 'Weather Prophet', 'Thumb Pro', 'Seer', 'Oracle', 'Grand Oracle', 'Thumb Legend', 'Thumb Master'],
@@ -863,7 +867,7 @@
     });
     st.scoreV = 3;
   }
-  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 's', scoreV: 3, lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 's', scoreV: 3, lang: null, tips: [], reports: [], lastExport: null, draws: [], alm: { pts: 0, days: {} }, current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -951,6 +955,7 @@
     if (ui.view === 'tip') return claimTheme(ui.claim);
     if (ui.view === 'conf') return ui.tip ? 'yes' : 'no';
     if (ui.view === 'result') return DP.isHit(ui.result.tip, ui.result.outcome) ? 'hit' : 'miss';
+    if (ui.view === 'alm') return ui.almRes ? (ui.almRes.ok ? 'hit' : 'wait') : 'home';
     if (ui.view === 'later') return 'wait';
     if (ui.view === 'duelend' || ui.view === 'examend') return 'wait';
     return 'home';
@@ -1088,11 +1093,12 @@
     world: ['teal', '<circle cx="32" cy="32" r="21"/><ellipse cx="32" cy="32" rx="9" ry="21"/><path d="M11 32H53M15 21H49M15 43H49"/>'],
     exam: ['blue', '<path d="M32 15L57 28L32 41L7 28Z"/><path d="M17 34V45C17 50 47 50 47 45V34"/><path d="M57 28V42"/>'],
     pass: ['teal', '<rect x="11" y="22" width="42" height="29" rx="7"/><path d="M24 22V17C24 15 25 14 27 14H37C39 14 40 15 40 17V22"/><path d="M11 35H53"/>'],
+    alm: ['orange', '<path d="M18 14H46M18 50H46M22 14C22 30 40 30 40 50M40 14C40 30 22 30 22 50"/>'],
     duel: ['red', '<path d="M15 15L46 46M49 15L18 46"/><path d="M38 51L51 38M13 38L26 51"/>'],
     better: ['blue', '<path d="M11 12V52H53"/><path d="M18 42L29 31L37 37L52 20"/><path d="M43 20H52V29"/>'],
     comeback: ['red', '<path d="M17 14V32C17 47 47 47 47 32V20"/><path d="M38 28L47 17L56 28"/>']
   };
-  /* Abzeichen-Wesen: 20 kleine Fantasiefiguren, jede mit einem Merkmal ihres Abzeichens */
+  /* Abzeichen-Wesen: 21 kleine Fantasiefiguren, jede mit einem Merkmal ihres Abzeichens */
   function bBody(c, d, belly) {
     return '<ellipse cx="48" cy="62" rx="25" ry="22" fill="' + c + '"/><ellipse cx="48" cy="68" rx="14" ry="11" fill="' + belly + '"/>' +
       '<ellipse cx="37" cy="84" rx="8" ry="4.5" fill="' + d + '"/><ellipse cx="59" cy="84" rx="8" ry="4.5" fill="' + d + '"/>';
@@ -1119,6 +1125,7 @@
     pass: function () { return '<ellipse cx="34" cy="86" rx="9" ry="4" fill="#1b7585"/><ellipse cx="62" cy="86" rx="9" ry="4" fill="#1b7585"/><path d="M38 30V23C38 19 40 17 44 17H52C56 17 58 19 58 23V30" stroke="#1b7585" stroke-width="4.5" fill="none" stroke-linecap="round"/><rect x="18" y="29" width="60" height="55" rx="12" fill="#2bb3c7"/><path d="M18 55H78" stroke="#1b7585" stroke-width="3"/>' + eye(38, 44, 5.4) + eye(58, 44, 5.4) + '<path d="M43 52Q48 57 53 52" stroke="#0f4a55" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="30" cy="68" r="6" fill="#ffd24a"/><rect x="50" y="62" width="16" height="12" rx="3" fill="#ff6a5e" transform="rotate(-8 58 68)"/><path d="M30 65V71M27 68H33" stroke="#c98f00" stroke-width="1.6"/>'; },
     duel: function () { return '<path d="M14 14L44 44M82 14L52 44" stroke="#dfe6f0" stroke-width="5.5" stroke-linecap="round"/><path d="M10 26L26 10M86 26L70 10" stroke="#ffd24a" stroke-width="5" stroke-linecap="round"/>' + bBody('#ff6a5e', '#cf2a20', '#ffc5be') + '<path d="M25 48C34 44 62 44 71 48V58C62 63 34 63 25 58Z" fill="#1b1530"/>' + eye(39, 53, 4.4) + eye(57, 53, 4.4) + '<path d="M42 68Q48 73 54 68" stroke="#7a1410" stroke-width="2.4" fill="none" stroke-linecap="round"/>'; },
     better: function () { return bBody('#35c9a5', '#1f9c7e', '#c8f5e8') + bFace('#0f5a47') + '<path d="M36 80L45 70L51 75L62 63" stroke="#0f7a5f" stroke-width="4.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 62H63V73" stroke="#0f7a5f" stroke-width="4.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 42C34 36 62 36 70 42" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".55"/><path d="M80 24L82 30L88 32L82 34L80 40L78 34L72 32L78 30Z M14 30L15.5 34L19.5 35.5L15.5 37L14 41L12.5 37L8.5 35.5L12.5 34Z" fill="#ffd24a"/>'; },
+    alm: function () { return '<path d="M30 8H66M30 90H66" stroke="#8a5a2b" stroke-width="5" stroke-linecap="round"/>' + bBody('#ffc94d', '#d99a00', '#fff1b8') + bFace('#7a4d00') + '<path d="M34 14H62C62 30 52 36 48 42C44 36 34 30 34 14Z" fill="#fff6d6" stroke="#d99a00" stroke-width="2.5" stroke-linejoin="round"/><path d="M40 17H56C55 25 51 28 48 31C45 28 41 25 40 17Z" fill="#ff9f0a"/>'; },
     comeback: function () { return '<path d="M24 58C11 52 8 38 14 29C21 37 27 47 30 58Z M72 58C85 52 88 38 82 29C75 37 69 47 66 58Z" fill="#ff9a3d"/>' + bBody('#ff7a3d', '#d94f1c', '#ffd0a0') + '<path d="M48 42C51 34 45 30 47 18C55 25 61 33 57 42Z" fill="#ffd24a"/><path d="M40 43C41 36 36 32 37 25C45 29 47 36 45 43Z" fill="#ff9a3d"/>' + eye(39, 55, 5.2) + eye(57, 55, 5.2) + '<path d="M32 48L44 52M64 48L52 52" stroke="#7a2a0a" stroke-width="2.6" stroke-linecap="round"/><path d="M44 63L48 70L52 63Z" fill="#ffb020"/>'; }
   };
   function bIcon(id, on, small) {
@@ -1145,7 +1152,8 @@
     ['pass', '', function (c) { return c.stamps >= 12; }],
     ['duel', '', function (c) { return c.duelsDone >= 1; }],
     ['better', '', function (c) { return c.better; }],
-    ['comeback', '', function (c) { return c.comeback; }]
+    ['comeback', '', function (c) { return c.comeback; }],
+    ['alm', '', function (c) { return c.alm >= 1; }]
   ];
   const SKINS = [['night', 0, '#6a5cff'], ['dawn', 2, '#ff7a1a'], ['aurora', 4, '#19e0a0'], ['storm', 6, '#43c7ff'], ['gold', 8, '#ffd24a']];
   function rankIndex() { return rankFor(DP.peak(S.tips)).i; }
@@ -1197,7 +1205,7 @@
       const a = DP.stats(rs.slice(0, 10)).calibration, b = DP.stats(rs.slice(-10)).calibration;
       better = a !== null && b !== null && b >= a + 10;
     }
-    return { better: better, comeback: comeback, n: rs.length, hits: st.hits, cal: st.calibration, maxCombo: maxCombo, bold: bold, ouch: ouch, maxDays: maxDays,
+    return { alm: Object.keys(almS().days).filter(function (k) { return almS().days[k].length >= ALM_N; }).length, better: better, comeback: comeback, n: rs.length, hits: st.hits, cal: st.calibration, maxCombo: maxCombo, bold: bold, ouch: ouch, maxDays: maxDays,
       exams: (S.exams || []).length, stamps: stampSet(list).length, duelsDone: Object.keys(S.duels || {}).filter(function (k) { return S.duels[k].done; }).length, maxPerDay: Math.max(0, Math.max.apply(null, days.map(function (d) { return perDay[d]; }).concat([0]))), topics: Object.keys(topics).length };
   }
   function earnedBadges(list) {
@@ -1314,6 +1322,7 @@
       (dDone && dDone.resolved ? '<div class="daily-res"><span>' + dailyRow() + '</span><button class="chip" data-act="share-daily">' + esc(t.share) + '</button></div>'
         : dDone ? '<span class="small">…</span>' : '<button class="chip go" data-act="daily">' + esc(t.daily_go) + '</button>') + '</section>';
     h += duelCard();
+    h += almCard();
     h += '<div class="slots" role="img" aria-label="' + esc(fill(t.left, { n: left })) + '">' + todaySlots().map(function (k) { return '<i class="' + k + '"></i>'; }).join('') + '</div>';
     if (left > 0) h += '<p class="hint">' + esc(fill(t.left, { n: left })) + '</p>';
     else h += '<p class="small" style="margin:14px 0 0;text-align:center">' + esc(t.goDone) + '</p>';
@@ -1695,10 +1704,110 @@
     })(t0);
   }
 
+  /* ---------- Almanach: vergangene Ereignisse, wahr oder falsch. Nur Bonus, nie Minus. ---------- */
+  const ALM_N = 3, ALM_HIT = 10, ALM_ALL = 10;
+  const ALM_NO = /krieg|schlacht|mord|attentat|anschlag|massaker|hinricht|terror|holocaust|völkermord|genozid|hitler|nazi|nationalsozial|\bns-|getötet|\btote[nr]?\b|\btod|opfer|selbstmord|suizid|absturz|abgestürzt|unglück|katastroph|erdbeben|überschwemm|\bflut|seuche|\bpest\b|epidemie|pandemie|hunger|folter|vergewalt|geisel|entführ|bombe|angriff|invasion|besetz|erschoss|hingerichtet|gefangen|sklav|verbrech|\bwaffe|waffen|rebellion|aufstand|putsch|kämpf|sprengstoff|\bbrand\b|brannte|feuer|explosion|ertrunk|untergang|versenk|unfall|stirbt|sterben|starb|ums leben|vergift|drogen|konzentrationslager|deport|vertreib|ethnisch|armee|militär|soldat|truppen|\bwar\b|battle|murder|assassin|attack|massacre|execut|terror|holocaust|genocide|nazi|killed|\bdead\b|death|victim|suicide|crash|disaster|earthquake|flood|plague|epidemic|famine|torture|hostage|kidnap|bomb|invasion|occup|\bshot\b|prisoner|slave|crime|weapon|uprising|\bcoup\b|explosion|drown|\bsank\b|accident|\bdies\b|\bdied\b|poison|deport|riot|siege|troops|military|soldier|shipwreck|\bfire\b|\bmassacre/i;
+  const ALM_YES = /erfind|eröffn|entdeck|landung|landet|premiere|weltmeister|olympi|gründ|uraufführ|\berste[rnms]?\b|\bstart|rakete|patent|weltrekord|veröffentlich|erscheint|\bfilm|\boper\b|roman|musical|fernseh|radio|telefon|computer|internet|satellit|raumfahr|astronaut|\bmond|\bmars\b|sonde|eisenbahn|brücke|turm|museum|\bzoo\b|universität|nobelpreis|erstmals|krönung|invent|discover|opens|opened|launch|landed|premiere|founded|first|record|champion|olympic|satellite|spacecraft|astronaut|moon|telephone|patent|published|released|bridge|tower|museum|university|nobel/i;
+  function almS() { if (!S.alm || typeof S.alm !== 'object') S.alm = { pts: 0, days: {} }; if (!S.alm.days) S.alm.days = {}; return S.alm; }
+  function almToday() { return almS().days[utcKey()] || []; }
+  function almDone() { return almToday().length; }
+  function almDate(key, year, lang) {
+    const p = key.split('-').map(Number);
+    let d = '';
+    try { d = new Date(Date.UTC(2000, p[1] - 1, p[2])).toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' }); } catch (e) { d = p[2] + '.' + p[1] + '.'; }
+    return d + ' ' + year;
+  }
+  /* Aus der Wikipedia-Liste drei Ereignisse wählen (für alle am selben Tag gleich) und je ein Jahr wahr oder verändert zeigen. */
+  function almBuild(events, key, lang) {
+    const nowY = new Date().getUTCFullYear();
+    const ok = (events || []).filter(function (e) {
+      return e && typeof e.text === 'string' && typeof e.year === 'number' && e.year >= 1000 && e.year < nowY && e.text.length >= 25 && e.text.length <= 170 &&
+        !/\d{4}/.test(e.text) && !ALM_NO.test(e.text);
+    }).sort(function (a, b) { return a.text < b.text ? -1 : a.text > b.text ? 1 : 0; });
+    const r = mulberry(hashStr('alm:' + key + ':' + lang));
+    const shuffle = function (a) { const x = a.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); const tmp = x[i]; x[i] = x[j]; x[j] = tmp; } return x; };
+    const good = shuffle(ok.filter(function (e) { return ALM_YES.test(e.text); }));
+    const rest = shuffle(ok.filter(function (e) { return !ALM_YES.test(e.text); }));
+    const chosen = good.concat(rest).slice(0, ALM_N);
+    return chosen.map(function (e) {
+      const truth = r() < 0.5;
+      let y = e.year;
+      if (!truth) {
+        const span = e.year >= 1900 ? [2, 9] : e.year >= 1700 ? [5, 30] : [10, 120];
+        const d = span[0] + Math.floor(r() * (span[1] - span[0] + 1));
+        const dir = r() < 0.5 ? -1 : 1;
+        y = e.year + dir * d;
+        if (y < 1000 || y >= nowY) y = e.year - dir * d;
+        if (y < 1000 || y >= nowY || y === e.year) y = e.year > 1500 ? e.year - 7 : e.year + 7;
+      }
+      return { text: e.text, year: e.year, shown: y, truth: truth };
+    });
+  }
+  function almFetch(key, lang) {
+    const p = key.split('-');
+    const url = 'https://api.wikimedia.org/feed/v1/wikipedia/' + (lang === 'de' ? 'de' : 'en') + '/onthisday/events/' + p[1] + '/' + p[2];
+    return fetchJson(url).then(function (d) {
+      const items = almBuild(d && d.events, key, lang);
+      if (!items.length) throw new Error('no events');
+      return items;
+    });
+  }
+  function almOpen() {
+    const t = T();
+    if (almDone() >= ALM_N) return;
+    ui.view = 'alm'; ui.almRes = null; ui.almErr = false; ui.almItems = null; ui.almBusy = true; render();
+    const key = utcKey(), lang = S.lang;
+    almFetch(key, lang).then(function (items) { ui.almItems = items; ui.almBusy = false; render(); })
+      .catch(function () { ui.almBusy = false; ui.almErr = true; render(); });
+  }
+  function almAnswer(yes) {
+    const items = ui.almItems, i = almDone();
+    if (!items || !items[i] || ui.almRes) return;
+    const it = items[i], ok = yes === it.truth;
+    const a = almS(), key = utcKey();
+    const day = a.days[key] = a.days[key] || [];
+    let pts = ok ? ALM_HIT : 0, bonus = 0;
+    day.push({ ok: ok, pts: pts, ts: Date.now() });
+    if (day.length >= items.length && day.every(function (x) { return x.ok; })) { bonus = ALM_ALL; day[day.length - 1].pts += bonus; }
+    a.pts += pts + bonus;
+    save(S);
+    ui.almRes = { ok: ok, pts: pts, bonus: bonus, item: it };
+    render(); sfx(ok ? 'hit' : 'miss');
+  }
+  function almCard() {
+    const t = T(), n = almDone(), a = almS();
+    const inner = '<div><b>' + esc(t.alm_title) + '</b><small>' + (a.pts ? esc(a.pts + ' ' + t.alm_pts) : esc(t.alm_sub)) + '</small></div>' +
+      (n >= ALM_N ? '<span class="small">' + esc(t.alm_done) + '</span>' : '<button class="chip go" data-act="alm">' + esc(n ? t.alm_cont : t.alm_go) + '</button>');
+    return '<section class="daily alm">' + inner + '</section>';
+  }
+  function viewAlm() {
+    const t = T();
+    let h = '<header class="top"><button class="chip" data-act="home">← ' + esc(t.home) + '</button>' + langs() + '</header><main class="stage">';
+    if (ui.almBusy) return h + '<div class="spacer"></div><p class="said">…</p><div class="spacer"></div></main>';
+    if (ui.almErr || !ui.almItems) return h + '<div class="spacer"></div><p class="said">' + esc(t.alm_err) + '</p><button class="btn" data-act="alm">' + esc(t.alm_retry) + '</button><button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
+    const items = ui.almItems, r = ui.almRes;
+    const i = r ? almDone() - 1 : almDone(), it = items[i] || items[items.length - 1];
+    const key = utcKey();
+    const text = fill(t.alm_claim, { date: almDate(key, it.shown, S.lang), text: it.text });
+    h += '<p class="small-claim">' + esc(t.alm_title) + ' · ' + esc(fill(t.alm_q, { i: i + 1, n: items.length })) + '</p>';
+    if (!r) {
+      return h + '<div class="deck"><div class="alm-card"><p class="claim-big" lang="' + S.lang + '">' + esc(text) + '</p></div></div>' +
+        '<div class="thumbs"><button class="thumb" data-act="alm-a" data-v="0"><span class="emoji" aria-hidden="true">' + ico('up', 'big down') + '</span>' + esc(t.alm_false) + '</button>' +
+        '<button class="thumb" data-act="alm-a" data-v="1"><span class="emoji" aria-hidden="true">' + ico('up', 'big') + '</span>' + esc(t.alm_true) + '</button></div>' +
+        '<p class="hint">' + esc(t.alm_src) + '</p></main>';
+    }
+    const last = almDone() >= items.length;
+    return h + '<p class="big-word">' + esc(r.ok ? t.alm_right : t.alm_wrong) + '</p>' +
+      '<div class="points"><span>+' + (r.pts + r.bonus) + '</span><small>' + esc(t.alm_pts) + '</small></div>' +
+      '<p class="said">' + esc(fill(t.alm_real, { y: r.item.year })) + ' ' + (r.ok ? '' : esc(t.alm_nominus)) + (r.bonus ? ' ' + esc(fill(t.alm_all, { n: r.bonus })) : '') + '</p>' +
+      '<div class="measure"><span class="small">' + esc(fill(t.alm_claim, { date: almDate(key, r.item.year, S.lang), text: r.item.text })) + '</span></div>' +
+      '<div class="spacer"></div><button class="btn" data-act="alm-next">' + esc(last ? t.alm_end : t.alm_next) + '</button></main>';
+  }
+
   function render() {
     const root = document.getElementById('app');
     document.documentElement.lang = S.lang;
-    const views = { faq: viewFaq, home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd, examend: viewExamEnd };
+    const views = { faq: viewFaq, home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, alm: viewAlm, duelend: viewDuelEnd, examend: viewExamEnd };
     const theme = themeFor();
     document.body.setAttribute('data-theme', theme);
     document.body.setAttribute('data-view', ui.view);
@@ -1774,7 +1883,7 @@
         if (ui.error && !ui.daily && !ui.duel && !ui.exam && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
         S.current = null; save(S);
       }
-      ui.daily = null; ui.duel = null; ui.exam = null; ui.duelEnd = null; ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
+      ui.daily = null; ui.duel = null; ui.exam = null; ui.duelEnd = null; ui.almRes = null; ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
     }
     else if (act === 'daily') {
       const key = utcKey();
@@ -1783,6 +1892,9 @@
       S.current = { claim: ui.claim, ts: Date.now(), daily: key };
       save(S); render();
     }
+    else if (act === 'alm') { almOpen(); }
+    else if (act === 'alm-a') { almAnswer(v === '1'); }
+    else if (act === 'alm-next') { ui.almRes = null; if (almDone() >= (ui.almItems || []).length) { ui.view = 'home'; } render(); }
     else if (act === 'share-daily') { shareDaily(); }
     else if (act === 'share-type') { shareType(); }
     else if (act === 'share-duel') { shareDuel(ui.duelEnd); }

@@ -686,3 +686,9 @@ body[data-theme="yes"] .slider::-moz-range-thumb, body[data-theme="no"] .slider:
 .report.done { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .report.done .chip { text-decoration: none; }
 .rep-hint { flex-basis: 100%; color: var(--fg2); font-size: .8rem; }
+
+/* Almanach */
+.alm-card { position: relative; width: 100%; min-height: 36dvh; background: var(--surface); color: var(--fg); border-radius: 28px; padding: 30px 24px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 24px 48px -24px rgba(0,0,0,.5); }
+.alm-card .claim-big { font-size: clamp(1.4rem, 6vw, 2.1rem); }
+.daily.alm { background: linear-gradient(120deg, rgba(255,228,92,.16), rgba(255,122,26,.12)); border-color: rgba(255,228,92,.45); }
+.daily.alm .go { background: #ffe45c; border-color: #ffe45c; color: var(--night); }
