@@ -76,16 +76,16 @@
       data_credit: 'Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Nur Spielpunkte, nie Geld.',
       measure_msg: {
         temp: 'In {city} sind es {v} °C.',
-        isday: 'In {city} ist es gerade {v}.',
+        isday: 'In {city} steht die Sonne gerade {v}.',
         rain: 'In {city} fallen gerade {v} mm Regen pro Stunde.',
         wind: 'In {city} weht der Wind mit {v} km/h.',
         iss: 'Die ISS ist bei {v}° Breite.',
         tomorrow: 'Höchstwert {a} °C am Tag des Tipps, {b} °C am Tag danach.'
       },
-      day: 'Tag', night: 'Nacht',
+      day: 'über dem Horizont', night: 'unter dem Horizont',
       claims: {
         temp: 'In {city} sind es gerade mehr als {T} °C.',
-        isday: 'In {city} ist gerade Tag.',
+        isday: 'In {city} ist die Sonne gerade über dem Horizont (nach Sonnenuntergang: nein).',
         rain: 'In {city} regnet es gerade.',
         wind: 'In {city} weht gerade mehr als {W} km/h Wind.',
         iss: 'Die ISS fliegt gerade nördlich des Äquators.',
@@ -93,7 +93,7 @@
       },
       rules: {
         temp: 'Stimmt, wenn die gemessene Temperatur über {T} °C liegt (Open-Meteo, aktueller Wert).',
-        isday: 'Stimmt, wenn Open-Meteo für den Ort jetzt Tageslicht meldet.',
+        isday: 'Stimmt, wenn die Sonne am Ort laut Open-Meteo jetzt über dem Horizont steht. Dämmerung nach Sonnenuntergang zählt als nein.',
         rain: 'Stimmt, wenn Open-Meteo jetzt Niederschlag über 0 mm meldet.',
         wind: 'Stimmt, wenn die gemessene Windgeschwindigkeit über {W} km/h liegt (Open-Meteo, 10 m Höhe).',
         iss: 'Stimmt, wenn die gemeldete Breite der ISS größer als 0° ist (wheretheiss.at).',
@@ -159,16 +159,16 @@
       data_credit: 'Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Play points only, never money.',
       measure_msg: {
         temp: 'It is {v} °C in {city}.',
-        isday: 'In {city} it is {v} right now.',
+        isday: 'In {city} the sun is {v} right now.',
         rain: 'In {city} {v} mm of rain per hour are falling.',
         wind: 'In {city} the wind blows at {v} km/h.',
         iss: 'The ISS is at {v}° latitude.',
         tomorrow: 'High of {a} °C on the day of your tip, {b} °C the day after.'
       },
-      day: 'daytime', night: 'night',
+      day: 'above the horizon', night: 'below the horizon',
       claims: {
         temp: 'It is warmer than {T} °C in {city} right now.',
-        isday: 'It is daytime in {city} right now.',
+        isday: 'The sun is above the horizon in {city} right now (after sunset: no).',
         rain: 'It is raining in {city} right now.',
         wind: 'The wind in {city} is faster than {W} km/h right now.',
         iss: 'The ISS is north of the equator right now.',
@@ -176,7 +176,7 @@
       },
       rules: {
         temp: 'True if the measured temperature is above {T} °C (Open-Meteo, current value).',
-        isday: 'True if Open-Meteo reports daylight for the place right now.',
+        isday: 'True if, per Open-Meteo, the sun is above the horizon at the place right now. Twilight after sunset counts as no.',
         rain: 'True if Open-Meteo reports precipitation above 0 mm right now.',
         wind: 'True if the measured wind speed is above {W} km/h (Open-Meteo, 10 m height).',
         iss: 'True if the reported latitude of the ISS is greater than 0° (wheretheiss.at).',
