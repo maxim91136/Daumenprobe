@@ -33,7 +33,7 @@
       ],
       rules_goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kosten Punkte, und zwar mehr, je sicherer du dich gibst.',
       rules_cols: ['Sicherheit', 'Treffer', 'Daneben'],
-      rules_foot: 'Schwer zählt volle Punkte, Mittel dreiviertel, Leicht die Hälfte. Fünf Behauptungen pro Tag. Nur Spielpunkte, nie Geld.',
+      rules_foot: 'Schwer zählt volle Punkte, Mittel dreiviertel, Leicht die Hälfte. Zehn Behauptungen pro Tag. Nur Spielpunkte, nie Geld.',
       conf_hint_l: 'Schwer: Die Grenzen liegen nah am Üblichen. Meist sind 50 bis 70 % klug. Bei 100 % kostet ein Irrtum 30 Punkte.',
       conf_hint: '50 % = geraten, 100 % = ganz sicher. Je sicherer, desto mehr Punkte, aber auch desto mehr Abzug.',
       go: 'Neue Behauptung',
@@ -80,6 +80,7 @@
         ['Was passiert mit meinen Daten?', 'Alles bleibt in deinem Browser. Kein Konto, kein Tracking. Mit „Sicherung“ kannst du deinen Stand als Datei oder Code speichern und laden.'],
         ['Eine Frage ist unklar oder die Messung stimmt nicht.', 'Auf dem Ergebnis-Bildschirm gibt es „Unklar“, „Langweilig“ und „Messung komisch“. So hilfst du, das Spiel besser zu machen.'],
         ['Kann ich es als App installieren?', 'Ja. Im Browser „Zum Home-Bildschirm“ wählen. Dann startet es wie eine App.'],
+        ['Was heißt Beta?', 'Das Spiel ist noch nicht fertig. Regeln, Punkte und Fragen können sich ändern, und es kann Fehler geben. Wenn dir etwas komisch vorkommt, melde die Frage mit dem Knopf unter dem Ergebnis.'],
         ['Dürfen Kinder mitspielen?', 'Ja. Es gibt nur Spielpunkte, nie Geld, nichts Kritisches, kein Konto und keine Altersabfrage.']
       ],
       peak_short: 'Höchststand {n}', free_note: 'Erste Niete des Tages: gratis', coach_over: 'Bei den letzten {n} Tipps mit mindestens 75 % Sicherheit lagst du {k}-mal daneben. Probier 60 bis 70 %: Da kostet ein Irrtum viel weniger.', coach_easy: 'Oder wechsle auf Leicht, dort kostet Daneben nichts.',
@@ -99,7 +100,7 @@
       lang: 'Sprache',
       made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
       privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) und services.swpc.noaa.gov (Polarlicht-Index) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
-      data_credit: 'Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Erdbeben: USGS. Polarlicht-Index: NOAA SWPC. Nur Spielpunkte, nie Geld.',
+      data_credit: 'Beta: Das Spiel ist noch in Entwicklung. Regeln, Punkte und Fragen können sich jederzeit ändern. Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Erdbeben: USGS. Polarlicht-Index: NOAA SWPC. Nur Spielpunkte, nie Geld.',
       measure_msg: {
         quake: 'Der USGS meldet {v} Beben ab Stärke 4,5 in den letzten 24 Stunden.',
         quakemax: 'Das stärkste Beben hatte Stärke {v}.',
@@ -255,7 +256,7 @@
       ],
       rules_goal: 'The one with the most points wins. Hits earn points, misses cost points, and the more so the surer you say you are.',
       rules_cols: ['Confidence', 'Hit', 'Miss'],
-      rules_foot: 'Hard counts full points, Medium three quarters, Easy half. Five claims per day. Play points only, never money.',
+      rules_foot: 'Hard counts full points, Medium three quarters, Easy half. Ten claims per day. Play points only, never money.',
       conf_hint_l: 'Hard: thresholds sit close to what is normal. 50 to 70 % is usually smart. At 100 % a miss costs 30 points.',
       conf_hint: '50 % = a guess, 100 % = totally sure. The surer you are, the more you win, but also the more you lose.',
       go: 'New claim',
@@ -302,6 +303,7 @@
         ['What happens to my data?', 'Everything stays in your browser. No account, no tracking. With “Backup” you can save and load your progress as a file or code.'],
         ['A claim is unclear or the measurement is wrong.', 'On the result screen there are “Unclear”, “Boring” and “Odd measurement”. That helps make the game better.'],
         ['Can I install it as an app?', 'Yes. Choose “Add to Home Screen” in your browser. Then it starts like an app.'],
+        ['What does Beta mean?', 'The game is not finished yet. Rules, points and claims can change, and there may be bugs. If something looks odd, report the claim with the button under the result.'],
         ['Can children play?', 'Yes. There are only play points, never money, nothing critical, no account and no age check.']
       ],
       peak_short: 'peak {n}', free_note: 'First miss of the day: free', coach_over: 'In your last {n} tips with at least 75 % sureness you missed {k} times. Try 60 to 70 %: a mistake costs far less there.', coach_easy: 'Or switch to Easy, where a miss costs nothing.',
@@ -321,7 +323,7 @@
       lang: 'Language',
       made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
       privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) and services.swpc.noaa.gov (aurora index); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
-      data_credit: 'Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Earthquakes: USGS. Aurora index: NOAA SWPC. Play points only, never money.',
+      data_credit: 'Beta: the game is still in development. Rules, points and claims can change at any time. Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Earthquakes: USGS. Aurora index: NOAA SWPC. Play points only, never money.',
       measure_msg: {
         quake: 'The USGS reports {v} quakes of magnitude 4.5+ in the last 24 hours.',
         quakemax: 'The strongest quake had magnitude {v}.',
@@ -1080,7 +1082,7 @@
       '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + ico(S.mute ? 'mute' : 'sound') + '</button></div>';
   }
   const THUMB = '<svg class="print-logo" viewBox="-60 -60 120 120" aria-hidden="true" focusable="false"><g transform="rotate(-12)" fill="none" stroke="#fbfbff" stroke-width="6" stroke-linecap="round"><ellipse rx="11" ry="15"/><ellipse rx="21" ry="29" stroke-dasharray="120 14 40 10"/><ellipse rx="31" ry="43" stroke-dasharray="150 12 70 16"/><ellipse rx="41" ry="57" stroke-dasharray="200 14 100 20" opacity=".7"/><circle r="4" fill="#ffd24a" stroke="none"/></g></svg>';
-  function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs(true) + '</header>'; }
+  function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + ' <span class="beta">Beta</span></p></div>' + langs(true) + '</header>'; }
   function topbar() {
     const n = Math.min(DAILY_LIMIT, todayCount());
     let d = '<div class="dots" role="img" aria-label="' + n + ' / ' + DAILY_LIMIT + '">';
