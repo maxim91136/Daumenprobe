@@ -85,4 +85,4 @@ Grenzen liegen nahe am Üblichen (Monatsmittel der Stadt für Temperatur, typisc
 
 ## Almanach (Nebenspiel)
 
-Drei Fragen pro Tag, für alle am selben Tag gleich: Ein Ereignis aus Wikipedias „Was geschah am“ (api.wikimedia.org) mit Jahr, das stimmt oder um einige Jahre verschoben ist. Stimmt es oder nicht? Treffer: 10 Sonderpunkte, alle drei richtig: 10 extra. Nie Minuspunkte, zählt nicht zum Tageslimit und nicht zum Rang. Kinderfreundlich gefiltert (Krieg, Tod, Unglücke usw. werden aussortiert). Ohne Netz erscheint eine Meldung. Abzeichen „Zeitreisender“ (das 21.).
+Drei Fragen pro Tag, für alle am selben Tag gleich: Ein Ereignis aus Wikipedias „Was geschah am“ (api.wikimedia.org) mit Jahr, das stimmt oder um einige Jahre verschoben ist. Stimmt es oder nicht? Treffer: 4 Sonderpunkte, alle drei richtig: 4 extra (höchstens 16 am Tag). Nie Minuspunkte, zählt nicht zum Tageslimit und nicht zum Rang. Kinderfreundlich gefiltert (Krieg, Tod, Unglücke usw. werden aussortiert). Ohne Netz erscheint eine Meldung. Abzeichen „Zeitreisender“ (das 21.).
