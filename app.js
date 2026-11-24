@@ -208,7 +208,7 @@
       pass_title: 'Weltreise-Pass', pass_help: 'Triff einmal in jeder Stadt, dann bekommst du den Stempel.',
       skin_title: 'Farbwelt', skins: { night: 'Nacht', dawn: 'Morgenrot', aurora: 'Polarlicht', storm: 'Gewitter', gold: 'Gold' }, skin_locked: 'Ab Rang {r}',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
-      god_note: 'God Mode: dieser Tipp zählt nicht.', god_note_s: 'zählt nicht (God Mode)', god_block: 'Duell und Prüfung gibt es im God Mode nicht, damit nichts verfälscht wird. Schalte ihn unten aus.', beta_off: 'God Mode: off', beta_on: 'God Mode: on', beta_peek: 'Lösung ansehen (God Mode)', beta_true: 'Stimmt.', beta_false: 'Stimmt nicht.', beta_nopeek: 'Noch nicht messbar.', alm_title: 'Almanach', alm_today: 'Heute {r} von {m} richtig: +{n} Sonderpunkte, schon in deinem Punktestand', alm_sub2: 'zählen zu deinem Punktestand', alm_back: 'Morgen wieder', alm_sub: 'Was geschah an diesem Tag? Nur Bonus, nie Minus.', alm_go: 'Spielen', alm_cont: 'Weiter', alm_done: 'Heute erledigt', alm_pts: 'Sonderpunkte', alm_q: 'Frage {i} von {n}', alm_true: 'Stimmt', alm_false: 'Stimmt nicht', alm_right: 'Richtig', alm_wrong: 'Knapp daneben', alm_nominus: 'Kein Abzug.', alm_real: 'Es war das Jahr {y}.', alm_next: 'Nächste Frage', alm_end: 'Fertig', alm_all: 'Alle drei richtig: {n} Extra-Punkte', alm_err: 'Der Almanach kommt aus Wikipedia und ist gerade nicht erreichbar. Versuch es später noch einmal.', alm_retry: 'Nochmal versuchen', alm_src: 'Quelle: Wikipedia, „Was geschah am“. Nur Spielpunkte.', alm_claim: 'Am {date}: {text}',
+      god_note: 'God Mode: dieser Tipp zählt nicht.', beta_off: 'God Mode: off', beta_on: 'God Mode: on', beta_peek: 'Lösung ansehen (God Mode)', beta_true: 'Stimmt.', beta_false: 'Stimmt nicht.', beta_nopeek: 'Noch nicht messbar.', alm_title: 'Almanach', alm_today: 'Heute {r} von {m} richtig: +{n} Sonderpunkte, schon in deinem Punktestand', alm_sub2: 'zählen zu deinem Punktestand', alm_back: 'Morgen wieder', alm_sub: 'Was geschah an diesem Tag? Nur Bonus, nie Minus.', alm_go: 'Spielen', alm_cont: 'Weiter', alm_done: 'Heute erledigt', alm_pts: 'Sonderpunkte', alm_q: 'Frage {i} von {n}', alm_true: 'Stimmt', alm_false: 'Stimmt nicht', alm_right: 'Richtig', alm_wrong: 'Knapp daneben', alm_nominus: 'Kein Abzug.', alm_real: 'Es war das Jahr {y}.', alm_next: 'Nächste Frage', alm_end: 'Fertig', alm_all: 'Alle drei richtig: {n} Extra-Punkte', alm_err: 'Der Almanach kommt aus Wikipedia und ist gerade nicht erreichbar. Versuch es später noch einmal.', alm_retry: 'Nochmal versuchen', alm_src: 'Quelle: Wikipedia, „Was geschah am“. Nur Spielpunkte.', alm_claim: 'Am {date}: {text}',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe · Frage des Tages #{n}', share_pts: '{p} Punkte. Schaffst du das auch?',
       ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumenschnipper', 'Daumen-Kenner', 'Wetterprophet', 'Daumen-Profi', 'Seher', 'Orakel', 'Großes Orakel', 'Daumen-Legende', 'Daumenprobe-Meister'],
@@ -454,7 +454,7 @@
       pass_title: 'World pass', pass_help: 'Hit once in every city to earn its stamp.',
       skin_title: 'Theme', skins: { night: 'Night', dawn: 'Dawn', aurora: 'Aurora', storm: 'Storm', gold: 'Gold' }, skin_locked: 'From rank {r}',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
-      god_note: 'God Mode: this tip does not count.', god_note_s: 'not counted (God Mode)', god_block: 'Duel and exam are off in God Mode so nothing gets skewed. Switch it off at the bottom.', beta_off: 'God Mode: off', beta_on: 'God Mode: on', beta_peek: 'See answer (God Mode)', beta_true: 'True.', beta_false: 'Not true.', beta_nopeek: 'Not measurable yet.', alm_title: 'Almanac', alm_today: 'Today {r} of {m} right: +{n} bonus points, already in your score', alm_sub2: 'count toward your score', alm_back: 'Back tomorrow', alm_sub: 'What happened on this day? Bonus only, never minus.', alm_go: 'Play', alm_cont: 'Continue', alm_done: 'Done today', alm_pts: 'bonus points', alm_q: 'Question {i} of {n}', alm_true: 'True', alm_false: 'Not true', alm_right: 'Right', alm_wrong: 'Close', alm_nominus: 'No deduction.', alm_real: 'It was the year {y}.', alm_next: 'Next question', alm_end: 'Done', alm_all: 'All three right: {n} extra points', alm_err: 'The almanac comes from Wikipedia and cannot be reached right now. Please try again later.', alm_retry: 'Try again', alm_src: 'Source: Wikipedia, “On this day”. Play points only.', alm_claim: 'On {date}: {text}',
+      god_note: 'God Mode: this tip does not count.', beta_off: 'God Mode: off', beta_on: 'God Mode: on', beta_peek: 'See answer (God Mode)', beta_true: 'True.', beta_false: 'Not true.', beta_nopeek: 'Not measurable yet.', alm_title: 'Almanac', alm_today: 'Today {r} of {m} right: +{n} bonus points, already in your score', alm_sub2: 'count toward your score', alm_back: 'Back tomorrow', alm_sub: 'What happened on this day? Bonus only, never minus.', alm_go: 'Play', alm_cont: 'Continue', alm_done: 'Done today', alm_pts: 'bonus points', alm_q: 'Question {i} of {n}', alm_true: 'True', alm_false: 'Not true', alm_right: 'Right', alm_wrong: 'Close', alm_nominus: 'No deduction.', alm_real: 'It was the year {y}.', alm_next: 'Next question', alm_end: 'Done', alm_all: 'All three right: {n} extra points', alm_err: 'The almanac comes from Wikipedia and cannot be reached right now. Please try again later.', alm_retry: 'Try again', alm_src: 'Source: Wikipedia, “On this day”. Play points only.', alm_claim: 'On {date}: {text}',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe · Daily claim #{n}', share_pts: '{p} points. Can you do that too?',
       ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Flicker', 'Thumb Expert', 'Weather Prophet', 'Thumb Pro', 'Seer', 'Oracle', 'Grand Oracle', 'Thumb Legend', 'Thumb Master'],
@@ -924,7 +924,7 @@
     measure(ui.claim).then(function (m) {
       const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: (ui.duel || ui.exam) ? 'l' : S.level, daily: ui.daily || undefined, duel: ui.duel ? ui.duel.seed : undefined, exam: ui.exam ? ui.exam.key : undefined, ts: Date.now(), resolved: false };
       finishTip(rec, m);
-      if (S.beta && !ui.duel && !ui.exam) { rec.god = true; rec.pts = 0; rec.free = false; } else S.tips.push(rec);
+      if (S.beta && !ui.daily && !ui.duel && !ui.exam) { rec.god = true; rec.pts = 0; rec.free = false; } else S.tips.push(rec);
       S.current = null; save(S);
       ui.result = rec; ui.view = 'result'; ui.busy = false; render();
     }).catch(function () {
@@ -1381,7 +1381,7 @@
       '<div class="thumbs">' +
       '<button class="thumb" data-act="tip" data-v="0"><span class="emoji" aria-hidden="true">' + ico('up', 'big down') + '</span>' + esc(t.no) + '</button>' +
       '<button class="thumb" data-act="tip" data-v="1"><span class="emoji" aria-hidden="true">' + ico('up', 'big') + '</span>' + esc(t.yes) + '</button></div>' +
-      (S.beta && !ui.practice ? '<button class="chip" data-act="peek">' + esc(t.beta_peek) + '</button>' + (ui.msg ? '<p class="hint">' + esc(ui.msg) + '</p>' : '') : '') +
+      (S.beta && !ui.practice && !ui.daily ? '<button class="chip" data-act="peek">' + esc(t.beta_peek) + '</button>' + (ui.msg ? '<p class="hint">' + esc(ui.msg) + '</p>' : '') : '') +
       '<button class="linkbtn" data-act="home">' + esc(ui.practice ? t.home : t.cancel) + '</button></main>';
   }
 
@@ -1694,7 +1694,7 @@
   const ALM_NO = /krieg|schlacht|mord|attentat|anschlag|massaker|hinricht|terror|holocaust|völkermord|genozid|hitler|nazi|nationalsozial|\bns-|getötet|\btote[nr]?\b|\btod|opfer|selbstmord|suizid|absturz|abgestürzt|unglück|katastroph|erdbeben|überschwemm|\bflut|seuche|\bpest\b|epidemie|pandemie|hunger|folter|vergewalt|geisel|entführ|bombe|angriff|invasion|besetz|erschoss|hingerichtet|gefangen|sklav|verbrech|\bwaffe|waffen|rebellion|aufstand|putsch|kämpf|sprengstoff|\bbrand\b|brannte|feuer|explosion|ertrunk|untergang|versenk|unfall|stirbt|sterben|starb|ums leben|vergift|drogen|konzentrationslager|deport|vertreib|ethnisch|armee|militär|soldat|truppen|\bwar\b|battle|murder|assassin|attack|massacre|execut|terror|holocaust|genocide|nazi|killed|\bdead\b|death|victim|suicide|crash|disaster|earthquake|flood|plague|epidemic|famine|torture|hostage|kidnap|bomb|invasion|occup|\bshot\b|prisoner|slave|crime|weapon|uprising|\bcoup\b|explosion|drown|\bsank\b|accident|\bdies\b|\bdied\b|poison|deport|riot|siege|troops|military|soldier|shipwreck|\bfire\b|\bmassacre/i;
   const ALM_YES = /erfind|eröffn|entdeck|landung|landet|premiere|weltmeister|olympi|gründ|uraufführ|\berste[rnms]?\b|\bstart|rakete|patent|weltrekord|veröffentlich|erscheint|\bfilm|\boper\b|roman|musical|fernseh|radio|telefon|computer|internet|satellit|raumfahr|astronaut|\bmond|\bmars\b|sonde|eisenbahn|brücke|turm|museum|\bzoo\b|universität|nobelpreis|erstmals|krönung|invent|discover|opens|opened|launch|landed|premiere|founded|first|record|champion|olympic|satellite|spacecraft|astronaut|moon|telephone|patent|published|released|bridge|tower|museum|university|nobel/i;
   function almS() { if (!S.alm || typeof S.alm !== 'object') S.alm = { pts: 0, days: {} }; if (!S.alm.days) S.alm.days = {}; return S.alm; }
-  function almToday() { return S.beta ? (ui.almGod = ui.almGod || []) : (almS().days[utcKey()] || []); }
+  function almToday() { return almS().days[utcKey()] || []; }
   function almDone() { return almToday().length; }
   function almDate(key, year, lang) {
     const p = key.split('-').map(Number);
@@ -1739,7 +1739,6 @@
   }
   function almOpen() {
     const t = T();
-    if (S.beta) ui.almGod = [];
     if (almDone() >= ALM_N) return;
     ui.view = 'alm'; ui.almRes = null; ui.almErr = false; ui.almItems = null; ui.almBusy = true; render();
     const key = utcKey(), lang = S.lang;
@@ -1751,19 +1750,19 @@
     if (!items || !items[i] || ui.almRes) return;
     const it = items[i], ok = yes === it.truth;
     const a = almS(), key = utcKey();
-    const day = S.beta ? almToday() : (a.days[key] = a.days[key] || []);
+    const day = a.days[key] = a.days[key] || [];
     let pts = ok ? ALM_HIT : 0, bonus = 0;
     day.push({ ok: ok, pts: pts, ts: Date.now() });
     if (day.length >= items.length && day.every(function (x) { return x.ok; })) { bonus = ALM_ALL; day[day.length - 1].pts += bonus; }
-    if (!S.beta) a.pts += pts + bonus;
+    a.pts += pts + bonus;
     save(S);
     ui.almRes = { ok: ok, pts: pts, bonus: bonus, item: it };
     render();
   }
   function almCard() {
     const t = T(), n = almDone(), a = almS();
-    const inner = '<div><b>' + esc(t.alm_title) + '</b><small>' + (n >= ALM_N && !S.beta ? esc(fill(t.alm_today, { n: almToday().reduce(function (x, r) { return x + r.pts; }, 0), r: almToday().filter(function (r) { return r.ok; }).length, m: ALM_N })) : a.pts ? esc(a.pts + ' ' + t.alm_pts + ' · ' + t.alm_sub2) : esc(t.alm_sub)) + '</small></div>' +
-      (n >= ALM_N && !S.beta ? '<span class="small">' + esc(t.alm_back) + '</span>' : '<button class="chip go" data-act="alm">' + esc(n ? t.alm_cont : t.alm_go) + '</button>');
+    const inner = '<div><b>' + esc(t.alm_title) + '</b><small>' + (n >= ALM_N ? esc(fill(t.alm_today, { n: almToday().reduce(function (x, r) { return x + r.pts; }, 0), r: almToday().filter(function (r) { return r.ok; }).length, m: ALM_N })) : a.pts ? esc(a.pts + ' ' + t.alm_pts + ' · ' + t.alm_sub2) : esc(t.alm_sub)) + '</small></div>' +
+      (n >= ALM_N ? '<span class="small">' + esc(t.alm_back) + '</span>' : '<button class="chip go" data-act="alm">' + esc(n ? t.alm_cont : t.alm_go) + '</button>');
     return '<section class="daily alm">' + inner + '</section>';
   }
   function viewAlm() {
@@ -1784,7 +1783,7 @@
     }
     const last = almDone() >= items.length;
     return h + '<p class="big-word">' + esc(r.ok ? t.alm_right : t.alm_wrong) + '</p>' +
-      '<div class="points"><span>+' + (S.beta ? 0 : r.pts + r.bonus) + '</span><small>' + esc(S.beta ? t.god_note_s : t.alm_pts) + '</small></div>' +
+      '<div class="points"><span>+' + (r.pts + r.bonus) + '</span><small>' + esc(t.alm_pts) + '</small></div>' +
       '<p class="said">' + esc(fill(t.alm_real, { y: r.item.year })) + ' ' + (r.ok ? '' : esc(t.alm_nominus)) + (r.bonus ? ' ' + esc(fill(t.alm_all, { n: r.bonus })) : '') + '</p>' +
       '<div class="measure"><span class="small">' + esc(fill(t.alm_claim, { date: almDate(key, r.item.year, S.lang), text: r.item.text })) + '</span></div>' +
       '<div class="spacer"></div><button class="btn" data-act="alm-next">' + esc(last ? t.alm_end : t.alm_next) + '</button></main>';
@@ -1892,7 +1891,6 @@
     else if (act === 'share-daily') { shareDaily(); }
     else if (act === 'share-type') { shareType(); }
     else if (act === 'share-duel') { shareDuel(ui.duelEnd); }
-    else if ((act === 'duel-new' || act === 'duel-accept' || act === 'exam-start') && S.beta) { ui.msg = T().god_block; render(); }
     else if (act === 'duel-new' || act === 'duel-accept') {
       if (S.duelActive) { startDuelClaim(); return; }
       if (act === 'duel-accept' && !ui.invite) return;
