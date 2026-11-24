@@ -73,3 +73,7 @@ Auf dem Desktop breites Layout (Startseite in zwei Spalten, Spielansichten zentr
 ## Prinzipien
 
 Nur Spielpunkte, nie echtes Geld. Nur messbare Behauptungen mit Datenquelle und Messregel vorab. Alles lokal beim Spieler, kein Konto, keine Tracker. Nichts Kritisches, weil auch Kinder mitspielen können.
+
+
+## Schwierigkeit „Schwer“
+Grenzen liegen nahe am Üblichen (Monatsmittel der Stadt für Temperatur, typische Werte für Wind, Luft, Erdbeben, Druck). Wer das Klima kennt, hat einen Vorteil; volle Punkte. Leicht und Mittel behalten die groben Grenzen. Die Monatsmittel sind gerundete Näherungswerte (siehe NORMS in app.js).

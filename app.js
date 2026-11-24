@@ -84,7 +84,8 @@
       peak_short: 'Höchststand {n}', free_note: 'Erste Niete des Tages: gratis', coach_over: 'Bei den letzten {n} Tipps mit mindestens 75 % Sicherheit lagst du {k}-mal daneben. Probier 60 bis 70 %: Da kostet ein Irrtum viel weniger.', coach_easy: 'Oder wechsle auf Leicht, dort kostet Daneben nichts.',
       lesson_title: 'Im Minus? Das gehört zum Lernen.', lesson_pts: ['Bist du unsicher, sag 50 oder 60 %. Ein Irrtum kostet dann fast nichts.', 'Geh nur höher, wenn du es wirklich weißt.', 'Auf Leicht gibt es kein Minus. Zum Üben ideal.'], peak_note: 'Dein Rang bleibt: Höchststand {n} Punkte.',
       faq_minus: 'Ich bin im Minus. Was jetzt?',
-      rules_more: ['Zehn Behauptungen pro Tag, danach ist Schluss für heute.', 'Eine Frage zu verwerfen zählt als Versuch.', 'Die Messregel steht vorher fest und wird nach dem Tipp gezeigt.', 'Tagesfrage, Duell und Aufstiegsprüfung zählen nicht zu den zehn.', 'Ehrlich einschätzen lohnt sich: Wer immer „ganz sicher“ sagt, verliert auf Dauer.', 'Dein Rang fällt nie, er richtet sich nach deinem Höchststand.', 'Die erste Niete jedes Tages kostet nichts.', 'Es gibt nur Spielpunkte, nie Geld.'],
+      rules_more: ['Zehn Behauptungen pro Tag, danach ist Schluss für heute.', 'Eine Frage zu verwerfen zählt als Versuch.', 'Die Messregel steht vorher fest und wird nach dem Tipp gezeigt.', 'Tagesfrage, Duell und Aufstiegsprüfung zählen nicht zu den zehn.', 'Ehrlich einschätzen lohnt sich: Wer immer „ganz sicher“ sagt, verliert auf Dauer.', 'Schwer: Die Grenzen liegen nah am Üblichen der Stadt. Wer das Klima kennt, hat einen Vorteil, und es gibt volle Punkte.',
+        'Dein Rang fällt nie, er richtet sich nach deinem Höchststand.', 'Die erste Niete jedes Tages kostet nichts.', 'Es gibt nur Spielpunkte, nie Geld.'],
       back: 'Antwort ändern',
       first_go: 'Los geht\'s', pr_swipe: 'Wische nach rechts: stimmt. Nach links: stimmt nicht.', pr_conf: 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum.', pr_done: 'Das war nur Übung, hier zählt nichts. Ab jetzt wird echt gemessen.', pr_next: 'Erste echte Frage', pr_unit: 'Übung',
       rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.',
@@ -303,7 +304,8 @@
       peak_short: 'peak {n}', free_note: 'First miss of the day: free', coach_over: 'In your last {n} tips with at least 75 % sureness you missed {k} times. Try 60 to 70 %: a mistake costs far less there.', coach_easy: 'Or switch to Easy, where a miss costs nothing.',
       lesson_title: 'In the red? That is part of learning.', lesson_pts: ['If you are unsure, say 50 or 60 %. A mistake then costs almost nothing.', 'Go higher only when you really know.', 'Easy has no minus. Great for practice.'], peak_note: 'Your rank stays: peak {n} points.',
       faq_minus: 'I am in the red. Now what?',
-      rules_more: ['Ten claims per day, then you are done for today.', 'Discarding a claim counts as an attempt.', 'The measuring rule is fixed beforehand and shown after your tip.', 'Daily claim, duel and rank exam do not count towards the ten.', 'Honest guessing pays off: always saying “totally sure” loses in the long run.', 'Your rank never drops, it follows your peak.', 'The first miss of each day costs nothing.', 'Play points only, never money.'],
+      rules_more: ['Ten claims per day, then you are done for today.', 'Discarding a claim counts as an attempt.', 'The measuring rule is fixed beforehand and shown after your tip.', 'Daily claim, duel and rank exam do not count towards the ten.', 'Honest guessing pays off: always saying “totally sure” loses in the long run.', 'Hard: thresholds sit close to what is normal for the city. Knowing the climate helps, and you get full points.',
+        'Your rank never drops, it follows your peak.', 'The first miss of each day costs nothing.', 'Play points only, never money.'],
       back: 'Change answer',
       first_go: 'Let\'s go', pr_swipe: 'Swipe right: true. Swipe left: not true.', pr_conf: 'The surer you are, the more a hit earns, but the more a mistake costs.', pr_done: 'That was only practice, nothing counts here. From now on it is measured for real.', pr_next: 'First real claim', pr_unit: 'practice',
       rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.',
@@ -503,15 +505,31 @@
   function dailyTip(key) { return S.tips.filter(function (t) { return t.daily === key; })[0]; }
   function cityById(id) { return CITIES.filter(function (c) { return c.id === id; })[0]; }
 
+  /* Schwer: Grenzen liegen nahe am Üblichen (Monatsmittel der Stadt). Wer das Klima kennt, hat einen Vorteil, geraten wird es knapp. */
+  let HARD = false;
+  const NORMS = {
+    hannover: [1.5, 2, 5, 9, 13.5, 16.5, 18.5, 18, 14.5, 10, 5.5, 2.5],
+    berlin: [0.5, 1.5, 5, 10, 14.5, 17.5, 19.5, 19, 14.5, 9.5, 5, 1.5],
+    muenchen: [-0.5, 0.5, 5, 9, 13.5, 17, 19, 18.5, 14, 9.5, 4, 0.5],
+    hamburg: [1.5, 2, 4.5, 9, 13, 16.5, 18.5, 18, 14.5, 10, 5.5, 2.5],
+    tokio: [5, 6, 9.5, 14.5, 19, 22, 26, 27, 23.5, 18.5, 13, 7.5],
+    sydney: [23, 23, 21.5, 19, 15.5, 13, 12, 13.5, 16, 18.5, 20, 22],
+    newyork: [0, 1.5, 5.5, 11.5, 17, 22, 25, 24.5, 20.5, 14.5, 9, 3],
+    kapstadt: [21, 21.5, 20, 17, 14.5, 12.5, 12, 12.5, 14, 16, 18, 20]
+  };
   const MAKERS = {
-    temp: function () { return { tpl: 'temp', city: pick(CITIES).id, T: pick([0, 5, 10, 15, 20, 25]) }; },
+    temp: function () {
+      const id = pick(CITIES).id;
+      if (HARD) return { tpl: 'temp', city: id, T: Math.round(NORMS[id][new Date().getUTCMonth()]) + pick([-2, -1, 0, 1, 2]) };
+      return { tpl: 'temp', city: id, T: pick([0, 5, 10, 15, 20, 25]) };
+    },
     isday: function () { return { tpl: 'isday', city: pick(CITIES).id }; },
     rain: function () { return { tpl: 'rain', city: pick(CITIES).id }; },
-    wind: function () { return { tpl: 'wind', city: pick(CITIES).id, W: pick([10, 15, 20, 30]) }; },
+    wind: function () { return { tpl: 'wind', city: pick(CITIES).id, W: HARD ? pick([12, 15, 18]) : pick([10, 15, 20, 30]) }; },
     iss: function () { return { tpl: 'iss' }; },
-    quake: function () { return { tpl: 'quake', N: pick([10, 15, 20, 25]) }; },
-    quakemax: function () { return { tpl: 'quakemax', M: pick([5, 5.5, 6]) }; },
-    aqi: function () { return { tpl: 'aqi', city: pick(CITIES).id, A: pick([20, 40]) }; },
+    quake: function () { return { tpl: 'quake', N: HARD ? pick([16, 18, 20, 22]) : pick([10, 15, 20, 25]) }; },
+    quakemax: function () { return { tpl: 'quakemax', M: HARD ? pick([5.3, 5.5, 5.7]) : pick([5, 5.5, 6]) }; },
+    aqi: function () { return { tpl: 'aqi', city: pick(CITIES).id, A: HARD ? pick([25, 30, 35]) : pick([20, 40]) }; },
     winddir: function () { return { tpl: 'winddir', city: pick(CITIES).id, D: pick(['N', 'E', 'S', 'W']) }; },
     daylen: function () {
       const a = pick(CITIES);
@@ -519,7 +537,7 @@
       while (b.id === a.id) b = pick(CITIES);
       return { tpl: 'daylen', city: a.id, city2: b.id };
     },
-    pressure: function () { return { tpl: 'pressure', city: pick(CITIES).id, P: pick([1000, 1010, 1020]) }; },
+    pressure: function () { return { tpl: 'pressure', city: pick(CITIES).id, P: HARD ? pick([1008, 1013, 1018]) : pick([1000, 1010, 1020]) }; },
     humidity: function () { return { tpl: 'humidity', city: pick(CITIES).id, H: pick([50, 65, 80]) }; },
     cloud: function () { return { tpl: 'cloud', city: pick(CITIES).id }; },
     warmer: function () {
@@ -559,7 +577,8 @@
     const recent = todays.slice(-3).reduce(function (a, x) { return a.concat([x.claim.city, x.claim.city2]); }, []);
     let c;
     for (let i = 0; i < 8; i++) {
-      c = MAKERS[balanced(pool, todays.map(function (x) { return x.claim.tpl; }))]();
+      HARD = S.level === 'l';
+      try { c = MAKERS[balanced(pool, todays.map(function (x) { return x.claim.tpl; }))](); } finally { HARD = false; }
       if (!c.city || recent.indexOf(c.city) < 0) break;
     }
     return c;
