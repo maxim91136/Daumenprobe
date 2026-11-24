@@ -1227,24 +1227,6 @@
     return earnedBadges(S.tips).filter(function (id) { return before.indexOf(id) < 0; });
   }
 
-  /* Töne: kleine Pieptöne aus dem Browser, abschaltbar. */
-  let audio = null;
-  function sfx(kind) {
-    if (S.mute) return;
-    try {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      audio = audio || new AC();
-      if (audio.state === 'suspended') audio.resume();
-      const seq = { hit: [[523, 0], [659, .09], [784, .18]], miss: [[300, 0], [220, .12]], tap: [[440, 0]], up: [[523, 0], [659, .08], [784, .16], [1046, .26]] }[kind] || [];
-      seq.forEach(function (n) {
-        const o = audio.createOscillator(), g = audio.createGain(), t0 = audio.currentTime + n[1];
-        o.type = kind === 'miss' ? 'sawtooth' : 'triangle'; o.frequency.value = n[0];
-        g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.12, t0 + .02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + .22);
-        o.connect(g); g.connect(audio.destination); o.start(t0); o.stop(t0 + .25);
-      });
-    } catch (e) { /* kein Ton */ }
-  }
   function signed(n) { return n > 0 ? '+' + n : String(n).replace('-', '−'); }
 
   function langs(withFaq) {
@@ -1252,7 +1234,7 @@
       (withFaq ? '<button class="chip faq" data-act="faq" aria-label="' + esc(T().faq_title) + '">' + '<span class="f-long">' + esc(T().faq_btn) + '</span><span class="f-short" aria-hidden="true">?</span></button>' : '') +
       '<button class="chip" data-act="lang" data-v="de" aria-pressed="' + (S.lang === 'de') + '">DE</button>' +
       '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button>' +
-      '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + ico(S.mute ? 'mute' : 'sound') + '</button></div>';
+      '</div>';
   }
   const THUMB = '<svg class="print-logo" viewBox="-60 -60 120 120" aria-hidden="true" focusable="false"><g transform="rotate(-12)" fill="none" stroke="#fbfbff" stroke-width="6" stroke-linecap="round"><ellipse rx="11" ry="15"/><ellipse rx="21" ry="29" stroke-dasharray="120 14 40 10"/><ellipse rx="31" ry="43" stroke-dasharray="150 12 70 16"/><ellipse rx="41" ry="57" stroke-dasharray="200 14 100 20" opacity=".7"/><circle r="4" fill="#ffd24a" stroke="none"/></g></svg>';
   function weekPts() {
@@ -1680,8 +1662,6 @@
 
   function celebrate(hit) {
     try { if (navigator.vibrate) navigator.vibrate(hit ? 40 : [70, 50, 70]); } catch (e) { /* egal */ }
-    sfx(hit ? 'hit' : 'miss');
-    try { const rr = ui.result; if (rankFor(DP.peak(S.tips)).i > rankFor(DP.peak(S.tips.filter(function (x) { return x !== rr; }))).i || newBadges(rr).length) setTimeout(function () { sfx('up'); }, 450); } catch (e) { /* egal */ }
     if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const app = document.getElementById('app');
     if (!hit) { app.classList.add('shake'); setTimeout(function () { app.classList.remove('shake'); }, 500); return; }
@@ -1772,7 +1752,7 @@
     a.pts += pts + bonus;
     save(S);
     ui.almRes = { ok: ok, pts: pts, bonus: bonus, item: it };
-    render(); sfx(ok ? 'hit' : 'miss');
+    render();
   }
   function almCard() {
     const t = T(), n = almDone(), a = almS();
@@ -1827,7 +1807,7 @@
   }
 
   function chooseTip(yes) {
-    ui.tip = yes; ui.view = 'conf'; ui.error = false; render(); sfx('tap');
+    ui.tip = yes; ui.view = 'conf'; ui.error = false; render();
   }
 
   /* ---------- Sichern und Laden ---------- */
@@ -1863,7 +1843,6 @@
     const act = el.getAttribute('data-act');
     const v = el.getAttribute('data-v');
     if (act === 'lang') { S.lang = v; save(S); render(); }
-    else if (act === 'sound') { S.mute = !S.mute; save(S); render(); sfx('tap'); }
     else if (act === 'repair') { S.current = null; S.duelActive = null; S.examActive = null; ui.view = 'home'; ui.claim = null; ui.result = null; ui.busy = false; save(S); render(); }
     else if (act === 'report') {
       const r = ui.result;
