@@ -99,6 +99,8 @@
         m: { how3: 'Sag, wie sicher du bist: von geraten bis ganz sicher.', goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kostet höchstens 10.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer, aber ein Daneben kostet auch mehr.' }
       },
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
+      ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumen-Kenner', 'Daumen-Profi', 'Orakel', 'Daumen-Legende'],
+      streak_n: '{n} Tage in Folge', streak_1: '1 Tag', combo_n: '{n} Treffer in Folge', rankup: 'Neuer Rang: {r}', to_next: 'noch {n} bis {r}', top_rank: 'Höchster Rang', sound_on: 'Ton an', sound_off: 'Ton aus',
       dir: { N: 'Norden', E: 'Osten', S: 'Süden', W: 'Westen' },
       claims: {
         quake: 'Weltweit gab es in den letzten 24 Stunden mehr als {N} Erdbeben ab Stärke 4,5.',
@@ -211,6 +213,8 @@
         m: { how3: 'Say how sure you are: from a guess to totally sure.', goal: 'The one with the most points wins. Hits earn points, a miss costs 10 at most.', hint: 'The surer you are, the more a hit is worth, but a miss costs more too.' }
       },
       you_tipped_w: 'Your tip: {tip}, {conf}.',
+      ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Expert', 'Thumb Pro', 'Oracle', 'Thumb Legend'],
+      streak_n: '{n} days in a row', streak_1: '1 day', combo_n: '{n} hits in a row', rankup: 'New rank: {r}', to_next: '{n} to {r}', top_rank: 'Top rank', sound_on: 'Sound on', sound_off: 'Sound off',
       dir: { N: 'north', E: 'east', S: 'south', W: 'west' },
       claims: {
         quake: 'In the last 24 hours there were more than {N} earthquakes of magnitude 4.5 or higher worldwide.',
@@ -446,12 +450,64 @@
     const i = st.indexOf(c);
     return T().words[L2][i < 0 ? 0 : i];
   }
+  const RANK_AT = [0, 25, 75, 150, 300, 600, 1200];
+  function rankFor(pts) {
+    let i = 0;
+    RANK_AT.forEach(function (v, k) { if (pts >= v) i = k; });
+    const next = i < RANK_AT.length - 1 ? RANK_AT[i + 1] : null;
+    return { i: i, name: T().ranks[i], next: next, nextName: next === null ? null : T().ranks[i + 1], toNext: next === null ? 0 : next - pts,
+      pct: next === null ? 100 : Math.max(0, Math.round((pts - RANK_AT[i]) / (next - RANK_AT[i]) * 100)) };
+  }
+  function streakDays() {
+    const days = {};
+    resolvedTips().forEach(function (r) { days[DP.dayKey(new Date(r.ts))] = 1; });
+    let k = DP.dayKey();
+    if (!days[k]) k = DP.addDays(k, -1);
+    let n = 0;
+    while (days[k]) { n++; k = DP.addDays(k, -1); }
+    return n;
+  }
+  function comboCount() {
+    const rs = resolvedTips().slice().sort(function (a, b) { return a.ts - b.ts; });
+    let n = 0;
+    for (let i = rs.length - 1; i >= 0 && DP.isHit(rs[i].tip, rs[i].outcome); i--) n++;
+    return n;
+  }
+  function todaySlots() {
+    const k = DP.dayKey();
+    const todays = S.tips.filter(function (x) { return DP.dayKey(new Date(x.ts)) === k; }).sort(function (a, b) { return a.ts - b.ts; });
+    const out = [];
+    for (let i = 0; i < DAILY_LIMIT; i++) {
+      const x = todays[i];
+      out.push(!x ? '' : !x.resolved ? 'open' : DP.isHit(x.tip, x.outcome) ? 'hit' : 'miss');
+    }
+    return out;
+  }
+  /* Töne: kleine Pieptöne aus dem Browser, abschaltbar. */
+  let audio = null;
+  function sfx(kind) {
+    if (S.mute) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      audio = audio || new AC();
+      if (audio.state === 'suspended') audio.resume();
+      const seq = { hit: [[523, 0], [659, .09], [784, .18]], miss: [[300, 0], [220, .12]], tap: [[440, 0]], up: [[523, 0], [659, .08], [784, .16], [1046, .26]] }[kind] || [];
+      seq.forEach(function (n) {
+        const o = audio.createOscillator(), g = audio.createGain(), t0 = audio.currentTime + n[1];
+        o.type = kind === 'miss' ? 'sawtooth' : 'triangle'; o.frequency.value = n[0];
+        g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.12, t0 + .02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + .22);
+        o.connect(g); g.connect(audio.destination); o.start(t0); o.stop(t0 + .25);
+      });
+    } catch (e) { /* kein Ton */ }
+  }
   function signed(n) { return n > 0 ? '+' + n : String(n).replace('-', '−'); }
 
   function langs() {
     return '<div class="langs">' +
       '<button class="chip" data-act="lang" data-v="de" aria-pressed="' + (S.lang === 'de') + '">DE</button>' +
-      '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button></div>';
+      '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button>' +
+      '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + (S.mute ? '🔇' : '🔊') + '</button></div>';
   }
   function header() { return '<header class="top"><div><h1 class="mark">' + esc(T().title) + '</h1><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs() + '</header>'; }
   function topbar() {
@@ -488,13 +544,19 @@
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
     if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<div class="notice">' + esc(t.remind) + '</div>';
 
+    const rk = rankFor(st.pts), sk = streakDays();
     h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
+      '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">🔥 ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
+      '<div class="rank-bar" role="img" aria-label="' + esc(rk.name) + '"><i style="width:' + rk.pct + '%"></i></div>' +
+      '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + '</small></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
-    if (left > 0) h += '<button class="btn" data-act="start">' + esc(t.go) + '</button><p class="hint" style="margin-top:10px">' + esc(fill(t.left, { n: left })) + '</p>';
-    else h += '<p class="small" style="margin-top:14px">' + esc(t.goDone) + '</p>';
+    if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(t.go) + '</button>';
+    h += '<div class="slots" role="img" aria-label="' + esc(fill(t.left, { n: left })) + '">' + todaySlots().map(function (k) { return '<i class="' + k + '"></i>'; }).join('') + '</div>';
+    if (left > 0) h += '<p class="hint">' + esc(fill(t.left, { n: left })) + '</p>';
+    else h += '<p class="small" style="margin:14px 0 0;text-align:center">' + esc(t.goDone) + '</p>';
 
     h += rulesSheet();
 
@@ -585,6 +647,22 @@
     return h;
   }
 
+  function badges(r, hit) {
+    const t = T();
+    const out = [];
+    const all = resolvedTips();
+    const total = all.reduce(function (a, x) { return a + (x.pts || 0); }, 0);
+    const before = rankFor(total - (r.pts || 0)), after = rankFor(total);
+    if (after.i > before.i) out.push('<span class="badge up">⭐ ' + esc(fill(t.rankup, { r: after.name })) + '</span>');
+    const combo = comboCount();
+    if (hit && combo >= 2) out.push('<span class="badge">🔥 ' + esc(fill(t.combo_n, { n: combo })) + '</span>');
+    const k = DP.dayKey(new Date(r.ts));
+    const firstToday = all.filter(function (x) { return DP.dayKey(new Date(x.ts)) === k; }).length === 1;
+    const sk = streakDays();
+    if (firstToday && sk >= 2) out.push('<span class="badge">🔥 ' + esc(fill(t.streak_n, { n: sk })) + '</span>');
+    return out.length ? '<div class="badges">' + out.join('') + '</div>' : '';
+  }
+
   function viewResult() {
     const t = T();
     const r = ui.result;
@@ -594,6 +672,7 @@
       '<p class="big-word">' + esc(hit ? t.hit : t.miss) + '</p>' +
       '<div class="points"><span id="pn" data-v="' + r.pts + '">' + signed(r.pts) + '</span><small>' + esc(t.pts_unit) + '</small></div>' +
       '<p class="said">' + esc(r.outcome ? t.truth_yes : t.truth_no) + ' ' + esc((r.level === 's' || r.level === 'm') ? fill(t.you_tipped_w, { tip: r.tip ? t.yes : t.no, conf: confWord(r.conf, r.level).toLowerCase() }) : fill(t.you_tipped, { tip: r.tip ? t.yes : t.no, conf: r.conf })) + '</p>' +
+      badges(r, hit) +
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
       '<div class="spacer"></div>' +
@@ -629,6 +708,8 @@
 
   function celebrate(hit) {
     try { if (navigator.vibrate) navigator.vibrate(hit ? 40 : [70, 50, 70]); } catch (e) { /* egal */ }
+    sfx(hit ? 'hit' : 'miss');
+    try { const rr = ui.result, tt = resolvedTips().reduce(function (a, x) { return a + (x.pts || 0); }, 0); if (rankFor(tt).i > rankFor(tt - (rr.pts || 0)).i) setTimeout(function () { sfx('up'); }, 450); } catch (e) { /* egal */ }
     if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const app = document.getElementById('app');
     if (!hit) { app.classList.add('shake'); setTimeout(function () { app.classList.remove('shake'); }, 500); return; }
@@ -670,7 +751,7 @@
   }
 
   function chooseTip(yes) {
-    ui.tip = yes; ui.view = 'conf'; ui.error = false; render();
+    ui.tip = yes; ui.view = 'conf'; ui.error = false; render(); sfx('tap');
   }
 
   /* ---------- Sichern und Laden ---------- */
@@ -703,6 +784,7 @@
     const act = el.getAttribute('data-act');
     const v = el.getAttribute('data-v');
     if (act === 'lang') { S.lang = v; save(S); render(); }
+    else if (act === 'sound') { S.mute = !S.mute; save(S); render(); sfx('tap'); }
     else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {
       if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {
@@ -764,6 +846,7 @@
   document.addEventListener('input', function (e) {
     if (e.target.id !== 'sl') return;
     const c = steps()[Number(e.target.value)];
+    try { if (navigator.vibrate) navigator.vibrate(8); } catch (err) { /* egal */ }
     const s = stakeFor(c);
     document.getElementById('pct').textContent = lvl() === 'l' ? c : confWord(c);
     document.getElementById('lbl').textContent = confLabel(c);
