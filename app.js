@@ -20,6 +20,17 @@
     de: {
       title: 'Daumenprobe',
       tagline: 'Erst tippen, dann messen.',
+      rules_title: 'So geht\'s',
+      howto: [
+        'Du bekommst eine Behauptung.',
+        'Tippe: stimmt (👍) oder stimmt nicht (👎).',
+        'Sag, wie sicher du bist: 50 % ist geraten, 100 % ist ganz sicher.',
+        'Wir messen live nach. Recht gehabt gibt Punkte, Daneben kostet Punkte.'
+      ],
+      rules_goal: 'Je sicherer du bist, desto mehr steht auf dem Spiel, in beide Richtungen. Es gewinnt, wer sich ehrlich einschätzt.',
+      rules_cols: ['Sicherheit', 'Treffer', 'Daneben'],
+      rules_foot: 'Fünf Behauptungen pro Tag. Nur Spielpunkte, nie Geld.',
+      conf_hint: '50 % = geraten, 100 % = ganz sicher. Je sicherer, desto mehr Punkte, aber auch desto mehr Abzug.',
       go: 'Neue Behauptung',
       goDone: 'Das war\'s für heute. Morgen gibt es neue.',
       left: 'noch {n} heute',
@@ -87,6 +98,17 @@
     en: {
       title: 'Daumenprobe',
       tagline: 'Guess first, then measure.',
+      rules_title: 'How it works',
+      howto: [
+        'You get a claim.',
+        'Tip: true (👍) or not true (👎).',
+        'Say how sure you are: 50 % is a guess, 100 % is totally sure.',
+        'We measure it live. Being right earns points, being wrong costs points.'
+      ],
+      rules_goal: 'The surer you are, the more is at stake, both ways. The one who judges themselves honestly wins.',
+      rules_cols: ['Confidence', 'Hit', 'Miss'],
+      rules_foot: 'Five claims per day. Play points only, never money.',
+      conf_hint: '50 % = a guess, 100 % = totally sure. The surer you are, the more you win, but also the more you lose.',
       go: 'New claim',
       goDone: 'That\'s it for today. New ones tomorrow.',
       left: '{n} left today',
@@ -311,6 +333,21 @@
       '</div></header>';
   }
 
+  function signed(n) { return n > 0 ? '+' + n : String(n).replace('-', '\u2212'); }
+  function rulesCard() {
+    const t = T();
+    let h = '<section class="card rules"><h2>' + esc(t.rules_title) + '</h2><ol>';
+    t.howto.forEach(function (r) { h += '<li>' + esc(r) + '</li>'; });
+    h += '</ol><p class="goal">' + esc(t.rules_goal) + '</p>';
+    h += '<table><thead><tr><th>' + esc(t.rules_cols[0]) + '</th><th>' + esc(t.rules_cols[1]) + '</th><th>' + esc(t.rules_cols[2]) + '</th></tr></thead><tbody>';
+    [50, 70, 100].forEach(function (c) {
+      const label = c + ' %' + (c === 50 ? ' (' + t.conf50 + ')' : c === 100 ? ' (' + t.conf100 + ')' : '');
+      h += '<tr><td>' + esc(label) + '</td><td class="pts-pos">' + signed(DP.points(true, c, true)) + '</td><td class="pts-neg">' + signed(DP.points(true, c, false)) + '</td></tr>';
+    });
+    h += '</tbody></table><p class="small">' + esc(t.rules_foot) + '</p></section>';
+    return h;
+  }
+
   function viewHome() {
     const t = T();
     const st = DP.stats(resolvedTips());
@@ -322,6 +359,7 @@
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
     if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<div class="notice">' + esc(t.remind) + '</div>';
 
+    h += rulesCard();
     h += '<section class="card"><p class="kicker">' + esc(t.tagline) + '</p>';
     h += '<div class="stats" style="margin-top:12px">' +
       '<div class="stat"><b>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + '</b><span>' + esc(t.stat_hit) + '</span></div>' +
@@ -399,7 +437,7 @@
       h += '<button class="conf" data-act="conf" data-v="' + c + '"' + (ui.busy ? ' disabled' : '') + '>' + c + ' %' +
         (c === 50 ? '<small>' + esc(t.conf50) + '</small>' : c === 100 ? '<small>' + esc(t.conf100) + '</small>' : '<small>&nbsp;</small>') + '</button>';
     });
-    h += '</div>';
+    h += '</div><p class="small" style="margin-top:12px">' + esc(t.conf_hint) + '</p>';
     if (ui.busy) h += '<p class="small" style="margin-top:12px">' + esc(t.measuring) + '</p>';
     if (ui.error) h += '<p class="notice" style="margin-top:12px">' + esc(t.err) + '</p><button class="btn" data-act="retry">' + esc(t.retry) + '</button>';
     h += '<button class="btn ghost" data-act="home">' + esc(t.cancel) + '</button></section>';

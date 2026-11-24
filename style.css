@@ -62,3 +62,13 @@ footer a { color: #cfd8ea; }
 @media (prefers-reduced-motion: no-preference) {
   .thumb, .conf, .btn { transition: transform .08s ease; }
 }
+
+.rules { border: 4px solid var(--sun); }
+.rules h2 { font-size: 1.5rem; margin-bottom: 8px; }
+.rules ol { margin: 0 0 12px; padding-left: 1.4em; font-size: 1.12rem; font-weight: 800; line-height: 1.4; }
+.rules li { margin-bottom: 6px; }
+.rules .goal { background: var(--sun); border-radius: 14px; padding: 12px 14px; font-weight: 900; font-size: 1.08rem; line-height: 1.35; margin: 0 0 12px; }
+.rules table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; font-weight: 700; }
+.rules th, .rules td { padding: 8px 10px; text-align: left; font-size: .95rem; }
+.rules th { background: #e8dfc4; font-size: .82rem; }
+.rules td.pts-pos, .rules td.pts-neg { font-weight: 900; }
