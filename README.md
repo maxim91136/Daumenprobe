@@ -14,9 +14,13 @@ Der Name ist vorläufig (Arbeitstitel „Project 7").
 - Tageslimit 5 Behauptungen (Verwerfen und Neuladen zählen mit, eine gezogene Behauptung bleibt nach dem Neuladen dieselbe), danach „Das war's für heute". Kein Push, kein Dauerscrollen.
 - Sichern und Laden per Datei oder Code (Browser können Daten löschen, Safari nach etwa 7 Tagen ohne Besuch).
 
+## Design
+
+Vollbild-Farbflächen pro Ansicht, Wisch-Karte (rechts = stimmt, links = stimmt nicht, auch per Knopf und Pfeiltasten), Sicherheits-Schieber mit Live-Anzeige von Treffer und Daneben, Ergebnis in Mint (Treffer) oder Pink (Daneben). Schrift: Bricolage Grotesque (SIL Open Font License, Datei und Lizenz in `fonts/`). Bewegung nur als Antwort auf Eingaben und mit `prefers-reduced-motion` abschaltbar.
+
 ## Dateien
 
-- `index.html`, `style.css`: Oberfläche
+- `index.html`, `style.css`, `fonts/`: Oberfläche und Schrift
 - `logic.js`: Punkte, Kalibrierung, Messregeln, Zusammenführen von Sicherungen (ohne Browser-Abhängigkeit, mit Node testbar)
 - `app.js`: Ablauf, Texte (DE/EN), Messung per fetch, Speicher
 

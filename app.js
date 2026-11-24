@@ -20,6 +20,9 @@
     de: {
       title: 'Daumenprobe',
       tagline: 'Erst tippen, dann messen.',
+      swipe_hint: 'Wische oder tippe',
+      measure: 'Messen',
+      pts_unit: 'Punkte',
       rules_title: 'So geht\'s',
       howto: [
         'Du bekommst eine Behauptung.',
@@ -27,7 +30,7 @@
         'Sag, wie sicher du bist: 50 % ist geraten, 100 % ist ganz sicher.',
         'Wir messen live nach. Recht gehabt gibt Punkte, Daneben kostet Punkte.'
       ],
-      rules_goal: 'Je sicherer du bist, desto mehr steht auf dem Spiel, in beide Richtungen. Es gewinnt, wer sich ehrlich einschätzt.',
+      rules_goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kosten Punkte, und zwar mehr, je sicherer du dich gibst.',
       rules_cols: ['Sicherheit', 'Treffer', 'Daneben'],
       rules_foot: 'Fünf Behauptungen pro Tag. Nur Spielpunkte, nie Geld.',
       conf_hint: '50 % = geraten, 100 % = ganz sicher. Je sicherer, desto mehr Punkte, aber auch desto mehr Abzug.',
@@ -98,6 +101,9 @@
     en: {
       title: 'Daumenprobe',
       tagline: 'Guess first, then measure.',
+      swipe_hint: 'Swipe or tap',
+      measure: 'Measure',
+      pts_unit: 'points',
       rules_title: 'How it works',
       howto: [
         'You get a claim.',
@@ -105,7 +111,7 @@
         'Say how sure you are: 50 % is a guess, 100 % is totally sure.',
         'We measure it live. Being right earns points, being wrong costs points.'
       ],
-      rules_goal: 'The surer you are, the more is at stake, both ways. The one who judges themselves honestly wins.',
+      rules_goal: 'The one with the most points wins. Hits earn points, misses cost points, and the more so the surer you say you are.',
       rules_cols: ['Confidence', 'Hit', 'Miss'],
       rules_foot: 'Five claims per day. Play points only, never money.',
       conf_hint: '50 % = a guess, 100 % = totally sure. The surer you are, the more you win, but also the more you lose.',
@@ -326,23 +332,40 @@
   }
 
   /* ---------- Ansichten ---------- */
-  function header() {
-    return '<header class="top"><h1>' + esc(T().title) + '</h1><div class="tools">' +
+  const THEME_HEX = { home: '#3a2cff', c0: '#3a2cff', c1: '#ffe45c', c2: '#ff7a1a', c3: '#43c7ff', yes: '#19e0a0', no: '#ff3b8d', hit: '#19e0a0', miss: '#ff3b8d', wait: '#ffe45c' };
+  function hashStr(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
+  function claimTheme(claim) { return 'c' + (hashStr(JSON.stringify(claim)) % 4); }
+  function themeFor() {
+    if (ui.view === 'tip') return claimTheme(ui.claim);
+    if (ui.view === 'conf') return ui.tip ? 'yes' : 'no';
+    if (ui.view === 'result') return DP.isHit(ui.result.tip, ui.result.outcome) ? 'hit' : 'miss';
+    if (ui.view === 'later') return 'wait';
+    return 'home';
+  }
+  function signed(n) { return n > 0 ? '+' + n : String(n).replace('-', '−'); }
+
+  function langs() {
+    return '<div class="langs">' +
       '<button class="chip" data-act="lang" data-v="de" aria-pressed="' + (S.lang === 'de') + '">DE</button>' +
-      '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button>' +
-      '</div></header>';
+      '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button></div>';
+  }
+  function header() { return '<header class="top"><div><h1 class="mark">' + esc(T().title) + '</h1><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs() + '</header>'; }
+  function topbar() {
+    const n = Math.min(DAILY_LIMIT, todayCount());
+    let d = '<div class="dots" role="img" aria-label="' + n + ' / ' + DAILY_LIMIT + '">';
+    for (let i = 0; i < DAILY_LIMIT; i++) d += '<i class="' + (i < n ? 'on' : '') + '"></i>';
+    return '<header class="top">' + d + '</div>' + langs() + '</header>';
   }
 
-  function signed(n) { return n > 0 ? '+' + n : String(n).replace('-', '\u2212'); }
-  function rulesCard() {
+  function rulesSheet() {
     const t = T();
-    let h = '<section class="card rules"><h2>' + esc(t.rules_title) + '</h2><ol>';
+    let h = '<section class="sheet"><h2>' + esc(t.rules_title) + '</h2><ol class="howto">';
     t.howto.forEach(function (r) { h += '<li>' + esc(r) + '</li>'; });
     h += '</ol><p class="goal">' + esc(t.rules_goal) + '</p>';
-    h += '<table><thead><tr><th>' + esc(t.rules_cols[0]) + '</th><th>' + esc(t.rules_cols[1]) + '</th><th>' + esc(t.rules_cols[2]) + '</th></tr></thead><tbody>';
+    h += '<table class="scale"><thead><tr><th>' + esc(t.rules_cols[0]) + '</th><th>' + esc(t.rules_cols[1]) + '</th><th>' + esc(t.rules_cols[2]) + '</th></tr></thead><tbody>';
     [50, 70, 100].forEach(function (c) {
       const label = c + ' %' + (c === 50 ? ' (' + t.conf50 + ')' : c === 100 ? ' (' + t.conf100 + ')' : '');
-      h += '<tr><td>' + esc(label) + '</td><td class="pts-pos">' + signed(DP.points(true, c, true)) + '</td><td class="pts-neg">' + signed(DP.points(true, c, false)) + '</td></tr>';
+      h += '<tr><td>' + esc(label) + '</td><td class="hit">' + signed(DP.points(true, c, true)) + '</td><td class="miss">' + signed(DP.points(true, c, false)) + '</td></tr>';
     });
     h += '</tbody></table><p class="small">' + esc(t.rules_foot) + '</p></section>';
     return h;
@@ -359,27 +382,22 @@
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
     if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<div class="notice">' + esc(t.remind) + '</div>';
 
-    h += rulesCard();
-    h += '<section class="card"><p class="kicker">' + esc(t.tagline) + '</p>';
-    h += '<div class="stats" style="margin-top:12px">' +
+    h += '<div class="stats">' +
       '<div class="stat"><b>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + '</b><span>' + esc(t.stat_hit) + '</span></div>' +
-      '<div class="stat"><b>' + st.pts + '</b><span>' + esc(t.stat_pts) + '</span></div>' +
-      '<div class="stat"><b>' + (st.calibration === null ? '–' : st.calibration + ' %') + '</b><span>' + esc(st.calibration === null ? t.stat_cal + ' (' + t.cal_need + ')' : t.stat_cal) + '</span></div>' +
-      '</div>';
-    if (left > 0) {
-      h += '<button class="btn" data-act="start">' + esc(t.go) + ' · ' + esc(fill(t.left, { n: left })) + '</button>';
-    } else {
-      h += '<p class="small" style="margin:14px 0 0">' + esc(t.goDone) + '</p>';
-    }
-    h += '</section>';
+      '<div class="stat"><b>' + signed(st.pts) + '</b><span>' + esc(t.stat_pts) + '</span></div>' +
+      '<div class="stat"><b>' + (st.calibration === null ? '–' : st.calibration + ' %') + '</b><span>' + esc(t.stat_cal) + '</span></div></div>';
+    if (left > 0) h += '<button class="btn" data-act="start">' + esc(t.go) + '</button><p class="hint" style="margin-top:10px">' + esc(fill(t.left, { n: left })) + '</p>';
+    else h += '<p class="small" style="margin-top:14px">' + esc(t.goDone) + '</p>';
+
+    h += rulesSheet();
 
     if (open.length) {
-      h += '<section class="card"><h2>' + esc(t.open_title) + '</h2>';
+      h += '<section class="dark"><h2>' + esc(t.open_title) + '</h2>';
       open.forEach(function (o) {
         const ready = today > o.claim.due;
         h += '<div class="row"><div>' + esc(claimText(o.claim, S.lang)) +
           '<div class="small">' + esc(o.tip ? t.yes : t.no) + ', ' + o.conf + ' %</div></div><div>' +
-          (ready ? '<button class="chip" style="color:var(--ink);border-color:var(--ink)" data-act="resolve" data-id="' + esc(o.id) + '"' + (ui.busy ? ' disabled' : '') + '>' + esc(t.resolve) + '</button>'
+          (ready ? '<button class="chip" data-act="resolve" data-id="' + esc(o.id) + '"' + (ui.busy ? ' disabled' : '') + '>' + esc(t.resolve) + '</button>'
             : '<span class="small">' + esc(fill(t.due, { d: DP.addDays(o.claim.due, 1) })) + '</span>') +
           '</div></div>';
       });
@@ -388,59 +406,73 @@
     }
 
     if (st.total >= 5) {
-      h += '<section class="card"><h2>' + esc(t.cal_title) + '</h2><div class="bars">';
+      h += '<section class="dark"><h2>' + esc(t.cal_title) + '</h2><div class="bars">';
       st.buckets.forEach(function (b) {
         if (!b.n) return;
         h += '<div class="bar"><span>' + b.range[0] + '–' + b.range[1] + '</span><div class="track"><div class="fill" style="width:' +
-          Math.round(b.hitRate * 100) + '%"></div><div class="mark" style="left:calc(' + Math.round(b.avgConf * 100) + '% - 1px)"></div></div><span>' +
+          Math.round(b.hitRate * 100) + '%"></div><div class="mark-line" style="left:calc(' + Math.round(b.avgConf * 100) + '% - 2px)"></div></div><span>' +
           Math.round(b.hitRate * 100) + '%</span></div>';
       });
-      h += '</div><p class="small">' + esc(t.cal_help) + '</p></section>';
+      h += '</div><p class="small" style="margin-top:10px">' + esc(t.cal_help) + '</p></section>';
     }
 
-    h += '<section class="card"><h2>' + esc(t.history) + '</h2>';
+    h += '<section class="dark"><h2>' + esc(t.history) + '</h2>';
     const recent = resolvedTips().slice(-8).reverse();
     if (!recent.length) h += '<p class="small">' + esc(t.none) + '</p>';
     recent.forEach(function (r) {
-      h += '<div class="row"><span>' + esc(claimText(r.claim, S.lang)) + '</span><span class="' + (r.pts >= 0 ? 'pts-pos' : 'pts-neg') + '">' + (r.pts > 0 ? '+' : '') + r.pts + '</span></div>';
+      h += '<div class="row"><span>' + esc(claimText(r.claim, S.lang)) + '</span><span class="' + (r.pts >= 0 ? 'pts-pos' : 'pts-neg') + '">' + signed(r.pts) + '</span></div>';
     });
     h += '</section>';
 
-    h += '<section class="card"><h2>' + esc(t.backup) + '</h2><p class="small">' + esc(t.backup_help) + '</p>' +
+    h += '<section class="dark"><h2>' + esc(t.backup) + '</h2><p class="small">' + esc(t.backup_help) + '</p>' +
       '<button class="btn ghost" data-act="export-file">' + esc(t.export_file) + '</button>' +
       '<button class="btn ghost" data-act="export-code">' + esc(t.export_code) + '</button>' +
-      '<h2 style="margin-top:16px">' + esc(t.import_title) + '</h2>' +
+      '<h2 style="margin-top:18px">' + esc(t.import_title) + '</h2>' +
       '<textarea id="imp" placeholder="' + esc(t.import_ph) + '"></textarea>' +
       '<button class="btn ghost" data-act="import-text">' + esc(t.import_btn) + '</button>' +
       '<button class="btn ghost" data-act="import-file">' + esc(t.import_file) + '</button>' +
       '<input id="impfile" type="file" accept="application/json,.json,.txt" hidden>' +
-      '<p class="small" id="bmsg"></p></section>';
+      '<p class="small" id="bmsg" style="margin-top:10px"></p></section>';
     return h;
   }
 
   function viewTip() {
     const t = T();
-    return header() + '<section class="card"><p class="kicker">' + esc(t.claimLead) + '</p>' +
-      '<p class="claim">' + esc(claimText(ui.claim, S.lang)) + '</p>' +
+    return topbar() + '<main class="stage"><div class="deck"><div class="swipe" id="swipe">' +
+      '<div class="tint yes"></div><div class="tint no"></div>' +
+      '<span class="stamp yes">' + esc(t.yes) + '!</span><span class="stamp no">' + esc(t.no) + '!</span>' +
+      '<p class="claim-big" lang="' + S.lang + '">' + esc(claimText(ui.claim, S.lang)) + '</p></div></div>' +
+      '<p class="hint">' + esc(t.swipe_hint) + '</p>' +
       '<div class="thumbs">' +
-      '<button class="thumb yes" data-act="tip" data-v="1"><span class="emoji" aria-hidden="true">👍</span>' + esc(t.yes) + '</button>' +
-      '<button class="thumb no" data-act="tip" data-v="0"><span class="emoji" aria-hidden="true">👎</span>' + esc(t.no) + '</button>' +
-      '</div><button class="btn ghost" data-act="home">' + esc(t.cancel) + '</button></section>';
+      '<button class="thumb" data-act="tip" data-v="0"><span class="emoji" aria-hidden="true">👎</span>' + esc(t.no) + '</button>' +
+      '<button class="thumb" data-act="tip" data-v="1"><span class="emoji" aria-hidden="true">👍</span>' + esc(t.yes) + '</button></div>' +
+      '<button class="linkbtn" data-act="home">' + esc(t.cancel) + '</button></main>';
   }
+
+  function stakeFor(c) {
+    return { hit: DP.points(ui.tip, c, ui.tip), miss: DP.points(ui.tip, c, !ui.tip) };
+  }
+  function confLabel(c) { return c === 50 ? T().conf50 : c === 100 ? T().conf100 : ' '; }
 
   function viewConf() {
     const t = T();
-    const levels = [50, 60, 70, 80, 90, 100];
-    let h = header() + '<section class="card"><p class="kicker">' + esc(claimText(ui.claim, S.lang)) + '</p>' +
-      '<p class="claim">' + esc(t.confTitle) + '</p><div class="conf-grid">';
-    levels.forEach(function (c) {
-      h += '<button class="conf" data-act="conf" data-v="' + c + '"' + (ui.busy ? ' disabled' : '') + '>' + c + ' %' +
-        (c === 50 ? '<small>' + esc(t.conf50) + '</small>' : c === 100 ? '<small>' + esc(t.conf100) + '</small>' : '<small>&nbsp;</small>') + '</button>';
-    });
-    h += '</div><p class="small" style="margin-top:12px">' + esc(t.conf_hint) + '</p>';
-    if (ui.busy) h += '<p class="small" style="margin-top:12px">' + esc(t.measuring) + '</p>';
-    if (ui.error) h += '<p class="notice" style="margin-top:12px">' + esc(t.err) + '</p><button class="btn" data-act="retry">' + esc(t.retry) + '</button>';
-    h += '<button class="btn ghost" data-act="home">' + esc(t.cancel) + '</button></section>';
+    const c = 50;
+    const s = stakeFor(c);
+    let h = topbar() + '<main class="stage conf">' +
+      '<p class="small-claim">' + esc(claimText(ui.claim, S.lang)) + '</p>' +
+      '<p class="verdict">' + esc(ui.tip ? t.yes : t.no) + '.</p>' +
+      '<p class="ask">' + esc(t.confTitle) + '</p>' +
+      '<div class="pct"><span id="pct">' + c + '</span><small>%</small></div>' +
+      '<p class="lbl" id="lbl">' + esc(confLabel(c)) + '</p>' +
+      '<input id="sl" class="slider" type="range" min="50" max="100" step="10" value="' + c + '" style="--p:0%" aria-label="' + esc(t.confTitle) + '"' + (ui.busy ? ' disabled' : '') + '>' +
+      '<div class="stake"><div class="plus"><span>' + esc(t.rules_cols[1]) + '</span><b id="pHit">' + signed(s.hit) + '</b></div>' +
+      '<div class="minus"><span>' + esc(t.rules_cols[2]) + '</span><b id="pMiss">' + signed(s.miss) + '</b></div></div>' +
+      '<p class="small" style="margin-top:10px">' + esc(t.conf_hint) + '</p>' +
+      '<div class="spacer"></div>';
+    if (ui.busy) h += '<p class="hint" style="margin-top:12px">' + esc(t.measuring) + '</p>';
+    if (ui.error) h += '<div class="notice" style="margin-top:12px">' + esc(t.err) + '</div><button class="btn" data-act="retry">' + esc(t.retry) + '</button>';
+    else h += '<button class="btn" data-act="measure"' + (ui.busy ? ' disabled' : '') + '>' + esc(t.measure) + '</button>';
+    h += '<button class="linkbtn" data-act="home">' + esc(t.cancel) + '</button></main>';
     return h;
   }
 
@@ -448,34 +480,60 @@
     const t = T();
     const r = ui.result;
     const hit = DP.isHit(r.tip, r.outcome);
-    return header() + '<section class="card"><p class="kicker">' + esc(claimText(r.claim, S.lang)) + '</p>' +
-      '<p class="result-big ' + (hit ? 'good' : 'bad') + '">' + esc(hit ? t.hit : t.miss) + '</p>' +
-      '<p class="claim" style="font-size:1.1rem">' + esc(r.outcome ? t.truth_yes : t.truth_no) + ' ' +
-      esc(fill(t.you_tipped, { tip: r.tip ? t.yes : t.no, conf: r.conf })) + '</p>' +
-      '<p class="result-big ' + (r.pts >= 0 ? 'good' : 'bad') + '" style="font-size:1.5rem">' + esc(fill(t.pts, { n: (r.pts > 0 ? '+' : '') + r.pts })) + '</p>' +
-      '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) + '<br><span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
+    return topbar() + '<main class="stage">' +
+      '<p class="small-claim">' + esc(claimText(r.claim, S.lang)) + '</p>' +
+      '<p class="big-word">' + esc(hit ? t.hit : t.miss) + '</p>' +
+      '<div class="points"><span id="pn" data-v="' + r.pts + '">' + signed(r.pts) + '</span><small>' + esc(t.pts_unit) + '</small></div>' +
+      '<p class="said">' + esc(r.outcome ? t.truth_yes : t.truth_no) + ' ' + esc(fill(t.you_tipped, { tip: r.tip ? t.yes : t.no, conf: r.conf })) + '</p>' +
+      '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
+      '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
+      '<div class="spacer"></div>' +
       (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '') +
-      '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></section>';
+      '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
   }
 
   function viewLater() {
     const t = T();
     const r = ui.result;
-    return header() + '<section class="card"><p class="kicker">' + esc(claimText(r.claim, S.lang)) + '</p>' +
-      '<p class="result-big">' + esc(t.waiting) + '</p>' +
-      '<div class="measure"><span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '<br>' +
+    return topbar() + '<main class="stage">' +
+      '<p class="small-claim">' + esc(claimText(r.claim, S.lang)) + '</p>' +
+      '<p class="big-word" style="font-size:clamp(3rem,15vw,5rem)">' + esc(t.waiting) + '</p>' +
+      '<div class="measure"><span class="small" style="margin:0"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '<br>' +
       esc(fill(t.due, { d: DP.addDays(r.claim.due, 1) })) + '</span></div>' +
+      '<div class="spacer"></div>' +
       (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '') +
-      '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></section>';
+      '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
+  }
+
+  function countUp() {
+    const el = document.getElementById('pn');
+    if (!el) return;
+    const v = Number(el.getAttribute('data-v'));
+    if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const t0 = performance.now();
+    (function step(now) {
+      const k = Math.min(1, ((now || performance.now()) - t0) / 700);
+      el.textContent = signed(Math.round(v * (1 - Math.pow(1 - k, 3))));
+      if (k < 1) requestAnimationFrame(step); else el.textContent = signed(v);
+    })(t0);
   }
 
   function render() {
     const root = document.getElementById('app');
     document.documentElement.lang = S.lang;
     const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater };
+    const theme = themeFor();
+    document.body.setAttribute('data-theme', theme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', THEME_HEX[theme]);
     root.innerHTML = views[ui.view]();
     document.getElementById('foot').textContent = T().data_credit;
     window.scrollTo(0, 0);
+    if (ui.view === 'result') countUp();
+  }
+
+  function chooseTip(yes) {
+    ui.tip = yes; ui.view = 'conf'; ui.error = false; render();
   }
 
   /* ---------- Sichern und Laden ---------- */
@@ -522,10 +580,11 @@
       S.draws = (S.draws || []).concat(Date.now());
       save(S); render();
     }
-    else if (act === 'tip') { ui.tip = v === '1'; ui.view = 'conf'; render(); }
-    else if (act === 'conf') {
+    else if (act === 'tip') { chooseTip(v === '1'); }
+    else if (act === 'measure') {
       if (ui.busy) return;
-      ui.conf = Number(v);
+      const sl = document.getElementById('sl');
+      ui.conf = sl ? Number(sl.value) : 50;
       if (isLater(ui.claim)) submitLater(); else submitInstant();
     }
     else if (act === 'retry') { submitInstant(); }
@@ -561,6 +620,63 @@
       };
       f.click();
     }
+  });
+
+  /* Schieber: zeigt live, was ein Treffer und ein Daneben jetzt wert sind. */
+  document.addEventListener('input', function (e) {
+    if (e.target.id !== 'sl') return;
+    const c = Number(e.target.value);
+    const s = stakeFor(c);
+    document.getElementById('pct').textContent = c;
+    document.getElementById('lbl').textContent = confLabel(c);
+    document.getElementById('pHit').textContent = signed(s.hit);
+    document.getElementById('pMiss').textContent = signed(s.miss);
+    e.target.style.setProperty('--p', ((c - 50) / 50 * 100) + '%');
+  });
+
+  /* Wischen: rechts = stimmt, links = stimmt nicht. */
+  let drag = null;
+  function applyDrag(el, dx) {
+    el.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 18) + 'deg)';
+    const k = Math.min(1, Math.abs(dx) / 110);
+    el.querySelector('.tint.yes').style.opacity = dx > 0 ? k * 0.85 : 0;
+    el.querySelector('.tint.no').style.opacity = dx < 0 ? k * 0.85 : 0;
+    el.querySelector('.stamp.yes').style.opacity = dx > 0 ? k : 0;
+    el.querySelector('.stamp.no').style.opacity = dx < 0 ? k : 0;
+  }
+  document.addEventListener('pointerdown', function (e) {
+    const el = e.target.closest && e.target.closest('.swipe');
+    if (!el || ui.view !== 'tip') return;
+    drag = { el: el, x0: e.clientX, dx: 0, id: e.pointerId };
+    el.classList.remove('back');
+    el.classList.add('dragging');
+    if (el.setPointerCapture) { try { el.setPointerCapture(e.pointerId); } catch (err) { /* ignorieren */ } }
+  });
+  document.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    drag.dx = e.clientX - drag.x0;
+    applyDrag(drag.el, drag.dx);
+  });
+  function endDrag() {
+    if (!drag) return;
+    const d = drag; drag = null;
+    d.el.classList.remove('dragging');
+    if (Math.abs(d.dx) > 90) {
+      const yes = d.dx > 0;
+      d.el.classList.add('back');
+      d.el.style.transform = 'translateX(' + (yes ? 1 : -1) * window.innerWidth + 'px) rotate(' + (yes ? 24 : -24) + 'deg)';
+      setTimeout(function () { chooseTip(yes); }, 200);
+    } else {
+      d.el.classList.add('back');
+      applyDrag(d.el, 0);
+    }
+  }
+  document.addEventListener('pointerup', endDrag);
+  document.addEventListener('pointercancel', endDrag);
+  document.addEventListener('keydown', function (e) {
+    if (ui.view !== 'tip') return;
+    if (e.key === 'ArrowRight') chooseTip(true);
+    else if (e.key === 'ArrowLeft') chooseTip(false);
   });
 
   if (S.current && validClaim(S.current.claim) && DP.dayKey(new Date(S.current.ts)) === DP.dayKey()) {
