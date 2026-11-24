@@ -1041,4 +1041,8 @@
   } else if (S.current) { S.current = null; save(S); }
 
   render();
+
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () { /* ohne Offline-Hülle weiter */ }); });
+  }
 })();
