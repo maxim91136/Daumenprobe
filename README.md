@@ -69,7 +69,7 @@ Auf dem Desktop breites Layout (Startseite in zwei Spalten, Spielansichten zentr
 
 - Live-Test der Messungen im echten Browser: Erdbeben, Luftqualität, Luftdruck, Feuchtigkeit, Bewölkung, Windrichtung (die Entwicklungsumgebung erreicht die Schnittstellen nicht, bisher mit nachgestellten Antworten getestet; die Tageslänge ist live bestätigt).
 - Weitere Spielformen und Themenpakete (Daten und Lizenzen vorher prüfen).
-- Domain und Marke prüfen, Altersgrenze der Datenschutzerklärung klären.
+- Marke: bewusst später, bisher Hobby. Altersgrenze: keine nötig (kein Konto, keine Einwilligung).
 
 ## Prinzipien
 
