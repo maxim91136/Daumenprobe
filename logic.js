@@ -15,12 +15,29 @@
      verlieren; wer seine Sicherheit ehrlich einschätzt, steht auf Dauer am besten da (Brier-Regel).
      Aufbau: 5 * (1 - 4 * (p - o)^2) plus 5 Punkte bei Treffer, minus 5 bei Daneben. Der Treffer-Anteil
      (+5/-5) hängt nicht von der Sicherheit ab, ändert also nicht, welche Sicherheit sich lohnt. */
-  L.points = function (tip, conf, outcome) {
+  /* level: 's' (klein): Daneben kostet nichts. 'm' (mittel): Daneben kostet höchstens 10. 'l' (groß, Standard): wie oben. */
+  L.points = function (tip, conf, outcome, level) {
     const p = L.probYes(tip, conf);
     const o = outcome ? 1 : 0;
     const base = 5 * (1 - 4 * (p - o) * (p - o));
-    const hit = L.isHit(tip, outcome) ? 5 : -5;
-    return Math.round(base + hit);
+    const isHit = L.isHit(tip, outcome);
+    const v = Math.round(base + (isHit ? 5 : -5));
+    if (!isHit && level === 's') return 0;
+    if (!isHit && level === 'm') return Math.max(v, -10);
+    return v;
+  };
+
+  /* Beleuchteter Anteil des Mondes (0 bis 1), gerechnet aus dem mittleren Mondalter. */
+  L.moonIllum = function (ms) {
+    const jd = ms / 86400000 + 2440587.5;
+    const age = (((jd - 2451550.1) % 29.530588853) + 29.530588853) % 29.530588853;
+    return (1 - Math.cos(2 * Math.PI * age / 29.530588853)) / 2;
+  };
+  const SECTORS = { N: [315, 45], E: [45, 135], S: [135, 225], W: [225, 315] };
+  L.inSector = function (deg, key) {
+    const s = SECTORS[key];
+    const d = ((deg % 360) + 360) % 360;
+    return s[0] > s[1] ? (d >= s[0] || d < s[1]) : (d >= s[0] && d < s[1]);
   };
 
   L.isHit = function (tip, outcome) {
@@ -102,6 +119,41 @@
       const v = data && data.latitude;
       if (typeof v !== 'number') return null;
       return { outcome: v > 0, shown: v };
+    },
+    quake: function (claim, data) {
+      const f = data && data.features;
+      if (!Array.isArray(f)) return null;
+      return { outcome: f.length > claim.N, shown: f.length };
+    },
+    quakemax: function (claim, data) {
+      const f = data && data.features;
+      if (!Array.isArray(f)) return null;
+      let mx = 0;
+      f.forEach(function (x) { const m = x && x.properties && x.properties.mag; if (typeof m === 'number' && m > mx) mx = m; });
+      if (!mx) return null;
+      return { outcome: mx >= claim.M, shown: mx };
+    },
+    aqi: function (claim, data) {
+      const v = data && data.current && data.current.european_aqi;
+      if (typeof v !== 'number') return null;
+      return { outcome: v < claim.A, shown: v };
+    },
+    winddir: function (claim, data) {
+      const v = data && data.current && data.current.wind_direction_10m;
+      if (typeof v !== 'number') return null;
+      return { outcome: L.inSector(v, claim.D), shown: v };
+    },
+    daylen: function (claim, data) {
+      const a = data && data[0] && data[0].daily && data[0].daily.daylight_duration && data[0].daily.daylight_duration[0];
+      const b = data && data[1] && data[1].daily && data[1].daily.daylight_duration && data[1].daily.daylight_duration[0];
+      if (typeof a !== 'number' || typeof b !== 'number') return null;
+      return { outcome: a > b, shown: { a: a / 3600, b: b / 3600 } };
+    },
+    moon: function (claim, data) {
+      const now = data && data.now;
+      if (typeof now !== 'number') return null;
+      const f = L.moonIllum(now);
+      return { outcome: f > 0.5, shown: Math.round(f * 100) };
     },
     tomorrow: function (claim, data) {
       const dl = data && data.daily;

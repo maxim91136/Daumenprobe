@@ -72,9 +72,15 @@
       remind: 'Du hast länger nicht gesichert. Sichere deinen Stand unten.',
       lang: 'Sprache',
       made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
-      privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter) und wheretheiss.at (ISS) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
-      data_credit: 'Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Nur Spielpunkte, nie Geld.',
+      privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
+      data_credit: 'Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Erdbeben: USGS. Nur Spielpunkte, nie Geld.',
       measure_msg: {
+        quake: 'Der USGS meldet {v} Beben ab Stärke 4,5 in den letzten 24 Stunden.',
+        quakemax: 'Das stärkste Beben hatte Stärke {v}.',
+        aqi: 'In {city} liegt der Luftindex bei {v}.',
+        winddir: 'In {city} kommt der Wind aus {v}° ({dir}).',
+        daylen: '{city}: {a} Stunden Tageslicht, {city2}: {b} Stunden.',
+        moon: 'Der Mond ist zu {v} % beleuchtet.',
         temp: 'In {city} sind es {v} °C.',
         isday: 'In {city} steht die Sonne gerade {v}.',
         rain: 'In {city} fallen gerade {v} mm Regen pro Stunde.',
@@ -83,7 +89,24 @@
         tomorrow: 'Höchstwert {a} °C am Tag des Tipps, {b} °C am Tag danach.'
       },
       day: 'über dem Horizont', night: 'unter dem Horizont',
+      lvl_title: 'Schwierigkeit', lvl: { s: 'Leicht', m: 'Mittel', l: 'Schwer' },
+      words: {
+        s: ['Geraten 🤷', 'Ziemlich sicher 🙂', 'Ganz sicher 💪'],
+        m: ['Geraten', 'Eher sicher', 'Ziemlich sicher', 'Sehr sicher', 'Fast sicher', 'Ganz sicher']
+      },
+      lv: {
+        s: { how3: 'Sag, wie sicher du bist: geraten, ziemlich sicher oder ganz sicher.', goal: 'Treffer bringen Punkte. Daneben kostet dich nichts.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer.' },
+        m: { how3: 'Sag, wie sicher du bist: von geraten bis ganz sicher.', goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kostet höchstens 10.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer, aber ein Daneben kostet auch mehr.' }
+      },
+      you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
+      dir: { N: 'Norden', E: 'Osten', S: 'Süden', W: 'Westen' },
       claims: {
+        quake: 'Weltweit gab es in den letzten 24 Stunden mehr als {N} Erdbeben ab Stärke 4,5.',
+        quakemax: 'Das stärkste Erdbeben der letzten 24 Stunden hatte mindestens Stärke {M}.',
+        aqi: 'Die Luft in {city} ist gerade besser als Stufe {A} (EU-Luftindex, kleiner ist besser).',
+        winddir: 'In {city} kommt der Wind gerade aus {D}.',
+        daylen: 'In {city} ist der heutige Tag länger als in {city2}.',
+        moon: 'Der Mond ist gerade mehr als halb beleuchtet.',
         temp: 'In {city} sind es gerade mehr als {T} °C.',
         isday: 'In {city} ist die Sonne gerade über dem Horizont (nach Sonnenuntergang: nein).',
         rain: 'In {city} regnet es gerade.',
@@ -92,6 +115,12 @@
         tomorrow: 'Morgen wird es in {city} wärmer als heute (Tageshöchstwert).'
       },
       rules: {
+        quake: 'Stimmt, wenn der Erdbebendienst USGS für die letzten 24 Stunden mehr als {N} Beben ab Stärke 4,5 meldet.',
+        quakemax: 'Stimmt, wenn das stärkste vom USGS gemeldete Beben der letzten 24 Stunden mindestens Stärke {M} hat.',
+        aqi: 'Stimmt, wenn der europäische Luftqualitäts-Index laut Open-Meteo jetzt unter {A} liegt.',
+        winddir: 'Stimmt, wenn die gemessene Windrichtung im Sektor {D} liegt (90° breit, Open-Meteo).',
+        daylen: 'Stimmt, wenn die Zeit mit Sonne über dem Horizont heute in {city} länger ist als in {city2} (Open-Meteo).',
+        moon: 'Stimmt, wenn der Mond jetzt zu mehr als 50 % beleuchtet ist. Das wird aus dem Mondalter gerechnet, nicht gemessen.',
         temp: 'Stimmt, wenn die gemessene Temperatur über {T} °C liegt (Open-Meteo, aktueller Wert).',
         isday: 'Stimmt, wenn die Sonne am Ort laut Open-Meteo jetzt über dem Horizont steht. Dämmerung nach Sonnenuntergang zählt als nein.',
         rain: 'Stimmt, wenn Open-Meteo jetzt Niederschlag über 0 mm meldet.',
@@ -155,9 +184,15 @@
       remind: 'You have not saved for a while. Save your progress below.',
       lang: 'Language',
       made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
-      privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather) and wheretheiss.at (ISS); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
-      data_credit: 'Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Play points only, never money.',
+      privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
+      data_credit: 'Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Earthquakes: USGS. Play points only, never money.',
       measure_msg: {
+        quake: 'The USGS reports {v} quakes of magnitude 4.5+ in the last 24 hours.',
+        quakemax: 'The strongest quake had magnitude {v}.',
+        aqi: 'The air index in {city} is {v}.',
+        winddir: 'In {city} the wind comes from {v}° ({dir}).',
+        daylen: '{city}: {a} hours of daylight, {city2}: {b} hours.',
+        moon: 'The moon is {v} % lit.',
         temp: 'It is {v} °C in {city}.',
         isday: 'In {city} the sun is {v} right now.',
         rain: 'In {city} {v} mm of rain per hour are falling.',
@@ -166,7 +201,24 @@
         tomorrow: 'High of {a} °C on the day of your tip, {b} °C the day after.'
       },
       day: 'above the horizon', night: 'below the horizon',
+      lvl_title: 'Difficulty', lvl: { s: 'Easy', m: 'Medium', l: 'Hard' },
+      words: {
+        s: ['A guess 🤷', 'Pretty sure 🙂', 'Totally sure 💪'],
+        m: ['A guess', 'Leaning yes', 'Pretty sure', 'Very sure', 'Almost certain', 'Totally sure']
+      },
+      lv: {
+        s: { how3: 'Say how sure you are: a guess, pretty sure or totally sure.', goal: 'Hits earn points. A miss costs you nothing.', hint: 'The surer you are, the more a hit is worth.' },
+        m: { how3: 'Say how sure you are: from a guess to totally sure.', goal: 'The one with the most points wins. Hits earn points, a miss costs 10 at most.', hint: 'The surer you are, the more a hit is worth, but a miss costs more too.' }
+      },
+      you_tipped_w: 'Your tip: {tip}, {conf}.',
+      dir: { N: 'north', E: 'east', S: 'south', W: 'west' },
       claims: {
+        quake: 'In the last 24 hours there were more than {N} earthquakes of magnitude 4.5 or higher worldwide.',
+        quakemax: 'The strongest earthquake of the last 24 hours had a magnitude of at least {M}.',
+        aqi: 'The air in {city} is better than level {A} right now (EU air index, lower is better).',
+        winddir: 'The wind in {city} is coming from the {D} right now.',
+        daylen: 'Today is longer in {city} than in {city2}.',
+        moon: 'The moon is more than half lit right now.',
         temp: 'It is warmer than {T} °C in {city} right now.',
         isday: 'The sun is above the horizon in {city} right now (after sunset: no).',
         rain: 'It is raining in {city} right now.',
@@ -175,6 +227,12 @@
         tomorrow: 'Tomorrow will be warmer than today in {city} (daily high).'
       },
       rules: {
+        quake: 'True if the USGS reports more than {N} quakes of magnitude 4.5+ for the last 24 hours.',
+        quakemax: 'True if the strongest quake the USGS reports for the last 24 hours is at least magnitude {M}.',
+        aqi: 'True if the European air quality index per Open-Meteo is below {A} right now.',
+        winddir: 'True if the measured wind direction is within the {D} sector (90° wide, Open-Meteo).',
+        daylen: 'True if the time with the sun above the horizon today is longer in {city} than in {city2} (Open-Meteo).',
+        moon: 'True if the moon is more than 50 % lit right now. This is calculated from the moon age, not measured.',
         temp: 'True if the measured temperature is above {T} °C (Open-Meteo, current value).',
         isday: 'True if, per Open-Meteo, the sun is above the horizon at the place right now. Twilight after sunset counts as no.',
         rain: 'True if Open-Meteo reports precipitation above 0 mm right now.',
@@ -195,19 +253,37 @@
     rain: function () { return { tpl: 'rain', city: pick(CITIES).id }; },
     wind: function () { return { tpl: 'wind', city: pick(CITIES).id, W: pick([10, 15, 20, 30]) }; },
     iss: function () { return { tpl: 'iss' }; },
+    quake: function () { return { tpl: 'quake', N: pick([10, 15, 20, 25]) }; },
+    quakemax: function () { return { tpl: 'quakemax', M: pick([5, 5.5, 6]) }; },
+    aqi: function () { return { tpl: 'aqi', city: pick(CITIES).id, A: pick([20, 40]) }; },
+    winddir: function () { return { tpl: 'winddir', city: pick(CITIES).id, D: pick(['N', 'E', 'S', 'W']) }; },
+    daylen: function () {
+      const a = pick(CITIES);
+      let b = pick(CITIES);
+      while (b.id === a.id) b = pick(CITIES);
+      return { tpl: 'daylen', city: a.id, city2: b.id };
+    },
+    moon: function () { return { tpl: 'moon' }; },
     tomorrow: function () {
       const today = DP.dayKey();
       const eu = CITIES.filter(function (c) { return c.eu; });
       return { tpl: 'tomorrow', city: pick(eu).id, created: today, due: DP.addDays(today, 1) };
     }
   };
-  const WEIGHTS = ['temp', 'temp', 'isday', 'isday', 'rain', 'wind', 'iss', 'tomorrow'];
+  const POOLS = {
+    s: ['temp', 'isday', 'isday', 'rain', 'wind', 'daylen', 'moon'],
+    m: ['temp', 'isday', 'rain', 'wind', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon'],
+    l: ['temp', 'temp', 'isday', 'rain', 'wind', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon']
+  };
+  const NOCITY = { iss: 1, quake: 1, quakemax: 1, moon: 1 };
 
-  function newClaim() { return MAKERS[pick(WEIGHTS)](); }
+  function newClaim() { return MAKERS[pick(POOLS[S.level] || POOLS.l)](); }
   function isLater(claim) { return claim.tpl === 'tomorrow'; }
   function validClaim(c) {
     if (!c || !MAKERS[c.tpl]) return false;
-    if (c.tpl !== 'iss' && !cityById(c.city)) return false;
+    if (!NOCITY[c.tpl] && !cityById(c.city)) return false;
+    if (c.tpl === 'daylen' && !cityById(c.city2)) return false;
+    if (c.tpl === 'winddir' && ['N', 'E', 'S', 'W'].indexOf(c.D) < 0) return false;
     if (c.tpl === 'tomorrow' && !(/^\d{4}-\d{2}-\d{2}$/.test(c.created) && /^\d{4}-\d{2}-\d{2}$/.test(c.due))) return false;
     return true;
   }
@@ -217,7 +293,9 @@
   }
   function claimVars(claim, lang) {
     const c = claim.city ? cityById(claim.city) : null;
-    return { city: c ? c[lang] : '', T: claim.T, W: claim.W };
+    const c2 = claim.city2 ? cityById(claim.city2) : null;
+    return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A,
+      M: claim.M === undefined ? undefined : num(claim.M, lang, 1), D: claim.D ? I18N[lang].dir[claim.D] : undefined };
   }
   function claimText(claim, lang) { return fill(I18N[lang].claims[claim.tpl], claimVars(claim, lang)); }
   function ruleText(claim, lang) { return fill(I18N[lang].rules[claim.tpl], claimVars(claim, lang)); }
@@ -228,6 +306,8 @@
     const t = I18N[lang];
     const vars = claimVars(claim, lang);
     if (claim.tpl === 'tomorrow') { vars.a = num(shown.today, lang); vars.b = num(shown.tomorrow, lang); }
+    else if (claim.tpl === 'daylen') { vars.a = num(shown.a, lang); vars.b = num(shown.b, lang); }
+    else if (claim.tpl === 'winddir') { vars.v = Math.round(shown); vars.dir = t.dir[['N', 'E', 'S', 'W'].filter(function (k) { return DP.inSector(shown, k); })[0]]; }
     else if (claim.tpl === 'isday') vars.v = shown === 1 ? t.day : t.night;
     else vars.v = num(shown, lang, claim.tpl === 'iss' ? 2 : 1);
     return fill(t.measure_msg[claim.tpl], vars);
@@ -244,10 +324,20 @@
   }
   function getData(claim) {
     if (claim.tpl === 'iss') return fetchJson('https://api.wheretheiss.at/v1/satellites/25544');
+    if (claim.tpl === 'quake' || claim.tpl === 'quakemax') return fetchJson('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson');
+    if (claim.tpl === 'moon') return Promise.resolve({ now: Date.now() });
+    if (claim.tpl === 'aqi') {
+      const ca = cityById(claim.city);
+      return fetchJson('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=' + ca.lat + '&longitude=' + ca.lon + '&current=european_aqi&timezone=auto');
+    }
+    if (claim.tpl === 'daylen') {
+      const a = cityById(claim.city), b = cityById(claim.city2);
+      return fetchJson('https://api.open-meteo.com/v1/forecast?latitude=' + a.lat + ',' + b.lat + '&longitude=' + a.lon + ',' + b.lon + '&daily=daylight_duration&forecast_days=1&timezone=auto');
+    }
     const c = cityById(claim.city);
     let url = 'https://api.open-meteo.com/v1/forecast?latitude=' + c.lat + '&longitude=' + c.lon + '&timezone=auto';
     if (claim.tpl === 'tomorrow') url += '&daily=temperature_2m_max&past_days=5&forecast_days=2';
-    else url += '&current=temperature_2m,is_day,precipitation,wind_speed_10m';
+    else url += '&current=temperature_2m,is_day,precipitation,wind_speed_10m,wind_direction_10m';
     return fetchJson(url);
   }
   function measure(claim) {
@@ -260,7 +350,7 @@
 
   /* ---------- Speicher ---------- */
   let memory = null;
-  function blank() { return { v: 1, lang: null, tips: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -301,14 +391,14 @@
     rec.resolved = true;
     rec.outcome = m.outcome;
     rec.shown = m.shown;
-    rec.pts = DP.points(rec.tip, rec.conf, m.outcome);
+    rec.pts = DP.points(rec.tip, rec.conf, m.outcome, rec.level);
     rec.measuredAt = Date.now();
   }
 
   function submitInstant() {
     ui.busy = true; ui.error = false; render();
     measure(ui.claim).then(function (m) {
-      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, ts: Date.now(), resolved: false };
+      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, ts: Date.now(), resolved: false };
       finishTip(rec, m);
       S.tips.push(rec); S.current = null; save(S);
       ui.result = rec; ui.view = 'result'; ui.busy = false; render();
@@ -318,7 +408,7 @@
   }
 
   function submitLater() {
-    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, ts: Date.now(), resolved: false };
+    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, ts: Date.now(), resolved: false };
     S.tips.push(rec); S.current = null; save(S);
     ui.result = rec; ui.view = 'later'; render();
   }
@@ -346,6 +436,16 @@
     if (ui.view === 'later') return 'wait';
     return 'home';
   }
+  const STEPS = { s: [50, 75, 100], m: [50, 60, 70, 80, 90, 100], l: [50, 60, 70, 80, 90, 100] };
+  function lvl() { return STEPS[S.level] ? S.level : 'l'; }
+  function steps() { return STEPS[lvl()]; }
+  function confWord(c, level) {
+    const L2 = level || lvl();
+    if (L2 === 'l') return null;
+    const st = STEPS[L2];
+    const i = st.indexOf(c);
+    return T().words[L2][i < 0 ? 0 : i];
+  }
   function signed(n) { return n > 0 ? '+' + n : String(n).replace('-', '−'); }
 
   function langs() {
@@ -364,12 +464,14 @@
   function rulesSheet() {
     const t = T();
     let h = '<details class="sheet"' + (S.tips.length ? '' : ' open') + '><summary>' + esc(t.rules_title) + '</summary><ol class="howto">';
-    t.howto.forEach(function (r) { h += '<li>' + esc(r) + '</li>'; });
-    h += '</ol><p class="goal">' + esc(t.rules_goal) + '</p>';
+    const lv = t.lv[lvl()];
+    t.howto.forEach(function (r, i) { h += '<li>' + esc(i === 2 && lv ? lv.how3 : r) + '</li>'; });
+    h += '</ol><p class="goal">' + esc(lv ? lv.goal : t.rules_goal) + '</p>';
     h += '<table class="scale"><thead><tr><th>' + esc(t.rules_cols[0]) + '</th><th>' + esc(t.rules_cols[1]) + '</th><th>' + esc(t.rules_cols[2]) + '</th></tr></thead><tbody>';
-    [50, 70, 100].forEach(function (c) {
-      const label = c + ' %' + (c === 50 ? ' (' + t.conf50 + ')' : c === 100 ? ' (' + t.conf100 + ')' : '');
-      h += '<tr><td>' + esc(label) + '</td><td class="hit">' + signed(DP.points(true, c, true)) + '</td><td class="miss">' + signed(DP.points(true, c, false)) + '</td></tr>';
+    (lvl() === 's' ? [50, 75, 100] : [50, 70, 100]).forEach(function (c) {
+      const w = lvl() === 's' ? confWord(c) : null;
+      const label = w ? w : c + ' %' + (c === 50 ? ' (' + t.conf50 + ')' : c === 100 ? ' (' + t.conf100 + ')' : '');
+      h += '<tr><td>' + esc(label) + '</td><td class="hit">' + signed(DP.points(true, c, true, lvl())) + '</td><td class="miss">' + signed(DP.points(true, c, false, lvl())) + '</td></tr>';
     });
     h += '</tbody></table><p class="small">' + esc(t.rules_foot) + '</p></details>';
     return h;
@@ -389,6 +491,8 @@
     h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
+    h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
+      ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
     if (left > 0) h += '<button class="btn" data-act="start">' + esc(t.go) + '</button><p class="hint" style="margin-top:10px">' + esc(fill(t.left, { n: left })) + '</p>';
     else h += '<p class="small" style="margin-top:14px">' + esc(t.goDone) + '</p>';
 
@@ -453,9 +557,10 @@
   }
 
   function stakeFor(c) {
-    return { hit: DP.points(ui.tip, c, ui.tip), miss: DP.points(ui.tip, c, !ui.tip) };
+    return { hit: DP.points(ui.tip, c, ui.tip, lvl()), miss: DP.points(ui.tip, c, !ui.tip, lvl()) };
   }
-  function confLabel(c) { return c === 50 ? T().conf50 : c === 100 ? T().conf100 : ' '; }
+  function confLabel(c) { return lvl() === 'l' ? (c === 50 ? T().conf50 : c === 100 ? T().conf100 : ' ') : ' '; }
+  function sliderPos(c) { const st = steps(); return st.indexOf(c) / (st.length - 1) * 100; }
 
   function viewConf() {
     const t = T();
@@ -465,12 +570,13 @@
       '<p class="small-claim">' + esc(claimText(ui.claim, S.lang)) + '</p>' +
       '<p class="verdict">' + esc(ui.tip ? t.yes : t.no) + '.</p>' +
       '<p class="ask">' + esc(t.confTitle) + '</p>' +
-      '<div class="pct"><span id="pct">' + c + '</span><small>%</small></div>' +
+      (lvl() === 'l' ? '<div class="pct"><span id="pct">' + c + '</span><small>%</small></div>'
+        : '<div class="pct word"><span id="pct">' + esc(confWord(c)) + '</span></div>') +
       '<p class="lbl" id="lbl">' + esc(confLabel(c)) + '</p>' +
-      '<input id="sl" class="slider" type="range" min="50" max="100" step="10" value="' + c + '" style="--p:0%" aria-label="' + esc(t.confTitle) + '"' + (ui.busy ? ' disabled' : '') + '>' +
+      '<input id="sl" class="slider" type="range" min="0" max="' + (steps().length - 1) + '" step="1" value="0" style="--p:0%" aria-label="' + esc(t.confTitle) + '"' + (ui.busy ? ' disabled' : '') + '>' +
       '<div class="stake"><div class="plus"><span>' + esc(t.rules_cols[1]) + '</span><b id="pHit">' + signed(s.hit) + '</b></div>' +
       '<div class="minus"><span>' + esc(t.rules_cols[2]) + '</span><b id="pMiss">' + signed(s.miss) + '</b></div></div>' +
-      '<p class="small" style="margin-top:10px">' + esc(t.conf_hint) + '</p>' +
+      '<p class="small" style="margin-top:10px">' + esc(t.lv[lvl()] ? t.lv[lvl()].hint : t.conf_hint) + '</p>' +
       '<div class="spacer"></div>';
     if (ui.busy) h += '<p class="hint" style="margin-top:12px">' + esc(t.measuring) + '</p>';
     if (ui.error) h += '<div class="notice" style="margin-top:12px">' + esc(t.err) + '</div><button class="btn" data-act="retry">' + esc(t.retry) + '</button>';
@@ -487,7 +593,7 @@
       '<p class="small-claim">' + esc(claimText(r.claim, S.lang)) + '</p>' +
       '<p class="big-word">' + esc(hit ? t.hit : t.miss) + '</p>' +
       '<div class="points"><span id="pn" data-v="' + r.pts + '">' + signed(r.pts) + '</span><small>' + esc(t.pts_unit) + '</small></div>' +
-      '<p class="said">' + esc(r.outcome ? t.truth_yes : t.truth_no) + ' ' + esc(fill(t.you_tipped, { tip: r.tip ? t.yes : t.no, conf: r.conf })) + '</p>' +
+      '<p class="said">' + esc(r.outcome ? t.truth_yes : t.truth_no) + ' ' + esc((r.level === 's' || r.level === 'm') ? fill(t.you_tipped_w, { tip: r.tip ? t.yes : t.no, conf: confWord(r.conf, r.level).toLowerCase() }) : fill(t.you_tipped, { tip: r.tip ? t.yes : t.no, conf: r.conf })) + '</p>' +
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
       '<div class="spacer"></div>' +
@@ -597,6 +703,7 @@
     const act = el.getAttribute('data-act');
     const v = el.getAttribute('data-v');
     if (act === 'lang') { S.lang = v; save(S); render(); }
+    else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {
       if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {
         if (ui.error && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
@@ -615,7 +722,7 @@
     else if (act === 'measure') {
       if (ui.busy) return;
       const sl = document.getElementById('sl');
-      ui.conf = sl ? Number(sl.value) : 50;
+      ui.conf = sl ? steps()[Number(sl.value)] : 50;
       if (isLater(ui.claim)) submitLater(); else submitInstant();
     }
     else if (act === 'retry') { submitInstant(); }
@@ -656,13 +763,13 @@
   /* Schieber: zeigt live, was ein Treffer und ein Daneben jetzt wert sind. */
   document.addEventListener('input', function (e) {
     if (e.target.id !== 'sl') return;
-    const c = Number(e.target.value);
+    const c = steps()[Number(e.target.value)];
     const s = stakeFor(c);
-    document.getElementById('pct').textContent = c;
+    document.getElementById('pct').textContent = lvl() === 'l' ? c : confWord(c);
     document.getElementById('lbl').textContent = confLabel(c);
     document.getElementById('pHit').textContent = signed(s.hit);
     document.getElementById('pMiss').textContent = signed(s.miss);
-    e.target.style.setProperty('--p', ((c - 50) / 50 * 100) + '%');
+    e.target.style.setProperty('--p', sliderPos(c) + '%');
   });
 
   /* Wischen: rechts = stimmt, links = stimmt nicht. */
