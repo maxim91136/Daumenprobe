@@ -741,8 +741,8 @@
       '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button>' +
       '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + (S.mute ? '🔇' : '🔊') + '</button></div>';
   }
-  const THUMB = '';
-  function header() { return '<header class="top"><div><div class="brand"><h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs() + '</header>'; }
+  const THUMB = '<svg class="compass-logo" viewBox="58 20 102 212" aria-hidden="true" focusable="false"><g fill="none" stroke="#fbfbff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><rect x="103" y="26" width="14" height="28" rx="5"/><rect x="106" y="52" width="8" height="14"/><polygon points="105.7,76.6 114.3,79.4 74.5,196.8 69.5,195.2"/><polygon points="114.1,76.2 105.9,79.8 147.6,173 152.4,171"/><rect x="146.5" y="179" width="7" height="27" rx="2"/></g><polygon points="69.5,195.2 74.5,196.8 71.5,226 70.5,226" fill="#fbfbff" stroke="#fbfbff" stroke-width="3" stroke-linejoin="round"/><polygon points="146.5,206 153.5,206 150.8,225 149.2,225" fill="#ffd24a" stroke="#ffd24a" stroke-width="3" stroke-linejoin="round"/><circle cx="150" cy="174" r="5.5" fill="#0d0b1f" stroke="#fbfbff" stroke-width="5"/><circle cx="110" cy="76" r="11" fill="#0d0b1f" stroke="#fbfbff" stroke-width="5"/><circle cx="110" cy="76" r="3.5" fill="#fbfbff"/></svg>';
+  function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs() + '</header>'; }
   function topbar() {
     const n = Math.min(DAILY_LIMIT, todayCount());
     let d = '<div class="dots" role="img" aria-label="' + n + ' / ' + DAILY_LIMIT + '">';

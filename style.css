@@ -334,3 +334,9 @@ body[data-skin="storm"] { --night: #080d1a; --surface: #111a30; }
 body[data-skin="storm"][data-theme="home"], body[data-skin="storm"][data-theme^="c"], body[data-skin="storm"][data-theme="wait"] { --accent: #43c7ff; }
 body[data-skin="gold"] { --night: #0e0b04; --surface: #1c160a; --lemon: #ffd24a; }
 body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c"], body[data-skin="gold"][data-theme="wait"] { --accent: #ffd24a; }
+
+.compass-logo { flex: none; height: clamp(2.3rem, 9.5vw, 3.1rem); width: auto; margin-right: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .compass-logo { animation: swing .9s cubic-bezier(.2,1.4,.4,1) .2s backwards; transform-origin: 50% 12%; }
+  @keyframes swing { from { transform: rotate(-24deg); } 55% { transform: rotate(8deg); } }
+}
