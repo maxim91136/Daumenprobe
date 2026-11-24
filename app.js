@@ -476,7 +476,7 @@
     };
   }
   /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
-  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'clock', 'aurora'];
+  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora'];
   /* Erst die Kategorie, dann das Thema: Wetter, Luft, Erde, Weltraum, Himmel, Zeit wechseln sich ab. */
   const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'luft', quake: 'erde', quakemax: 'erde', iss: 'raum', aurora: 'raum', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
   function balanced(pool, used) {
@@ -519,13 +519,23 @@
     newyork: [0, 1.5, 5.5, 11.5, 17, 22, 25, 24.5, 20.5, 14.5, 9, 3],
     kapstadt: [21, 21.5, 20, 17, 14.5, 12.5, 12, 12.5, 14, 16, 18, 20]
   };
+  /* Städte in einer anderen Zeitzone als der eigenen: nach der Uhrzeit oder dem Tageslicht zuhause zu fragen, wäre sinnlos. Geteilte Fragen (Tagesfrage, Duell) bleiben für alle gleich. */
+  function foreign() {
+    if (RNG !== null) return CITIES;
+    let own = '';
+    try { own = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { /* egal */ }
+    const far = CITIES.filter(function (c) { return c.tz !== own; });
+    return far.length ? far : CITIES;
+  }
   const MAKERS = {
     temp: function () {
       const id = pick(CITIES).id;
       if (HARD) return { tpl: 'temp', city: id, T: Math.round(NORMS[id][new Date().getUTCMonth()]) + pick([-2, -1, 0, 1, 2]) };
       return { tpl: 'temp', city: id, T: pick([0, 5, 10, 15, 20, 25]) };
     },
-    isday: function () { return { tpl: 'isday', city: pick(CITIES).id }; },
+    isday: function () {
+      return { tpl: 'isday', city: pick(foreign()).id };
+    },
     rain: function () { return { tpl: 'rain', city: pick(CITIES).id }; },
     wind: function () { return { tpl: 'wind', city: pick(CITIES).id, W: HARD ? pick([12, 15, 18]) : pick([10, 15, 20, 30]) }; },
     iss: function () { return { tpl: 'iss' }; },
@@ -555,7 +565,7 @@
       return { tpl: 'sunhigh', city: a.id, city2: b.id };
     },
     aurora: function () { return { tpl: 'aurora', K: pick([1, 2, 3]) }; },
-    clock: function () { return { tpl: 'clock', city: pick(CITIES).id, H: pick([6, 12, 18, 21]) }; },
+    clock: function () { return { tpl: 'clock', city: pick(foreign()).id, H: pick([6, 12, 18, 21]) }; },
     moon: function () { return { tpl: 'moon' }; },
     tomorrow: function () {
       const today = DP.dayKey();
@@ -566,7 +576,7 @@
   const POOLS = {
     s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora'],
     m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora'],
-    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora']
+    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'aurora']
   };
   const NOCITY = { iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
 

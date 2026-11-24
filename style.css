@@ -635,3 +635,11 @@ body[data-theme="hit"] .report, body[data-theme="miss"] .report { color: inherit
   .bf:not(.off):not(.sm) .eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
   .badge.up .bf { animation: pop .6s cubic-bezier(.2,1.6,.4,1) both; }
 }
+
+/* Auf farbiger Fläche (Ergebnis und Sicherheits-Seite) Links und Texte lesbar halten */
+body[data-theme="yes"] .linkbtn, body[data-theme="no"] .linkbtn, body[data-theme="hit"] .linkbtn, body[data-theme="miss"] .linkbtn { color: inherit; text-decoration: underline; opacity: .9; }
+body[data-theme="yes"] footer, body[data-theme="no"] footer { color: inherit; opacity: .85; }
+body[data-theme="yes"] footer a, body[data-theme="no"] footer a { color: inherit; text-decoration: underline; }
+body[data-theme="yes"] .small, body[data-theme="no"] .small, body[data-theme="yes"] .ask, body[data-theme="no"] .ask, body[data-theme="yes"] .lbl, body[data-theme="no"] .lbl { color: inherit; opacity: .9; }
+body[data-theme="no"], body[data-theme="miss"] { --bg: #dc3a30; --fg2: rgba(255,255,255,.9); }
+body[data-theme="yes"], body[data-theme="hit"] { --fg2: rgba(3,38,15,.8); }
