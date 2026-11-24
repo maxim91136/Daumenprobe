@@ -15,16 +15,17 @@
      verlieren; wer seine Sicherheit ehrlich einschätzt, steht auf Dauer am besten da (Brier-Regel).
      Aufbau: 5 * (1 - 4 * (p - o)^2) plus 5 Punkte bei Treffer, minus 5 bei Daneben. Der Treffer-Anteil
      (+5/-5) hängt nicht von der Sicherheit ab, ändert also nicht, welche Sicherheit sich lohnt. */
-  /* level: 's' (klein): Daneben kostet nichts. 'm' (mittel): Daneben kostet höchstens 10. 'l' (groß, Standard): wie oben. */
+  /* level: Schwierigkeit zählt. 'l' (schwer, Standard) volle Punkte. 'm' (mittel) drei Viertel, Daneben höchstens -8.
+     's' (leicht) die Hälfte, Daneben kostet nichts. Wer schwer mit 100 % trifft, bekommt also +10, leicht nur +5. */
   L.points = function (tip, conf, outcome, level) {
     const p = L.probYes(tip, conf);
     const o = outcome ? 1 : 0;
     const base = 5 * (1 - 4 * (p - o) * (p - o));
     const isHit = L.isHit(tip, outcome);
-    const v = Math.round(base + (isHit ? 5 : -5));
-    if (!isHit && level === 's') return 0;
-    if (!isHit && level === 'm') return Math.max(v, -10);
-    return v;
+    const raw = Math.round(base + (isHit ? 5 : -5));
+    if (level === 's') return isHit ? Math.round(raw * 0.5) : 0;
+    if (level === 'm') return isHit ? Math.round(raw * 0.75) : Math.max(Math.round(raw * 0.75), -8);
+    return raw;
   };
 
   /* Beleuchteter Anteil des Mondes (0 bis 1), gerechnet aus dem mittleren Mondalter. */

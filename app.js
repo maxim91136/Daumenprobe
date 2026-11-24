@@ -32,7 +32,7 @@
       ],
       rules_goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kosten Punkte, und zwar mehr, je sicherer du dich gibst.',
       rules_cols: ['Sicherheit', 'Treffer', 'Daneben'],
-      rules_foot: 'Fünf Behauptungen pro Tag. Nur Spielpunkte, nie Geld.',
+      rules_foot: 'Schwer zählt volle Punkte, Mittel dreiviertel, Leicht die Hälfte. Fünf Behauptungen pro Tag. Nur Spielpunkte, nie Geld.',
       conf_hint: '50 % = geraten, 100 % = ganz sicher. Je sicherer, desto mehr Punkte, aber auch desto mehr Abzug.',
       go: 'Neue Behauptung',
       goDone: 'Das war\'s für heute. Morgen gibt es neue.',
@@ -95,8 +95,8 @@
         m: ['Geraten', 'Eher sicher', 'Ziemlich sicher', 'Sehr sicher', 'Fast sicher', 'Ganz sicher']
       },
       lv: {
-        s: { how3: 'Sag, wie sicher du bist: geraten, ziemlich sicher oder ganz sicher.', goal: 'Treffer bringen Punkte. Daneben kostet dich nichts.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer.' },
-        m: { how3: 'Sag, wie sicher du bist: von geraten bis ganz sicher.', goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kostet höchstens 10.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer, aber ein Daneben kostet auch mehr.' }
+        s: { how3: 'Sag, wie sicher du bist: geraten, ziemlich sicher oder ganz sicher.', goal: 'Treffer bringen halbe Punkte. Daneben kostet dich nichts.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer.' },
+        m: { how3: 'Sag, wie sicher du bist: von geraten bis ganz sicher.', goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer zählen dreiviertel, Daneben kostet höchstens 8.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer, aber ein Daneben kostet auch mehr.' }
       },
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
       ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumen-Kenner', 'Daumen-Profi', 'Orakel', 'Daumen-Legende'],
@@ -146,7 +146,7 @@
       ],
       rules_goal: 'The one with the most points wins. Hits earn points, misses cost points, and the more so the surer you say you are.',
       rules_cols: ['Confidence', 'Hit', 'Miss'],
-      rules_foot: 'Five claims per day. Play points only, never money.',
+      rules_foot: 'Hard counts full points, Medium three quarters, Easy half. Five claims per day. Play points only, never money.',
       conf_hint: '50 % = a guess, 100 % = totally sure. The surer you are, the more you win, but also the more you lose.',
       go: 'New claim',
       goDone: 'That\'s it for today. New ones tomorrow.',
@@ -209,8 +209,8 @@
         m: ['A guess', 'Leaning yes', 'Pretty sure', 'Very sure', 'Almost certain', 'Totally sure']
       },
       lv: {
-        s: { how3: 'Say how sure you are: a guess, pretty sure or totally sure.', goal: 'Hits earn points. A miss costs you nothing.', hint: 'The surer you are, the more a hit is worth.' },
-        m: { how3: 'Say how sure you are: from a guess to totally sure.', goal: 'The one with the most points wins. Hits earn points, a miss costs 10 at most.', hint: 'The surer you are, the more a hit is worth, but a miss costs more too.' }
+        s: { how3: 'Say how sure you are: a guess, pretty sure or totally sure.', goal: 'Hits earn half points. A miss costs you nothing.', hint: 'The surer you are, the more a hit is worth.' },
+        m: { how3: 'Say how sure you are: from a guess to totally sure.', goal: 'The one with the most points wins. Hits count three quarters, a miss costs 8 at most.', hint: 'The surer you are, the more a hit is worth, but a miss costs more too.' }
       },
       you_tipped_w: 'Your tip: {tip}, {conf}.',
       ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Expert', 'Thumb Pro', 'Oracle', 'Thumb Legend'],
