@@ -8,16 +8,16 @@
     return tip ? conf / 100 : 1 - conf / 100;
   };
 
-  /* Spielpunkte (nie Geld). Zwei Teile:
-     1. Sicherheits-Punkte (Brier-Regel): 0 bei reinem Raten (50 %), bis +90 bei sicherem Treffer,
-        bis -90 bei sicherem Daneben (nach unten begrenzt, damit es für Kinder nicht zu hart wird).
-     2. Treffer-Bonus: +10 für jeden Treffer, unabhängig von der Sicherheit. Er ändert nicht,
-        welche Sicherheit sich lohnt, aber ein Treffer ist nie 0 Punkte wert. */
+  /* Spielpunkte (nie Geld), klein gehalten:
+     Treffer: 5 Punkte (geraten, 50 %) bis 10 Punkte (ganz sicher, 100 %).
+     Daneben: 0 Punkte (geraten) bis -15 Punkte (ganz sicher). Wer sicherer tippt, kann mehr gewinnen
+     und mehr verlieren; wer ehrlich einschätzt, steht auf Dauer am besten da (Brier-Regel).
+     Aufbau: 5 * (1 - 4 * (p - o)^2) plus 5 Punkte Treffer-Bonus. */
   L.points = function (tip, conf, outcome) {
     const p = L.probYes(tip, conf);
     const o = outcome ? 1 : 0;
-    const base = Math.max(-90, 90 * (1 - 4 * (p - o) * (p - o)));
-    const bonus = L.isHit(tip, outcome) ? 10 : 0;
+    const base = 5 * (1 - 4 * (p - o) * (p - o));
+    const bonus = L.isHit(tip, outcome) ? 5 : 0;
     return Math.round(base + bonus);
   };
 
