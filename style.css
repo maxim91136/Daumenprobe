@@ -698,3 +698,4 @@ body[data-theme="yes"] .slider::-moz-range-thumb, body[data-theme="no"] .slider:
 .betabtn.gold { animation: godglow 1.8s ease-out; }
 @keyframes godglow { 0% { text-shadow: 0 0 0 rgba(255,210,74,0); transform: scale(1); } 15% { text-shadow: 0 0 18px #ffd24a, 0 0 36px #ffb300; transform: scale(1.25); } 40% { text-shadow: 0 0 8px #ffd24a; } 55% { text-shadow: 0 0 22px #ffd24a, 0 0 40px #ffb300; } 100% { text-shadow: 0 0 0 rgba(255,210,74,0); transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .betabtn.gold { animation: none; text-shadow: 0 0 10px #ffd24a; } }
+.godbar { position: sticky; top: 0; z-index: 50; display: block; width: 100%; border: 0; padding: 9px 12px; background: linear-gradient(90deg, #ffb300, #ffd24a, #ffb300); color: #2a1c00; font-weight: 700; font-size: .9rem; text-align: center; cursor: pointer; }
