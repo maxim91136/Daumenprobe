@@ -3,7 +3,7 @@
   'use strict';
   const DP = window.DP;
   const KEY = 'daumenprobe.v1';
-  const DAILY_LIMIT = 5;
+  const DAILY_LIMIT = 10;
 
   const CITIES = [
     { id: 'hannover', flag: '🇩🇪', lat: 52.37, lon: 9.73, de: 'Hannover', en: 'Hanover', eu: true },
@@ -113,7 +113,7 @@
         t100: ['Hunderter', '100 Tipps gemessen.'],
         d3: ['Dranbleiber', '3 Tage in Folge gespielt.'],
         d7: ['Wochenmeister', '7 Tage in Folge gespielt.'],
-        full: ['Volles Haus', 'Alle fünf Behauptungen an einem Tag gespielt.'],
+        full: ['Volles Haus', 'Alle zehn Behauptungen an einem Tag gespielt.'],
         world: ['Weltenbummler', 'Fünf verschiedene Themen gespielt.'],
         exam: ['Geprüft', 'Eine Aufstiegsprüfung bestanden.'],
         pass: ['Weltreisender', 'In allen acht Städten einen Stempel geholt.'],
@@ -282,7 +282,7 @@
         t100: ['Hundred', '100 tips measured.'],
         d3: ['Keeping at it', 'Played 3 days in a row.'],
         d7: ['Week master', 'Played 7 days in a row.'],
-        full: ['Full house', 'Played all five claims in one day.'],
+        full: ['Full house', 'Played all ten claims in one day.'],
         world: ['Globetrotter', 'Played five different topics.'],
         exam: ['Examined', 'Passed a rank exam.'],
         pass: ['Globe trotter', 'Collected a stamp in all eight cities.'],
@@ -645,7 +645,7 @@
     ['t100', '🏆', function (c) { return c.n >= 100; }],
     ['d3', '📅', function (c) { return c.maxDays >= 3; }],
     ['d7', '👑', function (c) { return c.maxDays >= 7; }],
-    ['full', '🃏', function (c) { return c.maxPerDay >= 5; }],
+    ['full', '🃏', function (c) { return c.maxPerDay >= DAILY_LIMIT; }],
     ['world', '🌍', function (c) { return c.topics >= 5; }],
     ['exam', '🎓', function (c) { return c.exams >= 1; }],
     ['pass', '🧳', function (c) { return c.stamps >= 8; }],

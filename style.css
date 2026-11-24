@@ -249,8 +249,8 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 .rank-bar { height: 14px; border-radius: 999px; background: rgba(255,255,255,.14); margin: 8px 0 6px; overflow: hidden; }
 .rank-bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--lemon), var(--mint)); }
 .rank small { opacity: .7; font-weight: 650; }
-.slots { display: flex; justify-content: center; gap: 12px; margin: 16px 0 6px; }
-.slots i { width: 30px; height: 42px; border-radius: 9px; border: 2px dashed rgba(255,255,255,.3); display: block; }
+.slots { display: flex; justify-content: center; gap: 6px; margin: 16px 0 6px; }
+.slots i { width: 22px; height: 34px; border-radius: 7px; border: 2px dashed rgba(255,255,255,.3); display: block; }
 .slots i.hit { background: var(--mint); border: 2px solid var(--mint); transform: rotate(-4deg); }
 .slots i.miss { background: var(--pink); border: 2px solid var(--pink); transform: rotate(4deg); }
 .slots i.open { border-style: solid; border-color: var(--lemon); }
