@@ -65,6 +65,21 @@
       none: 'Noch nichts getippt.',
       backup: 'Sichern und laden',
       backup_help: 'Dein Spielstand liegt nur in diesem Browser. Sichere ihn ab und zu, falls der Browser Daten löscht (Safari kann das nach etwa 7 Tagen ohne Besuch).',
+      faq_btn: 'FAQ', faq_title: 'Häufige Fragen', faq_back: 'Zurück zum Spiel',
+      faq: [
+        ['Worum geht es?', 'Du bekommst eine Behauptung über die Wirklichkeit, tippst „stimmt“ oder „stimmt nicht“ und sagst, wie sicher du bist. Danach messen wir live aus offenen Daten nach.'],
+        ['Wie kommen die Punkte zustande?', 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum. Bei Schwer gibt es von +5 (geraten) bis +10 (ganz sicher) und von −5 bis −30. Die Tabelle steht unter „So geht’s“.'],
+        ['Warum kostet „ganz sicher“ so viel?', 'Wer immer „ganz sicher“ sagt, soll auf Dauer verlieren. Wer ehrlich einschätzt, steht am besten da. Darum geht es im Spiel.'],
+        ['Ich habe mich verklickt.', 'Einmal pro Frage kannst du vor dem Messen mit „Antwort ändern“ zurück und neu antworten.'],
+        ['Was heißen Leicht, Mittel und Schwer?', 'Leicht: Wörter statt Prozent, halbe Punkte, kein Minus. Mittel: Wörter, drei Viertel der Punkte, Minus höchstens −8. Schwer: Prozent, volle Punkte. Die Stufe ändert nur Bedienung und Punkte, nie die Inhalte.'],
+        ['Woher kommen die Daten?', 'Wetter und Luft von Open-Meteo, Erdbeben vom USGS, die ISS von wheretheiss.at. Mond, Sonnenhöhe und Ortszeit rechnet dein Gerät selbst.'],
+        ['Was sind Tagesfrage, Duell und Aufstiegsprüfung?', 'Die Tagesfrage ist für alle auf der Welt dieselbe. Beim Duell spielst du mit einem Freund per Link dieselben 5 Behauptungen. Die Aufstiegsprüfung brauchst du an manchen Rängen: 3 Behauptungen, mindestens 2 Treffer. Alle drei zählen nicht zu den zehn pro Tag.'],
+        ['Warum nur zehn Fragen am Tag?', 'Damit es nicht endlos wird. Danach ist Schluss für heute und morgen gibt es neue.'],
+        ['Was passiert mit meinen Daten?', 'Alles bleibt in deinem Browser. Kein Konto, kein Tracking. Mit „Sicherung“ kannst du deinen Stand als Datei oder Code speichern und laden.'],
+        ['Eine Frage ist unklar oder die Messung stimmt nicht.', 'Auf dem Ergebnis-Bildschirm gibt es „Unklar“, „Langweilig“ und „Messung komisch“. So hilfst du, das Spiel besser zu machen.'],
+        ['Kann ich es als App installieren?', 'Ja. Im Browser „Zum Home-Bildschirm“ wählen. Dann startet es wie eine App.'],
+        ['Dürfen Kinder mitspielen?', 'Ja. Es gibt nur Spielpunkte, nie Geld, nichts Kritisches, kein Konto und keine Altersabfrage.']
+      ],
       rules_more: ['Zehn Behauptungen pro Tag, danach ist Schluss für heute.', 'Eine Frage zu verwerfen zählt als Versuch.', 'Die Messregel steht vorher fest und wird nach dem Tipp gezeigt.', 'Tagesfrage, Duell und Aufstiegsprüfung zählen nicht zu den zehn.', 'Ehrlich einschätzen lohnt sich: Wer immer „ganz sicher“ sagt, verliert auf Dauer.', 'Es gibt nur Spielpunkte, nie Geld.'],
       back: 'Antwort ändern',
       first_go: 'Los geht\'s', pr_swipe: 'Wische nach rechts: stimmt. Nach links: stimmt nicht.', pr_conf: 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum.', pr_done: 'Das war nur Übung, hier zählt nichts. Ab jetzt wird echt gemessen.', pr_next: 'Erste echte Frage', pr_unit: 'Übung',
@@ -260,6 +275,21 @@
       none: 'No tips yet.',
       backup: 'Save and load',
       backup_help: 'Your progress lives only in this browser. Save it now and then in case the browser clears data (Safari can do that after about 7 days without a visit).',
+      faq_btn: 'FAQ', faq_title: 'Frequently asked questions', faq_back: 'Back to the game',
+      faq: [
+        ['What is this about?', 'You get a claim about the real world, tip “true” or “not true” and say how sure you are. Then we measure it live from open data.'],
+        ['How do points work?', 'The surer you are, the more a hit earns, but the more a mistake costs. On Hard it runs from +5 (a guess) to +10 (totally sure) and from −5 to −30. The table is under “How it works”.'],
+        ['Why does “totally sure” cost so much?', 'If you always say “totally sure” you should lose in the long run. Honest guessing wins. That is the game.'],
+        ['I tapped the wrong thing.', 'Once per claim you can go back with “Change answer” before measuring and answer again.'],
+        ['What do Easy, Medium and Hard mean?', 'Easy: words instead of percent, half points, no minus. Medium: words, three quarters of the points, minus at most −8. Hard: percent, full points. The level only changes controls and points, never the content.'],
+        ['Where does the data come from?', 'Weather and air from Open-Meteo, earthquakes from USGS, the ISS from wheretheiss.at. Your device calculates moon, sun height and local time itself.'],
+        ['What are the daily claim, duel and rank exam?', 'The daily claim is the same for everyone worldwide. In a duel you play the same 5 claims as a friend via a link. The rank exam is needed at some ranks: 3 claims, at least 2 hits. None of them count towards the ten per day.'],
+        ['Why only ten claims a day?', 'So it does not go on forever. After that you are done for today and there are new ones tomorrow.'],
+        ['What happens to my data?', 'Everything stays in your browser. No account, no tracking. With “Backup” you can save and load your progress as a file or code.'],
+        ['A claim is unclear or the measurement is wrong.', 'On the result screen there are “Unclear”, “Boring” and “Odd measurement”. That helps make the game better.'],
+        ['Can I install it as an app?', 'Yes. Choose “Add to Home Screen” in your browser. Then it starts like an app.'],
+        ['Can children play?', 'Yes. There are only play points, never money, nothing critical, no account and no age check.']
+      ],
       rules_more: ['Ten claims per day, then you are done for today.', 'Discarding a claim counts as an attempt.', 'The measuring rule is fixed beforehand and shown after your tip.', 'Daily claim, duel and rank exam do not count towards the ten.', 'Honest guessing pays off: always saying “totally sure” loses in the long run.', 'Play points only, never money.'],
       back: 'Change answer',
       first_go: 'Let\'s go', pr_swipe: 'Swipe right: true. Swipe left: not true.', pr_conf: 'The surer you are, the more a hit earns, but the more a mistake costs.', pr_done: 'That was only practice, nothing counts here. From now on it is measured for real.', pr_next: 'First real claim', pr_unit: 'practice',
@@ -855,14 +885,15 @@
   }
   function signed(n) { return n > 0 ? '+' + n : String(n).replace('-', '−'); }
 
-  function langs() {
+  function langs(withFaq) {
     return '<div class="langs">' +
+      (withFaq ? '<button class="chip faq" data-act="faq" aria-label="' + esc(T().faq_title) + '">' + '<span class="f-long">' + esc(T().faq_btn) + '</span><span class="f-short" aria-hidden="true">?</span></button>' : '') +
       '<button class="chip" data-act="lang" data-v="de" aria-pressed="' + (S.lang === 'de') + '">DE</button>' +
       '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button>' +
       '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + (S.mute ? '🔇' : '🔊') + '</button></div>';
   }
   const THUMB = '<svg class="print-logo" viewBox="-60 -60 120 120" aria-hidden="true" focusable="false"><g transform="rotate(-12)" fill="none" stroke="#fbfbff" stroke-width="6" stroke-linecap="round"><ellipse rx="11" ry="15"/><ellipse rx="21" ry="29" stroke-dasharray="120 14 40 10"/><ellipse rx="31" ry="43" stroke-dasharray="150 12 70 16"/><ellipse rx="41" ry="57" stroke-dasharray="200 14 100 20" opacity=".7"/><circle r="4" fill="#ffd24a" stroke="none"/></g></svg>';
-  function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs() + '</header>'; }
+  function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs(true) + '</header>'; }
   function topbar() {
     const n = Math.min(DAILY_LIMIT, todayCount());
     let d = '<div class="dots" role="img" aria-label="' + n + ' / ' + DAILY_LIMIT + '">';
@@ -973,6 +1004,14 @@
       '<p class="small" id="bmsg" style="margin-top:10px"></p></details>';
     h += '</div></div>';
     return h;
+  }
+
+  function viewFaq() {
+    const t = T();
+    let h = '<header class="top"><button class="chip" data-act="faq-close">← ' + esc(t.faq_back) + '</button>' + langs() + '</header>';
+    h += '<main class="stage faq"><h2 class="faq-h">' + esc(t.faq_title) + '</h2>';
+    t.faq.forEach(function (x) { h += '<details class="sheet dark"><summary>' + esc(x[0]) + '</summary><p>' + esc(x[1]) + '</p></details>'; });
+    return h + '</main>';
   }
 
   function viewTip() {
@@ -1261,7 +1300,7 @@
   function render() {
     const root = document.getElementById('app');
     document.documentElement.lang = S.lang;
-    const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd, examend: viewExamEnd };
+    const views = { faq: viewFaq, home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd, examend: viewExamEnd };
     const theme = themeFor();
     document.body.setAttribute('data-theme', theme);
     document.body.setAttribute('data-view', ui.view);
@@ -1378,6 +1417,8 @@
       save(S); render();
     }
     else if (act === 'tip') { chooseTip(v === '1'); }
+    else if (act === 'faq') { if (!ui.busy) { ui.faqFrom = ui.view; ui.view = 'faq'; render(); } }
+    else if (act === 'faq-close') { ui.view = ui.faqFrom && ui.faqFrom !== 'faq' ? ui.faqFrom : 'home'; render(); }
     else if (act === 'back') { if (ui.view === 'conf' && !ui.busy && ui.backFor !== ui.claim) { ui.backFor = ui.claim; ui.tip = null; ui.error = false; ui.view = 'tip'; render(); } }
     else if (act === 'measure') {
       if (ui.busy) return;

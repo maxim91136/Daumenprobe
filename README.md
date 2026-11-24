@@ -43,6 +43,10 @@ Ränge (12 Stufen, an vier Stufen mit Aufstiegsprüfung), 18 Abzeichen, Serie mi
 - Aufstiegsprüfung: 3 Behauptungen, mindestens 2 Treffer, ein Versuch pro Tag.
 - „Frage melden" (Unklar, Langweilig, Messung komisch) im Ergebnis. Die Meldungen bleiben lokal und stehen in der Sicherungsdatei.
 
+## Hilfe
+
+FAQ-Knopf („?“ auf dem Handy, „FAQ“ auf dem Desktop) oben rechts auf der Startseite mit 12 häufigen Fragen (Deutsch und Englisch).
+
 ## Sicherung
 
 Sichern und Laden per Datei oder Code. Browser können Daten löschen (Safari nach etwa 7 Tagen ohne Besuch). Die Sicherung enthält Tipps und Meldungen.
