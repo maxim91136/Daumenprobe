@@ -90,7 +90,7 @@
         'Dein Rang fällt nie, er richtet sich nach deinem Höchststand.', 'Die erste Niete jedes Tages kostet nichts.', 'Es gibt nur Spielpunkte, nie Geld.'],
       back: 'Antwort ändern',
       first_go: 'Los geht\'s', pr_swipe: 'Wische nach rechts: stimmt. Nach links: stimmt nicht.', pr_conf: 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum.', pr_done: 'Das war nur Übung, hier zählt nichts. Ab jetzt wird echt gemessen.', pr_next: 'Erste echte Frage', pr_unit: 'Übung',
-      rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.',
+      rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.', rep_send: 'Per Mail an mich schicken', rep_mail_sub: 'Daumenprobe: Meldung', rep_mail_hint: 'Ohne Senden bleibt die Meldung nur auf deinem Gerät.',
       export_file: 'Datei sichern', export_code: 'Code kopieren', copied: 'Kopiert.',
       import_title: 'Laden',
       import_ph: 'Code oder Sicherungsdatei-Inhalt hier einfügen',
@@ -316,7 +316,7 @@
         'Your rank never drops, it follows your peak.', 'The first miss of each day costs nothing.', 'Play points only, never money.'],
       back: 'Change answer',
       first_go: 'Let\'s go', pr_swipe: 'Swipe right: true. Swipe left: not true.', pr_conf: 'The surer you are, the more a hit earns, but the more a mistake costs.', pr_done: 'That was only practice, nothing counts here. From now on it is measured for real.', pr_next: 'First real claim', pr_unit: 'practice',
-      rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.',
+      rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.', rep_send: 'Send it to me by email', rep_mail_sub: 'Daumenprobe: report', rep_mail_hint: 'Unless you send it, the report stays on your device.',
       export_file: 'Save file', export_code: 'Copy code', copied: 'Copied.',
       import_title: 'Load',
       import_ph: 'Paste a code or the contents of a backup file here',
@@ -1445,9 +1445,17 @@
     return out.length ? '<div class="badges">' + out.join('') + '</div>' : '';
   }
 
+  function reportMail(x) {
+    const t = T();
+    const kind = t['rep_' + x.k] || x.k;
+    const body = [x.text, '', kind, x.tpl + ' | ' + JSON.stringify(x.claim) + ' | ' + JSON.stringify(x.shown), new Date(x.ts).toISOString()].join('\n');
+    return '<a class="chip" href="mailto:storm81la@gmail.com?subject=' + encodeURIComponent(t.rep_mail_sub) + '&body=' + encodeURIComponent(body) + '">' + esc(t.rep_send) + '</a>';
+  }
+  function reportDone(x) { return '<p class="report done">' + esc(T().rep_thanks) + ' ' + reportMail(x) + '<small class="rep-hint">' + esc(T().rep_mail_hint) + '</small></p>'; }
   function reportRow(r) {
     const t = T();
-    if ((S.reports || []).some(function (x) { return x.id === r.id; })) return '<p class="report done">' + esc(t.rep_thanks) + '</p>';
+    const had = (S.reports || []).filter(function (x) { return x.id === r.id; })[0];
+    if (had) return reportDone(had);
     return '<div class="report"><span>' + esc(t.rep_q) + '</span>' +
       ['unclear', 'boring', 'odd'].map(function (k) { return '<button class="chip" data-act="report" data-v="' + k + '">' + esc(t['rep_' + k]) + '</button>'; }).join('') + '</div>';
   }
@@ -1619,10 +1627,11 @@
     else if (act === 'report') {
       const r = ui.result;
       if (r && ui.view === 'result' && ['unclear', 'boring', 'odd'].indexOf(v) >= 0 && !(S.reports || []).some(function (x) { return x.id === r.id; })) {
-        S.reports = (S.reports || []).concat([{ id: r.id, k: v, tpl: r.claim.tpl, claim: r.claim, shown: r.shown, text: claimText(r.claim, 'de'), ts: Date.now() }]);
+        const nr = { id: r.id, k: v, tpl: r.claim.tpl, claim: r.claim, shown: r.shown, text: claimText(r.claim, 'de'), ts: Date.now() };
+        S.reports = (S.reports || []).concat([nr]);
         save(S);
         const box = el.closest('.report');
-        if (box) { box.className = 'report done'; box.innerHTML = esc(T().rep_thanks); }
+        if (box) { box.className = 'report done'; box.innerHTML = esc(T().rep_thanks) + ' ' + reportMail(nr) + '<small class="rep-hint">' + esc(T().rep_mail_hint) + '</small>'; }
       }
     }
     else if (act === 'skin') { if (skinOk(v)) { S.skin = v; save(S); render(); } }

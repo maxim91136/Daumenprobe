@@ -44,7 +44,7 @@ Ränge (12 Stufen, an vier Stufen mit Aufstiegsprüfung), 20 Abzeichen (u. a. �
 - Duell per Link: 5 gleiche Behauptungen, das Ergebnis steckt im Link nach dem `#` und geht nie an einen Server. Ein Duell pro Tag.
 - Aufstiegsprüfung: 3 Behauptungen, mindestens 2 Treffer, ein Versuch pro Tag.
 - Wochenanzeige: unter den Chips stehen die Punkte dieser Woche (Montag bis Sonntag) und der Vorwoche, nur lokal, ohne Einfluss auf den Rang. Prüfungen zählen nicht mit.
-- „Frage melden" (Unklar, Langweilig, Messung komisch) im Ergebnis. Die Meldungen bleiben lokal und stehen in der Sicherungsdatei.
+- „Frage melden" (Unklar, Langweilig, Messung komisch) im Ergebnis. Die Meldung bleibt lokal und steht in der Sicherungsdatei; danach gibt es den Knopf „Per Mail an mich schicken" (mailto an die Adresse aus dem Impressum, nichts geht automatisch raus).
 
 ## Hilfe
 

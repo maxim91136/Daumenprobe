@@ -683,3 +683,6 @@ body[data-theme="yes"] .stake span, body[data-theme="no"] .stake span { color: r
 body[data-theme="yes"] .slider, body[data-theme="no"] .slider { background: linear-gradient(to right, rgba(0,0,0,.72) var(--p, 0%), rgba(0,0,0,.22) var(--p, 0%)); }
 body[data-theme="yes"] .slider::-webkit-slider-thumb, body[data-theme="no"] .slider::-webkit-slider-thumb { border-color: rgba(0,0,0,.72); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
 body[data-theme="yes"] .slider::-moz-range-thumb, body[data-theme="no"] .slider::-moz-range-thumb { border-color: rgba(0,0,0,.72); }
+.report.done { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.report.done .chip { text-decoration: none; }
+.rep-hint { flex-basis: 100%; color: var(--fg2); font-size: .8rem; }
