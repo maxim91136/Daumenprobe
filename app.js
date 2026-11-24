@@ -1802,8 +1802,7 @@
     }
     const t = T();
     document.getElementById('foot').innerHTML =
-      '<div class="links">' + esc(t.made_by) + ' <a href="https://dreierlabs.com/" rel="noopener"><b>Dreier Labs</b></a> · <a href="https://dreierlabs.com/impressum.html" rel="noopener">' + esc(t.imprint) + '</a> · ' +
-      '<button class="linkbtn betabtn" data-act="beta" aria-pressed="' + !!S.beta + '">' + esc(S.beta ? t.beta_on : t.beta_off) + '</button> · ' +
+      '<div class="godrow"><button class="betabtn" data-act="beta" aria-pressed="' + !!S.beta + '"><span aria-hidden="true">✨</span> ' + esc(S.beta ? t.beta_on : t.beta_off) + '</button></div><div class="links">' + esc(t.made_by) + ' <a href="https://dreierlabs.com/" rel="noopener"><b>Dreier Labs</b></a> · <a href="https://dreierlabs.com/impressum.html" rel="noopener">' + esc(t.imprint) + '</a> · ' +
       '<details><summary>' + esc(t.privacy) + '</summary><p>' + esc(t.privacy_text) + '</p></details></div>' +
       '<p class="credit">' + esc(t.data_credit) + '</p>';
     window.scrollTo(0, 0);
