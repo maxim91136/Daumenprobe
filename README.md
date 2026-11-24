@@ -62,7 +62,7 @@ Auf dem Desktop breites Layout (Startseite in zwei Spalten, Spielansichten zentr
 - `logic.js`: Punkte, Kalibrierung, Messregeln, Mond, Zusammenführen von Sicherungen (ohne Browser-Abhängigkeit, mit Node testbar)
 - `app.js`: Ablauf, Texte (DE/EN), Messung per fetch, Speicher, Ränge, Abzeichen, Duell, Prüfung
 - `sw.js`, `manifest.webmanifest`, Symbole: PWA
-- Auslieferung: Cloudflare Workers (statische Dateien), automatisch bei Push auf `main`
+- Auslieferung: Cloudflare Workers (statische Dateien), automatisch bei Push auf `main`; Adresse: https://daumenprobe.com (auch www), die alte workers.dev-Adresse läuft vorerst parallel
 
 ## Noch offen
 
