@@ -133,6 +133,8 @@
         'Der Orden hat dir nichts mehr beizubringen. Außer Demut.'
       ],
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
+      daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
+      share_head: 'Daumenprobe #{n}', share_pts: '{p} Punkte',
       ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumenschnipper', 'Daumen-Kenner', 'Wetterprophet', 'Daumen-Profi', 'Seher', 'Orakel', 'Großes Orakel', 'Daumen-Legende', 'Daumenprobe-Meister'],
       streak_n: '{n} Tage in Folge', streak_1: '1 Tag', combo_n: '{n} Treffer in Folge', rankup: 'Neuer Rang: {r}', to_next: 'noch {n} bis {r}', top_rank: 'Höchster Rang', sound_on: 'Ton an', sound_off: 'Ton aus',
       dir: { N: 'Norden', E: 'Osten', S: 'Süden', W: 'Westen' },
@@ -281,6 +283,8 @@
         'The Order has nothing left to teach you. Except humility.'
       ],
       you_tipped_w: 'Your tip: {tip}, {conf}.',
+      daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
+      share_head: 'Daumenprobe #{n}', share_pts: '{p} points',
       ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Flicker', 'Thumb Expert', 'Weather Prophet', 'Thumb Pro', 'Seer', 'Oracle', 'Grand Oracle', 'Thumb Legend', 'Thumb Master'],
       streak_n: '{n} days in a row', streak_1: '1 day', combo_n: '{n} hits in a row', rankup: 'New rank: {r}', to_next: '{n} to {r}', top_rank: 'Top rank', sound_on: 'Sound on', sound_off: 'Sound off',
       dir: { N: 'north', E: 'east', S: 'south', W: 'west' },
@@ -316,7 +320,34 @@
   };
 
   /* ---------- Behauptungen ---------- */
-  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  let RNG = null;
+  function rnd() { return RNG ? RNG() : Math.random(); }
+  function pick(a) { return a[Math.floor(rnd() * a.length)]; }
+  function mulberry(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
+  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon'];
+  function claimsFromSeed(seed, n) {
+    RNG = mulberry(hashStr(seed));
+    try {
+      const out = [];
+      for (let i = 0; i < n; i++) out.push(MAKERS[pick(SHARED_POOL)]());
+      return out;
+    } finally { RNG = null; }
+  }
+  function utcKey(offset) { return new Date(Date.now() + (offset || 0) * 86400000).toISOString().slice(0, 10); }
+  function dailyNumber(key) {
+    const p = key.split('-').map(Number);
+    return Math.round((Date.UTC(p[0], p[1] - 1, p[2]) - Date.UTC(2026, 10, 24)) / 86400000) + 1;
+  }
+  function dailyClaim(key) { return claimsFromSeed('tag:' + key, 1)[0]; }
+  function dailyTip(key) { return S.tips.filter(function (t) { return t.daily === key; })[0]; }
   function cityById(id) { return CITIES.filter(function (c) { return c.id === id; })[0]; }
 
   const MAKERS = {
@@ -440,7 +471,7 @@
 
   let S = load();
   if (!S.lang) S.lang = (navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
-  const ui = { view: 'home', claim: null, tip: null, conf: null, result: null, error: false, busy: false, msg: '' };
+  const ui = { daily: null, view: 'home', claim: null, tip: null, conf: null, result: null, error: false, busy: false, msg: '' };
 
   function T() { return I18N[S.lang]; }
   function esc(s) {
@@ -452,7 +483,7 @@
   function todayCount() {
     const k = DP.dayKey();
     const drawn = (S.draws || []).filter(function (ts) { return DP.dayKey(new Date(ts)) === k; }).length;
-    const tipped = S.tips.filter(function (t) { return DP.dayKey(new Date(t.ts)) === k; }).length;
+    const tipped = S.tips.filter(function (t) { return !t.daily && DP.dayKey(new Date(t.ts)) === k; }).length;
     return Math.max(drawn, tipped);
   }
   function resolvedTips() { return S.tips.filter(function (t) { return t.resolved; }); }
@@ -470,7 +501,7 @@
   function submitInstant() {
     ui.busy = true; ui.error = false; render();
     measure(ui.claim).then(function (m) {
-      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, ts: Date.now(), resolved: false };
+      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, daily: ui.daily || undefined, ts: Date.now(), resolved: false };
       finishTip(rec, m);
       S.tips.push(rec); S.current = null; save(S);
       ui.result = rec; ui.view = 'result'; ui.busy = false; render();
@@ -480,7 +511,7 @@
   }
 
   function submitLater() {
-    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, ts: Date.now(), resolved: false };
+    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, daily: ui.daily || undefined, ts: Date.now(), resolved: false };
     S.tips.push(rec); S.current = null; save(S);
     ui.result = rec; ui.view = 'later'; render();
   }
@@ -547,7 +578,7 @@
   }
   function todaySlots() {
     const k = DP.dayKey();
-    const todays = S.tips.filter(function (x) { return DP.dayKey(new Date(x.ts)) === k; }).sort(function (a, b) { return a.ts - b.ts; });
+    const todays = S.tips.filter(function (x) { return !x.daily && DP.dayKey(new Date(x.ts)) === k; }).sort(function (a, b) { return a.ts - b.ts; });
     const out = [];
     for (let i = 0; i < DAILY_LIMIT; i++) {
       const x = todays[i];
@@ -683,6 +714,10 @@
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
     if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(t.go) + '</button>';
+    const dKey = utcKey(), dDone = dailyTip(dKey);
+    h += '<section class="daily"><div><b>' + esc(t.daily_title) + ' #' + dailyNumber(dKey) + '</b><small>' + esc(t.daily_sub) + '</small></div>' +
+      (dDone && dDone.resolved ? '<div class="daily-res"><span>' + dailyRow() + '</span><button class="chip" data-act="share-daily">' + esc(t.share) + '</button></div>'
+        : dDone ? '<span class="small">…</span>' : '<button class="chip go" data-act="daily">' + esc(t.daily_go) + '</button>') + '</section>';
     h += '<div class="slots" role="img" aria-label="' + esc(fill(t.left, { n: left })) + '">' + todaySlots().map(function (k) { return '<i class="' + k + '"></i>'; }).join('') + '</div>';
     if (left > 0) h += '<p class="hint">' + esc(fill(t.left, { n: left })) + '</p>';
     else h += '<p class="small" style="margin:14px 0 0;text-align:center">' + esc(t.goDone) + '</p>';
@@ -778,6 +813,23 @@
     return h;
   }
 
+  function dailyRow() {
+    let row = '';
+    for (let i = 6; i >= 0; i--) {
+      const d = dailyTip(utcKey(-i));
+      row += !d || !d.resolved ? '⬜' : DP.isHit(d.tip, d.outcome) ? '🟩' : '🟥';
+    }
+    return row;
+  }
+  function shareDaily() {
+    const t = T(), key = utcKey(), d = dailyTip(key);
+    if (!d || !d.resolved) return;
+    const text = fill(t.share_head, { n: dailyNumber(key) }) + ' ' + dailyRow() + '\n' + claimText(d.claim, S.lang) + '\n' +
+      fill(t.share_pts, { p: signed(d.pts) }) + '\n' + location.origin + location.pathname;
+    if (navigator.share) { navigator.share({ text: text }).catch(function () { /* abgebrochen */ }); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say(t.share_copied); });
+  }
+
   function badges(r, hit) {
     const t = T();
     const out = [];
@@ -812,7 +864,7 @@
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
       '<div class="spacer"></div>' +
-      (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '') +
+      (r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
       '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
   }
 
@@ -924,12 +976,21 @@
     else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {
       if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {
-        if (ui.error && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
+        if (ui.error && !ui.daily && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
         S.current = null; save(S);
       }
-      ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
+      ui.daily = null; ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
     }
+    else if (act === 'daily') {
+      const key = utcKey();
+      if (dailyTip(key)) return;
+      ui.daily = key; ui.claim = dailyClaim(key); ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip';
+      S.current = { claim: ui.claim, ts: Date.now(), daily: key };
+      save(S); render();
+    }
+    else if (act === 'share-daily') { shareDaily(); }
     else if (act === 'start') {
+      ui.daily = null;
       if (todayCount() >= DAILY_LIMIT) return;
       ui.claim = newClaim(); ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip';
       S.current = { claim: ui.claim, ts: Date.now() };
@@ -1037,7 +1098,7 @@
   });
 
   if (S.current && validClaim(S.current.claim) && DP.dayKey(new Date(S.current.ts)) === DP.dayKey()) {
-    ui.claim = S.current.claim; ui.view = 'tip';
+    ui.claim = S.current.claim; ui.view = 'tip'; ui.daily = S.current.daily || null;
   } else if (S.current) { S.current = null; save(S); }
 
   render();

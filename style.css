@@ -283,3 +283,9 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 .story h2 { font-size: 1.35rem; font-weight: 850; font-stretch: 80%; margin-bottom: 6px; }
 .story p { line-height: 1.4; }
 .lore-line { flex-basis: 100%; font-style: italic; font-weight: 650; }
+
+.daily { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 12px 0 0; padding: 14px 16px; border-radius: 22px; background: linear-gradient(120deg, rgba(25,224,160,.16), rgba(67,199,255,.16)); border: 1px solid rgba(25,224,160,.4); }
+.daily b { display: block; font-weight: 850; }
+.daily small { opacity: .75; font-weight: 600; }
+.daily .go { background: var(--mint); color: var(--night); border-color: var(--mint); white-space: nowrap; }
+.daily-res { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
