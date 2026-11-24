@@ -662,8 +662,8 @@
     root.innerHTML = views[ui.view]();
     const t = T();
     document.getElementById('foot').innerHTML =
-      '<p>' + esc(t.made_by) + ' <a href="https://dreierlabs.com/" rel="noopener"><b>Dreier Labs</b></a> · <a href="https://dreierlabs.com/impressum.html" rel="noopener">' + esc(t.imprint) + '</a></p>' +
-      '<details><summary>' + esc(t.privacy) + '</summary><p>' + esc(t.privacy_text) + '</p></details>' +
+      '<div class="links">' + esc(t.made_by) + ' <a href="https://dreierlabs.com/" rel="noopener"><b>Dreier Labs</b></a> · <a href="https://dreierlabs.com/impressum.html" rel="noopener">' + esc(t.imprint) + '</a> · ' +
+      '<details><summary>' + esc(t.privacy) + '</summary><p>' + esc(t.privacy_text) + '</p></details></div>' +
       '<p class="credit">' + esc(t.data_credit) + '</p>';
     window.scrollTo(0, 0);
     if (ui.view === 'result') { countUp(); celebrate(DP.isHit(ui.result.tip, ui.result.outcome)); }
