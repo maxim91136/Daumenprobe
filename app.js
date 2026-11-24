@@ -34,6 +34,7 @@
       rules_goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kosten Punkte, und zwar mehr, je sicherer du dich gibst.',
       rules_cols: ['Sicherheit', 'Treffer', 'Daneben'],
       rules_foot: 'Schwer zählt volle Punkte, Mittel dreiviertel, Leicht die Hälfte. Fünf Behauptungen pro Tag. Nur Spielpunkte, nie Geld.',
+      conf_hint_l: 'Schwer: Die Grenzen liegen nah am Üblichen. Meist sind 50 bis 70 % klug. Bei 100 % kostet ein Irrtum 30 Punkte.',
       conf_hint: '50 % = geraten, 100 % = ganz sicher. Je sicherer, desto mehr Punkte, aber auch desto mehr Abzug.',
       go: 'Neue Behauptung',
       goDone: 'Das war\'s für heute. Morgen warten 10 neue Behauptungen auf dich.',
@@ -255,6 +256,7 @@
       rules_goal: 'The one with the most points wins. Hits earn points, misses cost points, and the more so the surer you say you are.',
       rules_cols: ['Confidence', 'Hit', 'Miss'],
       rules_foot: 'Hard counts full points, Medium three quarters, Easy half. Five claims per day. Play points only, never money.',
+      conf_hint_l: 'Hard: thresholds sit close to what is normal. 50 to 70 % is usually smart. At 100 % a miss costs 30 points.',
       conf_hint: '50 % = a guess, 100 % = totally sure. The surer you are, the more you win, but also the more you lose.',
       go: 'New claim',
       goDone: 'That\'s it for today. 10 new claims tomorrow.',
@@ -1234,7 +1236,7 @@
       '<input id="sl" class="slider" type="range" min="0" max="' + (steps().length - 1) + '" step="1" value="0" style="--p:0%" aria-label="' + esc(t.confTitle) + '"' + (ui.busy ? ' disabled' : '') + '>' +
       '<div class="stake"><div class="plus"><span>' + esc(t.rules_cols[1]) + '</span><b id="pHit">' + signed(s.hit) + '</b></div>' +
       '<div class="minus"><span>' + esc(t.rules_cols[2]) + '</span><b id="pMiss">' + signed(s.miss) + '</b></div></div>' +
-      '<p class="small' + (ui.practice ? ' practice' : '') + '" style="margin-top:10px">' + esc(ui.practice ? t.pr_conf : (t.lv[lvl()] ? t.lv[lvl()].hint : t.conf_hint)) + '</p>' +
+      '<p class="small' + (ui.practice ? ' practice' : '') + '" style="margin-top:10px">' + esc(ui.practice ? t.pr_conf : (lvl() === 'l' ? t.conf_hint_l : t.lv[lvl()] ? t.lv[lvl()].hint : t.conf_hint)) + '</p>' +
       '<div class="spacer"></div>';
     if (ui.busy) h += '<p class="hint" style="margin-top:12px">' + esc(t.measuring) + '</p>';
     if (ui.error) h += '<div class="notice" style="margin-top:12px">' + esc(t.err) + '</div><button class="btn" data-act="retry">' + esc(t.retry) + '</button>';
