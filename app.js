@@ -81,7 +81,7 @@
         ['Kann ich es als App installieren?', 'Ja. Im Browser „Zum Home-Bildschirm“ wählen. Dann startet es wie eine App.'],
         ['Dürfen Kinder mitspielen?', 'Ja. Es gibt nur Spielpunkte, nie Geld, nichts Kritisches, kein Konto und keine Altersabfrage.']
       ],
-      free_note: 'Erste Niete des Tages: gratis', coach_over: 'Bei den letzten {n} Tipps mit mindestens 75 % Sicherheit lagst du {k}-mal daneben. Probier 60 bis 70 %: Da kostet ein Irrtum viel weniger.', coach_easy: 'Oder wechsle auf Leicht, dort kostet Daneben nichts.',
+      peak_short: 'Höchststand {n}', free_note: 'Erste Niete des Tages: gratis', coach_over: 'Bei den letzten {n} Tipps mit mindestens 75 % Sicherheit lagst du {k}-mal daneben. Probier 60 bis 70 %: Da kostet ein Irrtum viel weniger.', coach_easy: 'Oder wechsle auf Leicht, dort kostet Daneben nichts.',
       lesson_title: 'Im Minus? Das gehört zum Lernen.', lesson_pts: ['Bist du unsicher, sag 50 oder 60 %. Ein Irrtum kostet dann fast nichts.', 'Geh nur höher, wenn du es wirklich weißt.', 'Auf Leicht gibt es kein Minus. Zum Üben ideal.'], peak_note: 'Dein Rang bleibt: Höchststand {n} Punkte.',
       faq_minus: 'Ich bin im Minus. Was jetzt?',
       rules_more: ['Zehn Behauptungen pro Tag, danach ist Schluss für heute.', 'Eine Frage zu verwerfen zählt als Versuch.', 'Die Messregel steht vorher fest und wird nach dem Tipp gezeigt.', 'Tagesfrage, Duell und Aufstiegsprüfung zählen nicht zu den zehn.', 'Ehrlich einschätzen lohnt sich: Wer immer „ganz sicher“ sagt, verliert auf Dauer.', 'Dein Rang fällt nie, er richtet sich nach deinem Höchststand.', 'Die erste Niete jedes Tages kostet nichts.', 'Es gibt nur Spielpunkte, nie Geld.'],
@@ -156,7 +156,7 @@
       story_title: 'Der Orden der Daumen',
       story: 'Es gibt einen alten Brauch: Wer wissen will, woher der Wind weht, hält den Daumen hoch. Du bist neu im Orden der Daumen. Tippe, lass die Welt nachmessen und steige auf, bis du den Himmel lesen kannst wie ein Buch.',
       rank_lore: [
-        'Du hast den Daumen noch nicht einmal gehoben.',
+        'Der Daumen ist unten. Gleich geht er hoch.',
         'Du riechst den Regen, bevor er fällt. Meistens.',
         'Der Orden nimmt dich auf. Dein Daumen darf in den Wind.',
         'Du entscheidest schneller, als andere Wolken zählen.',
@@ -300,7 +300,7 @@
         ['Can I install it as an app?', 'Yes. Choose “Add to Home Screen” in your browser. Then it starts like an app.'],
         ['Can children play?', 'Yes. There are only play points, never money, nothing critical, no account and no age check.']
       ],
-      free_note: 'First miss of the day: free', coach_over: 'In your last {n} tips with at least 75 % sureness you missed {k} times. Try 60 to 70 %: a mistake costs far less there.', coach_easy: 'Or switch to Easy, where a miss costs nothing.',
+      peak_short: 'peak {n}', free_note: 'First miss of the day: free', coach_over: 'In your last {n} tips with at least 75 % sureness you missed {k} times. Try 60 to 70 %: a mistake costs far less there.', coach_easy: 'Or switch to Easy, where a miss costs nothing.',
       lesson_title: 'In the red? That is part of learning.', lesson_pts: ['If you are unsure, say 50 or 60 %. A mistake then costs almost nothing.', 'Go higher only when you really know.', 'Easy has no minus. Great for practice.'], peak_note: 'Your rank stays: peak {n} points.',
       faq_minus: 'I am in the red. Now what?',
       rules_more: ['Ten claims per day, then you are done for today.', 'Discarding a claim counts as an attempt.', 'The measuring rule is fixed beforehand and shown after your tip.', 'Daily claim, duel and rank exam do not count towards the ten.', 'Honest guessing pays off: always saying “totally sure” loses in the long run.', 'Your rank never drops, it follows your peak.', 'The first miss of each day costs nothing.', 'Play points only, never money.'],
@@ -377,7 +377,7 @@
       story_title: 'The Order of the Thumbs',
       story: 'There is an old custom: whoever wants to know where the wind blows holds up a thumb. You are new to the Order of the Thumbs. Tip, let the world measure itself and climb until you can read the sky like a book.',
       rank_lore: [
-        'You have not even raised your thumb yet.',
+        'Thumb is down. It will go up soon.',
         'You smell the rain before it falls. Mostly.',
         'The Order takes you in. Your thumb may test the wind.',
         'You decide faster than others count clouds.',
@@ -766,7 +766,7 @@
     return T().words[L2][i < 0 ? 0 : i];
   }
   const EXAM_GATES = [4, 6, 8, 10];
-  const RANK_AT = [0, 15, 40, 80, 140, 220, 320, 450, 650, 900, 1300, 2000];
+  const RANK_AT = [0, 10, 40, 80, 140, 220, 320, 450, 650, 900, 1300, 2000];
   function rankFor(pts) {
     let i = 0, pending = null;
     RANK_AT.forEach(function (v, k) { if (pts >= v) i = k; });
@@ -974,7 +974,7 @@
       (rk.pending ? '<small>' + esc(fill(t.exam_ready, { r: T().ranks[rk.pending] })) + '</small>' +
         (S.examActive ? '<button class="btn pulse" data-act="exam-start">' + esc(fill(t.exam_cont, { i: examRecs(S.examActive.key).length })) + '</button>'
           : S.examDay === utcKey() ? '<small class="warn">' + esc(t.exam_tomorrow) + '</small>' : '<button class="btn pulse" data-act="exam-start">' + esc(t.exam_start) + '</button>')
-        : '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + '</small>') +
+        : '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + (peak > st.pts && peak > 0 ? ' · ' + esc(fill(t.peak_short, { n: peak })) : '') + '</small>') +
       '<p class="lore">' + esc(t.rank_lore[rk.i]) + '</p></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
