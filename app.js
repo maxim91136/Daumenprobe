@@ -64,6 +64,7 @@
       none: 'Noch nichts getippt.',
       backup: 'Sichern und laden',
       backup_help: 'Dein Spielstand liegt nur in diesem Browser. Sichere ihn ab und zu, falls der Browser Daten löscht (Safari kann das nach etwa 7 Tagen ohne Besuch).',
+      rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.',
       export_file: 'Datei sichern', export_code: 'Code kopieren', copied: 'Kopiert.',
       import_title: 'Laden',
       import_ph: 'Code oder Sicherungsdatei-Inhalt hier einfügen',
@@ -245,6 +246,7 @@
       none: 'No tips yet.',
       backup: 'Save and load',
       backup_help: 'Your progress lives only in this browser. Save it now and then in case the browser clears data (Safari can do that after about 7 days without a visit).',
+      rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.',
       export_file: 'Save file', export_code: 'Copy code', copied: 'Copied.',
       import_title: 'Load',
       import_ph: 'Paste a code or the contents of a backup file here',
@@ -544,7 +546,7 @@
 
   /* ---------- Speicher ---------- */
   let memory = null;
-  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -1103,6 +1105,12 @@
     return out.length ? '<div class="badges">' + out.join('') + '</div>' : '';
   }
 
+  function reportRow(r) {
+    const t = T();
+    if ((S.reports || []).some(function (x) { return x.id === r.id; })) return '<p class="report done">' + esc(t.rep_thanks) + '</p>';
+    return '<div class="report"><span>' + esc(t.rep_q) + '</span>' +
+      ['unclear', 'boring', 'odd'].map(function (k) { return '<button class="chip" data-act="report" data-v="' + k + '">' + esc(t['rep_' + k]) + '</button>'; }).join('') + '</div>';
+  }
   function viewResult() {
     const t = T();
     const r = ui.result;
@@ -1115,6 +1123,7 @@
       badges(r, hit) +
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
+      reportRow(r) +
       '<div class="spacer"></div>' +
       (r.exam ? '<button class="btn" data-act="exam-next">' + esc(examRecs(r.exam).length >= 3 ? t.exam_eval : fill(t.exam_next, { i: examRecs(r.exam).length })) + '</button>' : r.duel ? '<button class="btn" data-act="duel-next">' + esc(duelRecs(r.duel).length >= 5 ? t.duel_eval : fill(t.duel_next, { i: duelRecs(r.duel).length })) + '</button>' : r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
       '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
@@ -1196,7 +1205,7 @@
   }
 
   /* ---------- Sichern und Laden ---------- */
-  function exportJson() { return JSON.stringify({ app: 'daumenprobe', v: 1, tips: S.tips }); }
+  function exportJson() { return JSON.stringify({ app: 'daumenprobe', v: 1, tips: S.tips, reports: S.reports || [] }); }
   function toCode(json) { return btoa(unescape(encodeURIComponent(json))); }
   function fromInput(text) {
     const s = text.trim();
@@ -1210,6 +1219,9 @@
       inc.tips = (inc.tips || []).filter(function (t) { return t && validClaim(t.claim); });
       const before = S.tips.length;
       S = DP.mergeState(S, inc);
+      const have = {};
+      (S.reports || []).forEach(function (x) { have[x.id] = 1; });
+      S.reports = (S.reports || []).concat((Array.isArray(inc.reports) ? inc.reports : []).filter(function (x) { return x && x.id && x.k && validClaim(x.claim) && !have[x.id]; }));
       save(S);
       return { ok: true, n: S.tips.length - before };
     } catch (e) { return { ok: false }; }
@@ -1226,6 +1238,15 @@
     const v = el.getAttribute('data-v');
     if (act === 'lang') { S.lang = v; save(S); render(); }
     else if (act === 'sound') { S.mute = !S.mute; save(S); render(); sfx('tap'); }
+    else if (act === 'report') {
+      const r = ui.result;
+      if (r && ui.view === 'result' && ['unclear', 'boring', 'odd'].indexOf(v) >= 0 && !(S.reports || []).some(function (x) { return x.id === r.id; })) {
+        S.reports = (S.reports || []).concat([{ id: r.id, k: v, tpl: r.claim.tpl, claim: r.claim, shown: r.shown, text: claimText(r.claim, 'de'), ts: Date.now() }]);
+        save(S);
+        const box = el.closest('.report');
+        if (box) { box.className = 'report done'; box.innerHTML = esc(T().rep_thanks); }
+      }
+    }
     else if (act === 'skin') { if (skinOk(v)) { S.skin = v; save(S); render(); } }
     else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {

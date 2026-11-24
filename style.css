@@ -340,3 +340,7 @@ body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c
   .print-logo { animation: swing .9s cubic-bezier(.2,1.4,.4,1) .2s backwards; }
   @keyframes swing { from { transform: rotate(-50deg) scale(.7); opacity: 0; } 60% { transform: rotate(6deg); } }
 }
+
+.report { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 14px 0 0; font-size: .85rem; font-weight: 700; opacity: .85; }
+.report.done { opacity: .7; }
+.report .chip { font-size: .8rem; padding: 3px 10px; }
