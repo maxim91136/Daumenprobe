@@ -287,6 +287,8 @@
       return { outcome: b > a, shown: { today: a, tomorrow: b } };
     }
   };
+  L.measure.wikihist = L.measure.wiki;
+  L.measure.wikisport = L.measure.wiki;
 
   /* Sicherungsdatei: prüft und führt Spielstände zusammen (ohne Doppelte). */
   L.mergeState = function (current, incoming) {

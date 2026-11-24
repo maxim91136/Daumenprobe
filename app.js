@@ -13,7 +13,19 @@
     { id: 'tokio', tz: 'Asia/Tokyo', code: 'TYO', lat: 35.68, lon: 139.69, de: 'Tokio', en: 'Tokyo', eu: false },
     { id: 'sydney', tz: 'Australia/Sydney', code: 'SYD', lat: -33.87, lon: 151.21, de: 'Sydney', en: 'Sydney', eu: false },
     { id: 'newyork', tz: 'America/New_York', code: 'NYC', lat: 40.71, lon: -74.01, de: 'New York', en: 'New York', eu: false },
-    { id: 'kapstadt', tz: 'Africa/Johannesburg', code: 'CPT', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false }
+    { id: 'kapstadt', tz: 'Africa/Johannesburg', code: 'CPT', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false },
+    { id: 'london', tz: 'Europe/London', code: 'LON', lat: 51.51, lon: -0.13, de: 'London', en: 'London', eu: true },
+    { id: 'paris', tz: 'Europe/Paris', code: 'PAR', lat: 48.86, lon: 2.35, de: 'Paris', en: 'Paris', eu: true },
+    { id: 'rom', tz: 'Europe/Rome', code: 'ROM', lat: 41.90, lon: 12.50, de: 'Rom', en: 'Rome', eu: true },
+    { id: 'madrid', tz: 'Europe/Madrid', code: 'MAD', lat: 40.42, lon: -3.70, de: 'Madrid', en: 'Madrid', eu: true },
+    { id: 'reykjavik', tz: 'Atlantic/Reykjavik', code: 'REK', lat: 64.15, lon: -21.94, de: 'Reykjavik', en: 'Reykjavik', eu: false },
+    { id: 'kairo', tz: 'Africa/Cairo', code: 'CAI', lat: 30.04, lon: 31.24, de: 'Kairo', en: 'Cairo', eu: false },
+    { id: 'dubai', tz: 'Asia/Dubai', code: 'DXB', lat: 25.20, lon: 55.27, de: 'Dubai', en: 'Dubai', eu: false },
+    { id: 'mumbai', tz: 'Asia/Kolkata', code: 'BOM', lat: 19.08, lon: 72.88, de: 'Mumbai', en: 'Mumbai', eu: false },
+    { id: 'singapur', tz: 'Asia/Singapore', code: 'SIN', lat: 1.35, lon: 103.82, de: 'Singapur', en: 'Singapore', eu: false },
+    { id: 'peking', tz: 'Asia/Shanghai', code: 'PEK', lat: 39.90, lon: 116.41, de: 'Peking', en: 'Beijing', eu: false },
+    { id: 'rio', tz: 'America/Sao_Paulo', code: 'RIO', lat: -22.91, lon: -43.17, de: 'Rio de Janeiro', en: 'Rio de Janeiro', eu: false },
+    { id: 'losangeles', tz: 'America/Los_Angeles', code: 'LAX', lat: 34.05, lon: -118.24, de: 'Los Angeles', en: 'Los Angeles', eu: false }
   ];
 
   const I18N = {
@@ -156,7 +168,7 @@
         full: ['Volles Haus', 'Alle zehn Behauptungen an einem Tag gespielt.'],
         world: ['Weltenbummler', 'Fünf verschiedene Themen gespielt.'],
         exam: ['Geprüft', 'Eine Aufstiegsprüfung bestanden.'],
-        pass: ['Weltreisender', 'In allen acht Städten einen Stempel geholt.'],
+        pass: ['Weltreisender', 'In zwölf Städten einen Stempel geholt.'],
         duel: ['Duellant', 'Ein Duell zu Ende gespielt.'],
         better: ['Besser eingeschätzt', 'Deine letzten 10 Tipps sind mindestens 10 Punkte ehrlicher kalibriert als deine ersten 10.'],
         comeback: ['Wieder da', 'Aus dem Minus (ab −10) zurück auf null oder mehr.']
@@ -393,7 +405,7 @@
         full: ['Full house', 'Played all ten claims in one day.'],
         world: ['Globetrotter', 'Played five different topics.'],
         exam: ['Examined', 'Passed a rank exam.'],
-        pass: ['Globe trotter', 'Collected a stamp in all eight cities.'],
+        pass: ['Globe trotter', 'Collected a stamp in twelve cities.'],
         better: ['Better judge', 'Your last 10 tips are calibrated at least 10 points more honestly than your first 10.'],
         comeback: ['Back on top', 'Climbed out of the red (from −10) back to zero or more.'],
         duel: ['Duelist', 'Finished a duel.'],
@@ -508,9 +520,12 @@
     };
   }
   /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
-  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize'];
+  ['de', 'en'].forEach(function (lg) {
+    ['claims', 'rules', 'measure_msg'].forEach(function (k) { I18N[lg][k].wikihist = I18N[lg][k].wiki; I18N[lg][k].wikisport = I18N[lg][k].wiki; });
+  });
+  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora', 'wiki', 'wikihist', 'wikisport', 'isssun', 'isseast', 'solarwind', 'wikisize'];
   /* Erst die Kategorie, dann das Thema: Wetter, Luft, Erde, Weltraum, Himmel, Zeit wechseln sich ab. */
-  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'luft', quake: 'erde', quakemax: 'erde', iss: 'raum', aurora: 'raum', isssun: 'raum', isseast: 'raum', solarwind: 'raum', wikisize: 'wissen', wiki: 'wissen', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
+  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'w', quake: 'erde', quakemax: 'erde', iss: 'raum', wikihist: 'geschichte', wikisport: 'sport', aurora: 'raum', isssun: 'raum', isseast: 'raum', solarwind: 'raum', wikisize: 'wissen', wiki: 'wissen', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
   function balanced(pool, used) {
     const cats = {};
     pool.forEach(function (t) { (cats[CAT_OF[t]] = cats[CAT_OF[t]] || []).push(t); });
@@ -549,7 +564,19 @@
     tokio: [5, 6, 9.5, 14.5, 19, 22, 26, 27, 23.5, 18.5, 13, 7.5],
     sydney: [23, 23, 21.5, 19, 15.5, 13, 12, 13.5, 16, 18.5, 20, 22],
     newyork: [0, 1.5, 5.5, 11.5, 17, 22, 25, 24.5, 20.5, 14.5, 9, 3],
-    kapstadt: [21, 21.5, 20, 17, 14.5, 12.5, 12, 12.5, 14, 16, 18, 20]
+    kapstadt: [21, 21.5, 20, 17, 14.5, 12.5, 12, 12.5, 14, 16, 18, 20],
+    london: [5.5, 5.7, 7.6, 10, 13.3, 16.4, 18.7, 18.4, 15.7, 12.1, 8.3, 5.8],
+    paris: [5, 5.7, 8.8, 11.5, 15, 18.4, 20.5, 20.3, 16.8, 12.9, 8.1, 5.5],
+    rom: [8.5, 9.2, 11.8, 14.5, 18.7, 22.8, 25.9, 26, 22.4, 18.1, 13.2, 9.6],
+    madrid: [6.3, 8, 11.2, 13, 17, 22.5, 26.1, 25.7, 21.3, 15.6, 10, 6.6],
+    reykjavik: [0, 0.4, 1.5, 3.6, 7.2, 9.9, 11.8, 11.2, 8.4, 5, 1.7, 0.2],
+    kairo: [14.6, 15.6, 18.4, 22.6, 26.5, 28.9, 29.8, 29.6, 27.4, 24.1, 19.7, 15.8],
+    dubai: [19.1, 20.1, 22.6, 26.2, 30.6, 32.7, 34.7, 35, 32, 28.7, 24.6, 21],
+    mumbai: [24.9, 25.5, 27.7, 29.6, 30.4, 29.4, 28.3, 27.9, 27.9, 28.6, 27.4, 25.8],
+    singapur: [26.6, 27.2, 27.7, 28, 28.2, 28, 27.7, 27.7, 27.5, 27.4, 26.8, 26.2],
+    peking: [-2.9, 0.3, 7, 14.5, 20.8, 25, 26.8, 25.4, 20.6, 13.2, 4.8, -1.2],
+    rio: [26.5, 26.8, 26, 24.5, 22.7, 21.6, 21.3, 21.9, 22.2, 23.2, 24.2, 25.5],
+    losangeles: [14.2, 14.8, 15.8, 17.1, 18.8, 20.7, 23.3, 23.9, 23, 20.2, 16.7, 13.8]
   };
   /* Städte in einer anderen Zeitzone als der eigenen: nach der Uhrzeit oder dem Tageslicht zuhause zu fragen, wäre sinnlos. Geteilte Fragen (Tagesfrage, Duell) bleiben für alle gleich. */
   function foreign() {
@@ -573,7 +600,7 @@
     iss: function () { return { tpl: 'iss' }; },
     quake: function () { return { tpl: 'quake', N: HARD ? pick([16, 18, 20, 22]) : pick([10, 15, 20, 25]) }; },
     quakemax: function () { return { tpl: 'quakemax', M: HARD ? pick([5.3, 5.5, 5.7]) : pick([5, 5.5, 6]) }; },
-    aqi: function () { return { tpl: 'aqi', city: pick(CITIES).id, A: HARD ? pick([25, 30, 35]) : pick([20, 40]) }; },
+    aqi: function () { return { tpl: 'aqi', city: pick(CITIES.filter(function (c) { return c.eu; })).id, A: HARD ? pick([25, 30, 35]) : pick([20, 40]) }; },
     winddir: function () { return { tpl: 'winddir', city: pick(CITIES).id, D: pick(['N', 'E', 'S', 'W']) }; },
     daylen: function () {
       const a = pick(CITIES);
@@ -605,8 +632,10 @@
       while (y === x) y = pick(WIKI_LANGS);
       return { tpl: 'wikisize', x: x, y: y };
     },
+    wikihist: function () { const x = pick(WIKI_HIST); let y = pick(WIKI_HIST); while (y === x) y = pick(WIKI_HIST); return { tpl: 'wikihist', x: x, y: y }; },
+    wikisport: function () { const x = pick(WIKI_SPORT); let y = pick(WIKI_SPORT); while (y === x) y = pick(WIKI_SPORT); return { tpl: 'wikisport', x: x, y: y }; },
     wiki: function () {
-      const g = HARD ? pick(WIKI_GROUPS) : WIKI_ALL;
+      const g = HARD ? pick(WIKI_GROUPS) : [].concat.apply([], WIKI_GROUPS);
       const x = pick(g); let y = pick(g);
       while (y === x) y = pick(g);
       return { tpl: 'wiki', x: x, y: y };
@@ -620,9 +649,9 @@
     }
   };
   const POOLS = {
-    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize'],
-    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize'],
-    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize']
+    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki', 'wikihist', 'wikisport', 'isssun', 'isseast', 'solarwind', 'wikisize'],
+    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki', 'wikihist', 'wikisport', 'isssun', 'isseast', 'solarwind', 'wikisize'],
+    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'aurora', 'wiki', 'wikihist', 'wikisport', 'isssun', 'isseast', 'solarwind', 'wikisize']
   };
   /* Wikipedia-Vergleich: feste, kinderfreundliche Liste (deutsche Titel, Unterstrich statt Leerzeichen). Nur diese Titel werden abgefragt. */
   const WIKI_GROUPS = [
@@ -632,14 +661,17 @@
     ['Pizza', 'Schokolade', 'Kaffee', 'Tee', 'Brot', 'Apfel', 'Banane', 'Käse', 'Honig', 'Speiseeis'],
     ['Fußball', 'Tennis', 'Schach', 'Basketball', 'Handball', 'Schwimmsport', 'Radsport']
   ];
-  const WIKI_ALL = [].concat.apply([], WIKI_GROUPS);
+  const WIKI_HIST = ['Römisches_Reich', 'Mittelalter', 'Steinzeit', 'Wikinger', 'Dinosaurier', 'Pharao', 'Apollo_11', 'Berliner_Mauer', 'Albert_Einstein', 'Leonardo_da_Vinci', 'Isaac_Newton', 'Marie_Curie', 'Christoph_Kolumbus', 'Johannes_Gutenberg', 'Olympische_Spiele', 'Pyramiden_von_Gizeh', 'Alexander_der_Große', 'Napoleon_Bonaparte'];
+  const WIKI_SPORT = ['Fußball-Weltmeisterschaft', 'UEFA_Champions_League', 'FC_Bayern_München', 'Borussia_Dortmund', 'Real_Madrid', 'FC_Barcelona', 'Formel_1', 'Tour_de_France', 'Wimbledon_Championships', 'Eishockey', 'Skispringen', 'Biathlon', 'Tischtennis', 'Rugby', 'Judo', 'Basketball', 'Handball', 'Radsport'];
+  const WIKI_ALL = [].concat.apply([], WIKI_GROUPS).concat(WIKI_HIST, WIKI_SPORT);
+  const WIKI_TPL = { wiki: 1, wikihist: 1, wikisport: 1 };
   const WIKILANG = {
     de: { en: 'Englisch', de: 'Deutsch', fr: 'Französisch', es: 'Spanisch', it: 'Italienisch', nl: 'Niederländisch', sv: 'Schwedisch', pl: 'Polnisch', ru: 'Russisch', ja: 'Japanisch', pt: 'Portugiesisch', ar: 'Arabisch' },
     en: { en: 'English', de: 'German', fr: 'French', es: 'Spanish', it: 'Italian', nl: 'Dutch', sv: 'Swedish', pl: 'Polish', ru: 'Russian', ja: 'Japanese', pt: 'Portuguese', ar: 'Arabic' }
   };
   const WIKI_LANGS = Object.keys(WIKILANG.en);
   function wikiDay() { const d = new Date(Date.now() - 2 * 864e5); return d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCDate()).padStart(2, '0'); }
-  const NOCITY = { wiki: 1, wikisize: 1, isssun: 1, isseast: 1, solarwind: 1, iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
+  const NOCITY = { wikihist: 1, wikisport: 1, wiki: 1, wikisize: 1, isssun: 1, isseast: 1, solarwind: 1, iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
 
   /* Abwechslung: heute noch nicht gespielte Themen zuerst, und keine Stadt aus den letzten drei Behauptungen. */
   function firstRun() { return !S.onbDone && !S.tips.length; }
@@ -663,7 +695,7 @@
     if ((c.tpl === 'daylen' || c.tpl === 'warmer' || c.tpl === 'sunhigh') && !cityById(c.city2)) return false;
     if (c.tpl === 'wikisize' && (WIKI_LANGS.indexOf(c.x) < 0 || WIKI_LANGS.indexOf(c.y) < 0 || c.x === c.y)) return false;
     if (c.tpl === 'solarwind' && !(c.S > 0 && c.S < 2000)) return false;
-    if (c.tpl === 'wiki' && (WIKI_ALL.indexOf(c.x) < 0 || WIKI_ALL.indexOf(c.y) < 0 || c.x === c.y)) return false;
+    if (WIKI_TPL[c.tpl] && (WIKI_ALL.indexOf(c.x) < 0 || WIKI_ALL.indexOf(c.y) < 0 || c.x === c.y)) return false;
     if (c.tpl === 'winddir' && ['N', 'E', 'S', 'W'].indexOf(c.D) < 0) return false;
     if (c.tpl === 'tomorrow' && !(/^\d{4}-\d{2}-\d{2}$/.test(c.created) && /^\d{4}-\d{2}-\d{2}$/.test(c.due))) return false;
     return true;
@@ -689,7 +721,7 @@
     const vars = claimVars(claim, lang);
     if (claim.tpl === 'tomorrow') { vars.a = num(shown.today, lang); vars.b = num(shown.tomorrow, lang); }
     else if (claim.tpl === 'daylen' || claim.tpl === 'warmer') { vars.a = num(shown.a, lang); vars.b = num(shown.b, lang); }
-    else if (claim.tpl === 'wiki' || claim.tpl === 'wikisize') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
+    else if (WIKI_TPL[claim.tpl] || claim.tpl === 'wikisize') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
     else if (claim.tpl === 'isssun') vars.v = t.iss_vis[shown] || shown;
     else if (claim.tpl === 'solarwind') vars.v = num(shown, lang, 0);
     else if (claim.tpl === 'sunhigh') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
@@ -721,7 +753,7 @@
     }
     if (claim.tpl === 'quake' || claim.tpl === 'quakemax') return fetchJson('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson');
     if (claim.tpl === 'aurora') return fetchJson('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
-    if (claim.tpl === 'wiki') {
+    if (WIKI_TPL[claim.tpl]) {
       const day = wikiDay();
       const views = function (t) {
         return fetchJson('https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/de.wikipedia/all-access/user/' + encodeURIComponent(t) + '/daily/' + day + '/' + day)
@@ -1057,7 +1089,7 @@
     ['full', '', function (c) { return c.maxPerDay >= DAILY_LIMIT; }],
     ['world', '', function (c) { return c.topics >= 5; }],
     ['exam', '', function (c) { return c.exams >= 1; }],
-    ['pass', '', function (c) { return c.stamps >= 8; }],
+    ['pass', '', function (c) { return c.stamps >= 12; }],
     ['duel', '', function (c) { return c.duelsDone >= 1; }],
     ['better', '', function (c) { return c.better; }],
     ['comeback', '', function (c) { return c.comeback; }]
