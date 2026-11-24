@@ -93,7 +93,7 @@
       import_ph: 'Code oder Sicherungsdatei-Inhalt hier einfügen',
       import_btn: 'Laden', import_file: 'Datei wählen',
       import_ok: 'Geladen: {n} Tipps.', import_bad: 'Das hat nicht geklappt. Ist es ein Code von Daumenprobe?',
-      remind: '💾 Zeit für ein Backup. Jetzt sichern →',
+      remind: '💾 Zeit für ein Backup. Tippen zum Sichern →',
       lang: 'Sprache',
       made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
       privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) und services.swpc.noaa.gov (Polarlicht-Index) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
@@ -312,7 +312,7 @@
       import_ph: 'Paste a code or the contents of a backup file here',
       import_btn: 'Load', import_file: 'Choose file',
       import_ok: 'Loaded: {n} tips.', import_bad: 'That did not work. Is it a Daumenprobe code?',
-      remind: '💾 Time for a backup. Save now →',
+      remind: '💾 Time for a backup. Tap to save →',
       lang: 'Language',
       made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
       privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) and services.swpc.noaa.gov (aurora index); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
@@ -963,7 +963,7 @@
     let h = header();
 
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
-    if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<button class="notice" data-act="to-backup">' + esc(t.remind) + '</button>';
+    if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<button class="notice" data-act="export-file">' + esc(t.remind) + '</button>';
 
     const peak = DP.peak(S.tips);
     const rk = rankFor(peak), sk = streakDays();
@@ -1492,7 +1492,7 @@
       a.href = URL.createObjectURL(blob);
       a.download = 'daumenprobe-' + DP.dayKey() + '.json';
       document.body.appendChild(a); a.click(); a.remove();
-      S.lastExport = Date.now(); save(S);
+      S.lastExport = Date.now(); save(S); render();
     }
     else if (act === 'export-code') {
       const code = toCode(exportJson());
