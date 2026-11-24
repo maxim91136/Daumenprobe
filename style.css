@@ -115,7 +115,7 @@ textarea { width: 100%; min-height: 84px; border-radius: 16px; border: 0; paddin
 .swipe { position: relative; width: 100%; min-height: 48dvh; background: var(--white); color: var(--night); border-radius: 36px; padding: 30px 26px; display: flex; flex-direction: column; justify-content: center; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; overflow: hidden; will-change: transform; }
 .swipe.dragging { cursor: grabbing; }
 .swipe.back { transition: transform .22s ease; }
-.claim-big { font-size: clamp(2.4rem, 11.4vw, 4.2rem); font-weight: 850; font-stretch: 78%; line-height: .98; letter-spacing: -.015em; hyphens: manual; text-wrap: balance; overflow-wrap: break-word; }
+.claim-big { font-size: clamp(2.4rem, 11.4vw, 4.2rem); font-weight: 850; font-stretch: 78%; line-height: .98; letter-spacing: -.015em; hyphens: auto; text-wrap: balance; overflow-wrap: break-word; }
 .tint { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
 .tint.yes { background: var(--mint); }
 .tint.no { background: var(--pink); }
