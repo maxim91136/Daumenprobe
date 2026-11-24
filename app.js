@@ -150,6 +150,7 @@
       exam_title: 'Aufstiegsprüfung', exam_ready: 'Prüfung für {r}: 3 schwere Behauptungen, mindestens 2 Treffer.', exam_start: 'Prüfung starten', exam_cont: 'Prüfung fortsetzen ({i}/3)',
       exam_tomorrow: 'Nicht bestanden. Neuer Versuch morgen.', exam_next: 'Weiter ({i}/3)', exam_eval: 'Auswerten', exam_pass: 'Bestanden!', exam_fail: 'Nicht bestanden.', exam_newrank: 'Neuer Rang: {r}', exam_again: 'Du brauchtest 2 Treffer. Morgen gibt es einen neuen Versuch.',
       pass_title: 'Weltreise-Pass', pass_help: 'Triff einmal in jeder Stadt, dann bekommst du den Stempel.',
+      skin_title: 'Farbwelt', skins: { night: 'Nacht', dawn: 'Morgenrot', aurora: 'Polarlicht', storm: 'Gewitter', gold: 'Gold' }, skin_locked: 'Ab Rang {r}',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} Punkte',
@@ -318,6 +319,7 @@
       exam_title: 'Rank exam', exam_ready: 'Exam for {r}: 3 hard claims, at least 2 hits.', exam_start: 'Start exam', exam_cont: 'Continue exam ({i}/3)',
       exam_tomorrow: 'Not passed. Try again tomorrow.', exam_next: 'Next ({i}/3)', exam_eval: 'See result', exam_pass: 'Passed!', exam_fail: 'Not passed.', exam_newrank: 'New rank: {r}', exam_again: 'You needed 2 hits. A new attempt opens tomorrow.',
       pass_title: 'World pass', pass_help: 'Hit once in every city to earn its stamp.',
+      skin_title: 'Theme', skins: { night: 'Night', dawn: 'Dawn', aurora: 'Aurora', storm: 'Storm', gold: 'Gold' }, skin_locked: 'From rank {r}',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} points',
@@ -489,7 +491,7 @@
 
   /* ---------- Speicher ---------- */
   let memory = null;
-  function blank() { return { v: 1, exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -649,6 +651,18 @@
     ['pass', '🧳', function (c) { return c.stamps >= 8; }],
     ['duel', '⚔️', function (c) { return c.duelsDone >= 1; }]
   ];
+  const SKINS = [['night', 0, '#6a5cff'], ['dawn', 2, '#ff7a1a'], ['aurora', 4, '#19e0a0'], ['storm', 6, '#43c7ff'], ['gold', 8, '#ffd24a']];
+  function rankIndex() { return rankFor(DP.stats(resolvedTips()).pts).i; }
+  function skinOk(id) { const k = SKINS.filter(function (x) { return x[0] === id; })[0]; return !!k && rankIndex() >= k[1]; }
+  function activeSkin() { return skinOk(S.skin) ? S.skin : 'night'; }
+  function skinRow() {
+    const t = T(), ri = rankIndex();
+    return '<div class="levels skins" role="group" aria-label="' + esc(t.skin_title) + '"><span>' + esc(t.skin_title) + '</span>' + SKINS.map(function (k) {
+      const ok = ri >= k[1];
+      return '<button class="chip skin" data-act="skin" data-v="' + k[0] + '" aria-pressed="' + (activeSkin() === k[0]) + '"' + (ok ? '' : ' disabled title="' + esc(fill(t.skin_locked, { r: t.ranks[k[1]] })) + '"') + '>' +
+        '<i style="background:' + k[2] + '"></i>' + (ok ? esc(t.skins[k[0]]) : '🔒') + '</button>';
+    }).join('') + '</div>';
+  }
   function stampSet(list) {
     const got = {};
     list.forEach(function (r) { if (r.resolved && r.claim && r.claim.city && DP.isHit(r.tip, r.outcome)) got[r.claim.city] = 1; });
@@ -777,6 +791,7 @@
     h += typeCard();
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
+    h += skinRow();
     if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(t.go) + '</button>';
     const dKey = utcKey(), dDone = dailyTip(dKey);
     h += '<section class="daily"><div><b>' + esc(t.daily_title) + ' #' + dailyNumber(dKey) + '</b><small>' + esc(t.daily_sub) + '</small></div>' +
@@ -1110,6 +1125,7 @@
     const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd, examend: viewExamEnd };
     const theme = themeFor();
     document.body.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-skin', activeSkin());
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', THEME_HEX[theme]);
     root.innerHTML = views[ui.view]();
@@ -1157,6 +1173,7 @@
     const v = el.getAttribute('data-v');
     if (act === 'lang') { S.lang = v; save(S); render(); }
     else if (act === 'sound') { S.mute = !S.mute; save(S); render(); sfx('tap'); }
+    else if (act === 'skin') { if (skinOk(v)) { S.skin = v; save(S); render(); } }
     else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {
       if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {

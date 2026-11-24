@@ -321,3 +321,16 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 
 .stamps .bdg { padding: 10px 4px; }
 .stamps .bdg b { font-size: .8rem; }
+
+/* Farbwelten, per Rang freigeschaltet */
+.skin { display: inline-flex; align-items: center; gap: 6px; }
+.skin i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.skin[disabled] { opacity: .5; cursor: not-allowed; }
+body[data-skin="dawn"] { --night: #1c0e0a; --surface: #2a1710; }
+body[data-skin="dawn"][data-theme="home"], body[data-skin="dawn"][data-theme^="c"], body[data-skin="dawn"][data-theme="wait"] { --accent: #ff7a1a; }
+body[data-skin="aurora"] { --night: #06150f; --surface: #0e2219; }
+body[data-skin="aurora"][data-theme="home"], body[data-skin="aurora"][data-theme^="c"], body[data-skin="aurora"][data-theme="wait"] { --accent: #19e0a0; }
+body[data-skin="storm"] { --night: #080d1a; --surface: #111a30; }
+body[data-skin="storm"][data-theme="home"], body[data-skin="storm"][data-theme^="c"], body[data-skin="storm"][data-theme="wait"] { --accent: #43c7ff; }
+body[data-skin="gold"] { --night: #0e0b04; --surface: #1c160a; --lemon: #ffd24a; }
+body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c"], body[data-skin="gold"][data-theme="wait"] { --accent: #ffd24a; }
