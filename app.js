@@ -208,7 +208,7 @@
       pass_title: 'Weltreise-Pass', pass_help: 'Triff einmal in jeder Stadt, dann bekommst du den Stempel.',
       skin_title: 'Farbwelt', skins: { night: 'Nacht', dawn: 'Morgenrot', aurora: 'Polarlicht', storm: 'Gewitter', gold: 'Gold' }, skin_locked: 'Ab Rang {r}',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
-      alm_title: 'Almanach', alm_sub: 'Was geschah an diesem Tag? Nur Bonus, nie Minus.', alm_go: 'Spielen', alm_cont: 'Weiter', alm_done: 'Heute erledigt', alm_pts: 'Sonderpunkte', alm_q: 'Frage {i} von {n}', alm_true: 'Stimmt', alm_false: 'Stimmt nicht', alm_right: 'Richtig', alm_wrong: 'Knapp daneben', alm_nominus: 'Kein Abzug.', alm_real: 'Es war das Jahr {y}.', alm_next: 'Nächste Frage', alm_end: 'Fertig', alm_all: 'Alle drei richtig: {n} Extra-Punkte', alm_err: 'Der Almanach kommt aus Wikipedia und ist gerade nicht erreichbar. Versuch es später noch einmal.', alm_retry: 'Nochmal versuchen', alm_src: 'Quelle: Wikipedia, „Was geschah am“. Nur Spielpunkte.', alm_claim: 'Am {date}: {text}',
+      alm_title: 'Almanach', alm_today: 'Heute {r} von {m} richtig: +{n} Sonderpunkte, schon in deinem Punktestand', alm_sub2: 'zählen zu deinem Punktestand', alm_back: 'Morgen wieder', alm_sub: 'Was geschah an diesem Tag? Nur Bonus, nie Minus.', alm_go: 'Spielen', alm_cont: 'Weiter', alm_done: 'Heute erledigt', alm_pts: 'Sonderpunkte', alm_q: 'Frage {i} von {n}', alm_true: 'Stimmt', alm_false: 'Stimmt nicht', alm_right: 'Richtig', alm_wrong: 'Knapp daneben', alm_nominus: 'Kein Abzug.', alm_real: 'Es war das Jahr {y}.', alm_next: 'Nächste Frage', alm_end: 'Fertig', alm_all: 'Alle drei richtig: {n} Extra-Punkte', alm_err: 'Der Almanach kommt aus Wikipedia und ist gerade nicht erreichbar. Versuch es später noch einmal.', alm_retry: 'Nochmal versuchen', alm_src: 'Quelle: Wikipedia, „Was geschah am“. Nur Spielpunkte.', alm_claim: 'Am {date}: {text}',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe · Frage des Tages #{n}', share_pts: '{p} Punkte. Schaffst du das auch?',
       ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumenschnipper', 'Daumen-Kenner', 'Wetterprophet', 'Daumen-Profi', 'Seher', 'Orakel', 'Großes Orakel', 'Daumen-Legende', 'Daumenprobe-Meister'],
@@ -454,7 +454,7 @@
       pass_title: 'World pass', pass_help: 'Hit once in every city to earn its stamp.',
       skin_title: 'Theme', skins: { night: 'Night', dawn: 'Dawn', aurora: 'Aurora', storm: 'Storm', gold: 'Gold' }, skin_locked: 'From rank {r}',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
-      alm_title: 'Almanac', alm_sub: 'What happened on this day? Bonus only, never minus.', alm_go: 'Play', alm_cont: 'Continue', alm_done: 'Done today', alm_pts: 'bonus points', alm_q: 'Question {i} of {n}', alm_true: 'True', alm_false: 'Not true', alm_right: 'Right', alm_wrong: 'Close', alm_nominus: 'No deduction.', alm_real: 'It was the year {y}.', alm_next: 'Next question', alm_end: 'Done', alm_all: 'All three right: {n} extra points', alm_err: 'The almanac comes from Wikipedia and cannot be reached right now. Please try again later.', alm_retry: 'Try again', alm_src: 'Source: Wikipedia, “On this day”. Play points only.', alm_claim: 'On {date}: {text}',
+      alm_title: 'Almanac', alm_today: 'Today {r} of {m} right: +{n} bonus points, already in your score', alm_sub2: 'count toward your score', alm_back: 'Back tomorrow', alm_sub: 'What happened on this day? Bonus only, never minus.', alm_go: 'Play', alm_cont: 'Continue', alm_done: 'Done today', alm_pts: 'bonus points', alm_q: 'Question {i} of {n}', alm_true: 'True', alm_false: 'Not true', alm_right: 'Right', alm_wrong: 'Close', alm_nominus: 'No deduction.', alm_real: 'It was the year {y}.', alm_next: 'Next question', alm_end: 'Done', alm_all: 'All three right: {n} extra points', alm_err: 'The almanac comes from Wikipedia and cannot be reached right now. Please try again later.', alm_retry: 'Try again', alm_src: 'Source: Wikipedia, “On this day”. Play points only.', alm_claim: 'On {date}: {text}',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe · Daily claim #{n}', share_pts: '{p} points. Can you do that too?',
       ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Flicker', 'Thumb Expert', 'Weather Prophet', 'Thumb Pro', 'Seer', 'Oracle', 'Grand Oracle', 'Thumb Legend', 'Thumb Master'],
@@ -1281,7 +1281,7 @@
     const peak = DP.peak(S.tips);
     const rk = rankFor(peak), sk = streakDays();
     h += '<div class="cols"><div class="col col-a">';
-    h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
+    h += '<div class="hero"><b class="hero-n">' + signed(st.pts + almS().pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
       '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">' + ico('flame') + ' ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
       '<div class="rank-bar" role="img" aria-label="' + esc(rk.name) + '"><i style="width:' + rk.pct + '%"></i></div>' +
       (rk.pending ? '<small>' + esc(fill(t.exam_ready, { r: T().ranks[rk.pending] })) + '</small>' +
@@ -1756,8 +1756,8 @@
   }
   function almCard() {
     const t = T(), n = almDone(), a = almS();
-    const inner = '<div><b>' + esc(t.alm_title) + '</b><small>' + (a.pts ? esc(a.pts + ' ' + t.alm_pts) : esc(t.alm_sub)) + '</small></div>' +
-      (n >= ALM_N ? '<span class="small">' + esc(t.alm_done) + '</span>' : '<button class="chip go" data-act="alm">' + esc(n ? t.alm_cont : t.alm_go) + '</button>');
+    const inner = '<div><b>' + esc(t.alm_title) + '</b><small>' + (n >= ALM_N ? esc(fill(t.alm_today, { n: almToday().reduce(function (x, r) { return x + r.pts; }, 0), r: almToday().filter(function (r) { return r.ok; }).length, m: ALM_N })) : a.pts ? esc(a.pts + ' ' + t.alm_pts + ' · ' + t.alm_sub2) : esc(t.alm_sub)) + '</small></div>' +
+      (n >= ALM_N ? '<span class="small">' + esc(t.alm_back) + '</span>' : '<button class="chip go" data-act="alm">' + esc(n ? t.alm_cont : t.alm_go) + '</button>');
     return '<section class="daily alm">' + inner + '</section>';
   }
   function viewAlm() {
