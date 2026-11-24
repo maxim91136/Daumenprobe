@@ -122,6 +122,7 @@
         tomorrow: 'Höchstwert {a} °C am Tag des Tipps, {b} °C am Tag danach.'
       },
       day: 'über dem Horizont', night: 'unter dem Horizont',
+      lvl_up: 'Läuft gut. Bereit für {l}?', lvl_down: 'Zäh gerade. Mit {l} macht es mehr Spaß.', lvl_try: '{l} probieren',
       lvl_title: 'Schwierigkeit', lvl: { s: 'Leicht', m: 'Mittel', l: 'Schwer' },
       words: {
         s: ['Geraten 🤷', 'Ziemlich sicher 🙂', 'Ganz sicher 💪'],
@@ -342,6 +343,7 @@
         tomorrow: 'High of {a} °C on the day of your tip, {b} °C the day after.'
       },
       day: 'above the horizon', night: 'below the horizon',
+      lvl_up: 'Going well. Ready for {l}?', lvl_down: 'Tough lately. {l} is more fun.', lvl_try: 'Try {l}',
       lvl_title: 'Difficulty', lvl: { s: 'Easy', m: 'Medium', l: 'Hard' },
       words: {
         s: ['A guess 🤷', 'Pretty sure 🙂', 'Totally sure 💪'],
@@ -997,7 +999,7 @@
       '<p class="lore">' + esc(t.rank_lore[rk.i]) + '</p></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
-    h += lessonCard(st, peak);
+    h += lessonCard(st, peak) + levelHint();
     h += typeCard();
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
@@ -1285,6 +1287,16 @@
     const misses = sure.filter(function (x) { return !DP.isHit(x.tip, x.outcome); }).length;
     if (sure.length < 3 || misses * 2 < sure.length || r.conf < 75) return '';
     return fill(T().coach_over, { n: sure.length, k: misses }) + (S.level !== 's' ? ' ' + T().coach_easy : '');
+  }
+  /* Passende Stufe vorschlagen: gut kalibriert und treffsicher -> eine Stufe höher, oft daneben -> eine tiefer */
+  function levelHint() {
+    const cur = S.level || 'l', order = ['s', 'm', 'l'], i = order.indexOf(cur);
+    const rs = S.tips.filter(function (x) { return x.resolved && !x.daily && !x.duel && !x.exam && (x.level || 'l') === cur; }).sort(function (a, b) { return (a.measuredAt || a.ts) - (b.measuredAt || b.ts); }).slice(-10);
+    if (rs.length < 10) return '';
+    const st = DP.stats(rs), t = T();
+    if (i < 2 && st.hitRate >= 0.7 && st.calibration !== null && st.calibration >= 70) return '<section class="lesson"><b>' + esc(fill(t.lvl_up, { l: t.lvl[order[i + 1]] })) + '</b><button class="chip" data-act="level" data-v="' + order[i + 1] + '">' + esc(fill(t.lvl_try, { l: t.lvl[order[i + 1]] })) + '</button></section>';
+    if (i > 0 && st.hitRate <= 0.4) return '<section class="lesson"><b>' + esc(fill(t.lvl_down, { l: t.lvl[order[i - 1]] })) + '</b><button class="chip" data-act="level" data-v="' + order[i - 1] + '">' + esc(fill(t.lvl_try, { l: t.lvl[order[i - 1]] })) + '</button></section>';
+    return '';
   }
   function lessonCard(st, peak) {
     if (st.pts >= 0 || !S.tips.length) return '';
