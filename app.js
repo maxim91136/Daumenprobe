@@ -6,14 +6,14 @@
   const DAILY_LIMIT = 5;
 
   const CITIES = [
-    { id: 'hannover', lat: 52.37, lon: 9.73, de: 'Hannover', en: 'Hanover', eu: true },
-    { id: 'berlin', lat: 52.52, lon: 13.41, de: 'Berlin', en: 'Berlin', eu: true },
-    { id: 'muenchen', lat: 48.14, lon: 11.58, de: 'München', en: 'Munich', eu: true },
-    { id: 'hamburg', lat: 53.55, lon: 9.99, de: 'Hamburg', en: 'Hamburg', eu: true },
-    { id: 'tokio', lat: 35.68, lon: 139.69, de: 'Tokio', en: 'Tokyo', eu: false },
-    { id: 'sydney', lat: -33.87, lon: 151.21, de: 'Sydney', en: 'Sydney', eu: false },
-    { id: 'newyork', lat: 40.71, lon: -74.01, de: 'New York', en: 'New York', eu: false },
-    { id: 'kapstadt', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false }
+    { id: 'hannover', flag: '🇩🇪', lat: 52.37, lon: 9.73, de: 'Hannover', en: 'Hanover', eu: true },
+    { id: 'berlin', flag: '🇩🇪', lat: 52.52, lon: 13.41, de: 'Berlin', en: 'Berlin', eu: true },
+    { id: 'muenchen', flag: '🇩🇪', lat: 48.14, lon: 11.58, de: 'München', en: 'Munich', eu: true },
+    { id: 'hamburg', flag: '🇩🇪', lat: 53.55, lon: 9.99, de: 'Hamburg', en: 'Hamburg', eu: true },
+    { id: 'tokio', flag: '🇯🇵', lat: 35.68, lon: 139.69, de: 'Tokio', en: 'Tokyo', eu: false },
+    { id: 'sydney', flag: '🇦🇺', lat: -33.87, lon: 151.21, de: 'Sydney', en: 'Sydney', eu: false },
+    { id: 'newyork', flag: '🇺🇸', lat: 40.71, lon: -74.01, de: 'New York', en: 'New York', eu: false },
+    { id: 'kapstadt', flag: '🇿🇦', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false }
   ];
 
   const I18N = {
@@ -115,7 +115,9 @@
         d7: ['Wochenmeister', '7 Tage in Folge gespielt.'],
         full: ['Volles Haus', 'Alle fünf Behauptungen an einem Tag gespielt.'],
         world: ['Weltenbummler', 'Fünf verschiedene Themen gespielt.'],
-        exam: ['Geprüft', 'Eine Aufstiegsprüfung bestanden.']
+        exam: ['Geprüft', 'Eine Aufstiegsprüfung bestanden.'],
+        pass: ['Weltreisender', 'In allen acht Städten einen Stempel geholt.'],
+        duel: ['Duellant', 'Ein Duell zu Ende gespielt.']
       },
       story_title: 'Der Orden der Daumen',
       story: 'Es gibt einen alten Brauch: Wer wissen will, woher der Wind weht, hält den Daumen hoch. Du bist neu im Orden der Daumen. Tippe, lass die Welt nachmessen und steige auf, bis du den Himmel lesen kannst wie ein Buch.',
@@ -147,6 +149,7 @@
       type_title: 'Dein Daumen-Typ', type_more: 'Noch {n} Tipps bis dein Typ feststeht.', type_stats: 'Ø Sicherheit {c} % · Trefferquote {h} %', type_share: 'Mein Daumen-Typ: {e} {n}. {d}',
       exam_title: 'Aufstiegsprüfung', exam_ready: 'Prüfung für {r}: 3 schwere Behauptungen, mindestens 2 Treffer.', exam_start: 'Prüfung starten', exam_cont: 'Prüfung fortsetzen ({i}/3)',
       exam_tomorrow: 'Nicht bestanden. Neuer Versuch morgen.', exam_next: 'Weiter ({i}/3)', exam_eval: 'Auswerten', exam_pass: 'Bestanden!', exam_fail: 'Nicht bestanden.', exam_newrank: 'Neuer Rang: {r}', exam_again: 'Du brauchtest 2 Treffer. Morgen gibt es einen neuen Versuch.',
+      pass_title: 'Weltreise-Pass', pass_help: 'Triff einmal in jeder Stadt, dann bekommst du den Stempel.',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} Punkte',
@@ -280,7 +283,9 @@
         d7: ['Week master', 'Played 7 days in a row.'],
         full: ['Full house', 'Played all five claims in one day.'],
         world: ['Globetrotter', 'Played five different topics.'],
-        exam: ['Examined', 'Passed a rank exam.']
+        exam: ['Examined', 'Passed a rank exam.'],
+        pass: ['Globe trotter', 'Collected a stamp in all eight cities.'],
+        duel: ['Duelist', 'Finished a duel.']
       },
       story_title: 'The Order of the Thumbs',
       story: 'There is an old custom: whoever wants to know where the wind blows holds up a thumb. You are new to the Order of the Thumbs. Tip, let the world measure itself and climb until you can read the sky like a book.',
@@ -312,6 +317,7 @@
       type_title: 'Your thumb type', type_more: '{n} more tips until your type is set.', type_stats: 'Avg. confidence {c} % · hit rate {h} %', type_share: 'My thumb type: {e} {n}. {d}',
       exam_title: 'Rank exam', exam_ready: 'Exam for {r}: 3 hard claims, at least 2 hits.', exam_start: 'Start exam', exam_cont: 'Continue exam ({i}/3)',
       exam_tomorrow: 'Not passed. Try again tomorrow.', exam_next: 'Next ({i}/3)', exam_eval: 'See result', exam_pass: 'Passed!', exam_fail: 'Not passed.', exam_newrank: 'New rank: {r}', exam_again: 'You needed 2 hits. A new attempt opens tomorrow.',
+      pass_title: 'World pass', pass_help: 'Hit once in every city to earn its stamp.',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} points',
@@ -639,8 +645,24 @@
     ['d7', '👑', function (c) { return c.maxDays >= 7; }],
     ['full', '🃏', function (c) { return c.maxPerDay >= 5; }],
     ['world', '🌍', function (c) { return c.topics >= 5; }],
-    ['exam', '🎓', function (c) { return c.exams >= 1; }]
+    ['exam', '🎓', function (c) { return c.exams >= 1; }],
+    ['pass', '🧳', function (c) { return c.stamps >= 8; }],
+    ['duel', '⚔️', function (c) { return c.duelsDone >= 1; }]
   ];
+  function stampSet(list) {
+    const got = {};
+    list.forEach(function (r) { if (r.resolved && r.claim && r.claim.city && DP.isHit(r.tip, r.outcome)) got[r.claim.city] = 1; });
+    return Object.keys(got);
+  }
+  function passShelf() {
+    const t = T(), got = stampSet(S.tips);
+    let h = '<details class="dark shelf"' + (got.length ? ' open' : '') + '><summary>' + esc(t.pass_title) + ' <span class="count">' + got.length + ' / ' + CITIES.length + '</span></summary><div class="grid stamps">';
+    CITIES.forEach(function (c) {
+      const on = got.indexOf(c.id) >= 0;
+      h += '<div class="bdg' + (on ? ' on' : '') + '"><span class="e" aria-hidden="true">' + (on ? c.flag : '🔒') + '</span><b>' + esc(c[S.lang]) + '</b></div>';
+    });
+    return h + '</div><p class="small" style="margin-top:10px">' + esc(t.pass_help) + '</p></details>';
+  }
   function badgeCtx(list) {
     const rs = list.filter(function (r) { return r.resolved; }).sort(function (a, b) { return a.ts - b.ts; });
     let combo = 0, maxCombo = 0, bold = false, ouch = false;
@@ -658,7 +680,7 @@
     days.forEach(function (d) { run = prev && DP.addDays(prev, 1) === d ? run + 1 : 1; if (run > maxDays) maxDays = run; prev = d; });
     const st = DP.stats(rs);
     return { n: rs.length, hits: st.hits, cal: st.calibration, maxCombo: maxCombo, bold: bold, ouch: ouch, maxDays: maxDays,
-      exams: (S.exams || []).length, maxPerDay: Math.max(0, Math.max.apply(null, days.map(function (d) { return perDay[d]; }).concat([0]))), topics: Object.keys(topics).length };
+      exams: (S.exams || []).length, stamps: stampSet(list).length, duelsDone: Object.keys(S.duels || {}).filter(function (k) { return S.duels[k].done; }).length, maxPerDay: Math.max(0, Math.max.apply(null, days.map(function (d) { return perDay[d]; }).concat([0]))), topics: Object.keys(topics).length };
   }
   function earnedBadges(list) {
     const c = badgeCtx(list);
@@ -768,6 +790,7 @@
     if (!S.tips.length) h += '<section class="story"><h2>' + esc(t.story_title) + '</h2><p>' + esc(t.story) + '</p></section>';
     h += rulesSheet();
     h += badgeShelf();
+    h += passShelf();
 
     if (open.length) {
       h += '<details class=\"dark\"' + '' + '><summary>' + esc(t.open_title) + '</summary>';

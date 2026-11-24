@@ -318,3 +318,6 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 
 .rank small.warn { color: var(--pink); opacity: 1; font-weight: 800; display: block; margin-top: 6px; }
 .rank .btn { margin-top: 10px; padding: 14px 20px; font-size: 1.1rem; }
+
+.stamps .bdg { padding: 10px 4px; }
+.stamps .bdg b { font-size: .8rem; }
