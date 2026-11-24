@@ -664,7 +664,7 @@ body[data-theme="hit"] .beta, body[data-theme="miss"] .beta { color: inherit; }
 @media (max-width: 430px) { .beta { font-size: .55rem; padding: 2px 6px; margin-top: .25em; } }
 
 /* Kopf auf dem Handy: Titel groß in eigener Zeile, Sprachknöpfe neben dem Untertitel */
-@media (max-width: 600px) {
+@media (max-width: 899px) {
   .top:has(.brand) { display: grid; grid-template-columns: 1fr auto; column-gap: 8px; row-gap: 2px; align-items: center; }
   .top:has(.brand) > div:first-child { display: contents; }
   .top:has(.brand) .brand { grid-column: 1 / -1; grid-row: 1; }
