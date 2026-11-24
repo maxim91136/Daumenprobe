@@ -600,8 +600,8 @@
   /* ---------- Speicher ---------- */
   let memory = null;
   /* Einmalig: alte Tipps nach der neuen Punktetabelle umrechnen (Punkte-Version 2). */
-  function rescore(st) {
-    if (st.scoreV >= 2) return;
+  function rescore(st, raw) {
+    if (raw && raw.scoreV >= 2) return;
     st.tips.forEach(function (t) {
       if (t && t.resolved && typeof t.pts === 'number' && typeof t.conf === 'number') t.pts = DP.points(t.tip, t.conf, t.outcome, t.level || 'l');
     });
@@ -617,7 +617,7 @@
       const raw = localStorage.getItem(KEY);
       if (raw) {
         const s = JSON.parse(raw);
-        if (s && Array.isArray(s.tips)) { const st = Object.assign(blank(), s); rescore(st); return st; }
+        if (s && Array.isArray(s.tips)) { const st = Object.assign(blank(), s); rescore(st, s); return st; }
       }
     } catch (e) { /* Speicher gesperrt */ }
     return memory || blank();
