@@ -297,3 +297,11 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 .vs small { display: block; opacity: .7; font-weight: 700; }
 .vs b { display: block; font-size: 1.1rem; margin: 4px 0; letter-spacing: 1px; }
 .vs span { font-size: 2.2rem; font-weight: 900; font-stretch: 75%; }
+
+.typecard { margin: 0 0 14px; padding: 14px 16px; border-radius: 22px; background: rgba(255,255,255,.05); border: 1px dashed rgba(255,255,255,.22); display: flex; flex-direction: column; gap: 2px; }
+.typecard.on { flex-direction: row; align-items: center; gap: 14px; border-style: solid; border-color: rgba(255,228,92,.5); background: linear-gradient(120deg, rgba(255,228,92,.14), rgba(106,92,255,.2)); }
+.typecard .te { font-size: 3rem; line-height: 1; }
+.typecard b { display: block; font-size: 1.25rem; font-weight: 850; font-stretch: 80%; }
+.typecard p { font-size: .92rem; line-height: 1.3; margin: 2px 0 4px; opacity: .9; }
+.typecard small { opacity: .7; font-weight: 600; }
+.typecard .chip { align-self: flex-start; }

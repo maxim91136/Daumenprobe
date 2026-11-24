@@ -136,6 +136,14 @@
       duel_invite: 'Duell-Einladung', duel_friend: 'Freund: {row} · {p} Punkte', duel_accept: 'Annehmen', duel_next: 'Weiter ({i}/5)', duel_eval: 'Auswerten',
       duel_title: 'Duell', duel_you: 'Du', duel_them: 'Freund', duel_win: 'Gewonnen!', duel_lose: 'Knapp verloren.', duel_draw: 'Unentschieden.',
       duel_share_text: 'Daumenprobe-Duell ⚔️ {row} · {p} Punkte. Schaffst du mehr?', duel_waiting: 'Schick den Link. Dein Freund spielt dieselben 5 Behauptungen und sieht dein Ergebnis.', duel_show: 'Duell-Ergebnis',
+      types: {
+        coin: ['🪙', 'Der Münzwerfer', 'Du tippst fast immer auf Nummer sicher bei 50 %. Mut bringt mehr Punkte, wenn du etwas ahnst.'],
+        wolf: ['🐺', 'Der Draufgänger', 'Du bist sicherer, als es die Treffer hergeben. Etwas weniger Prozent, und es gibt weniger Autsch.'],
+        turtle: ['🐢', 'Der Zauderer', 'Du triffst öfter, als du dir zutraust. Trau dich, höher zu gehen.'],
+        falcon: ['🦅', 'Der Falke', 'Du bist mutig und liegst dabei richtig. Selten und stark.'],
+        fox: ['🦊', 'Der Fuchs', 'Du schätzt dich fast genau richtig ein. Das ist die Kunst.']
+      },
+      type_title: 'Dein Daumen-Typ', type_more: 'Noch {n} Tipps bis dein Typ feststeht.', type_stats: 'Ø Sicherheit {c} % · Trefferquote {h} %', type_share: 'Mein Daumen-Typ: {e} {n}. {d}',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} Punkte',
@@ -290,6 +298,14 @@
       duel_invite: 'Duel invitation', duel_friend: 'Friend: {row} · {p} points', duel_accept: 'Accept', duel_next: 'Next ({i}/5)', duel_eval: 'See result',
       duel_title: 'Duel', duel_you: 'You', duel_them: 'Friend', duel_win: 'You won!', duel_lose: 'Narrowly lost.', duel_draw: 'A draw.',
       duel_share_text: 'Daumenprobe duel ⚔️ {row} · {p} points. Can you beat it?', duel_waiting: 'Send the link. Your friend plays the same 5 claims and sees your result.', duel_show: 'Duel result',
+      types: {
+        coin: ['🪙', 'The Coin Flipper', 'You almost always play it safe at 50 %. Boldness pays more when you sense something.'],
+        wolf: ['🐺', 'The Daredevil', 'You are surer than your hits justify. A few percent less, and fewer ouches.'],
+        turtle: ['🐢', 'The Hesitant One', 'You hit more often than you think. Dare to go higher.'],
+        falcon: ['🦅', 'The Falcon', 'You are bold and right at the same time. Rare and strong.'],
+        fox: ['🦊', 'The Fox', 'You judge yourself almost exactly right. That is the art.']
+      },
+      type_title: 'Your thumb type', type_more: '{n} more tips until your type is set.', type_stats: 'Avg. confidence {c} % · hit rate {h} %', type_share: 'My thumb type: {e} {n}. {d}',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} points',
@@ -720,6 +736,7 @@
       '<p class="lore">' + esc(t.rank_lore[rk.i]) + '</p></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
+    h += typeCard();
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
     if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(t.go) + '</button>';
@@ -885,6 +902,31 @@
     else if (last) inner = '<div><b>⚔️ ' + esc(t.duel_title) + '</b><small>' + rowEmoji(S.duels[last].row) + ' ' + signed(S.duels[last].pts) + '</small></div><button class="chip" data-act="duel-show" data-v="' + esc(last) + '">' + esc(t.duel_show) + '</button>';
     else inner = '<div><b>⚔️ ' + esc(t.duel_new) + '</b><small>' + esc(t.duel_sub) + '</small></div><button class="chip go" data-act="duel-new">' + esc(t.go) + '</button>';
     return '<section class="daily duel">' + inner + '</section>';
+  }
+  /* Daumen-Typ: Wie gut passt die Sicherheit zur Trefferquote? Ab 10 gemessenen Tipps. */
+  function thumbType() {
+    const rs = resolvedTips();
+    if (rs.length < 10) return { more: 10 - rs.length };
+    const avg = rs.reduce(function (a, r) { return a + r.conf; }, 0) / rs.length / 100;
+    const hit = rs.filter(function (r) { return DP.isHit(r.tip, r.outcome); }).length / rs.length;
+    const gap = avg - hit;
+    const key = avg <= 0.58 ? 'coin' : gap > 0.08 ? 'wolf' : gap < -0.08 ? 'turtle' : avg >= 0.75 ? 'falcon' : 'fox';
+    return { key: key, avg: Math.round(avg * 100), hit: Math.round(hit * 100) };
+  }
+  function typeCard() {
+    const t = T(), ty = thumbType();
+    if (ty.more) return '<section class="typecard"><b>' + esc(t.type_title) + '</b><small>' + esc(fill(t.type_more, { n: ty.more })) + '</small></section>';
+    const d = t.types[ty.key];
+    return '<section class="typecard on"><div class="te" aria-hidden="true">' + d[0] + '</div><div><small>' + esc(t.type_title) + '</small><b>' + esc(d[1]) + '</b><p>' + esc(d[2]) + '</p><small>' +
+      esc(fill(t.type_stats, { c: ty.avg, h: ty.hit })) + '</small></div><button class="chip" data-act="share-type">' + esc(t.share) + '</button></section>';
+  }
+  function shareType() {
+    const t = T(), ty = thumbType();
+    if (ty.more) return;
+    const d = t.types[ty.key];
+    const text = fill(t.type_share, { e: d[0], n: d[1], d: d[2] }) + '\n' + location.origin + location.pathname;
+    if (navigator.share) { navigator.share({ text: text }).catch(function () { /* abgebrochen */ }); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say(t.share_copied); });
   }
   function dailyRow() {
     let row = '';
@@ -1062,6 +1104,7 @@
       save(S); render();
     }
     else if (act === 'share-daily') { shareDaily(); }
+    else if (act === 'share-type') { shareType(); }
     else if (act === 'share-duel') { shareDuel(ui.duelEnd); }
     else if (act === 'duel-new' || act === 'duel-accept') {
       if (S.duelActive) { startDuelClaim(); return; }
