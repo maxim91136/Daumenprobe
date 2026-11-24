@@ -149,7 +149,9 @@
         world: ['Weltenbummler', 'Fünf verschiedene Themen gespielt.'],
         exam: ['Geprüft', 'Eine Aufstiegsprüfung bestanden.'],
         pass: ['Weltreisender', 'In allen acht Städten einen Stempel geholt.'],
-        duel: ['Duellant', 'Ein Duell zu Ende gespielt.']
+        duel: ['Duellant', 'Ein Duell zu Ende gespielt.'],
+        better: ['Besser eingeschätzt', 'Deine letzten 10 Tipps sind mindestens 10 Punkte ehrlicher kalibriert als deine ersten 10.'],
+        comeback: ['Wieder da', 'Aus dem Minus (ab −10) zurück auf null oder mehr.']
       },
       story_title: 'Der Orden der Daumen',
       story: 'Es gibt einen alten Brauch: Wer wissen will, woher der Wind weht, hält den Daumen hoch. Du bist neu im Orden der Daumen. Tippe, lass die Welt nachmessen und steige auf, bis du den Himmel lesen kannst wie ein Buch.',
@@ -366,7 +368,11 @@
         world: ['Globetrotter', 'Played five different topics.'],
         exam: ['Examined', 'Passed a rank exam.'],
         pass: ['Globe trotter', 'Collected a stamp in all eight cities.'],
-        duel: ['Duelist', 'Finished a duel.']
+        better: ['Better judge', 'Your last 10 tips are calibrated at least 10 points more honestly than your first 10.'],
+        comeback: ['Back on top', 'Climbed out of the red (from −10) back to zero or more.'],
+        duel: ['Duelist', 'Finished a duel.'],
+        better: ['Better judge', 'Your last 10 tips are calibrated at least 10 points more honestly than your first 10.'],
+        comeback: ['Back on top', 'Climbed out of the red (from −10) back to zero or more.']
       },
       story_title: 'The Order of the Thumbs',
       story: 'There is an old custom: whoever wants to know where the wind blows holds up a thumb. You are new to the Order of the Thumbs. Tip, let the world measure itself and climb until you can read the sky like a book.',
@@ -820,7 +826,9 @@
     ['world', '🌍', function (c) { return c.topics >= 5; }],
     ['exam', '🎓', function (c) { return c.exams >= 1; }],
     ['pass', '🧳', function (c) { return c.stamps >= 8; }],
-    ['duel', '⚔️', function (c) { return c.duelsDone >= 1; }]
+    ['duel', '⚔️', function (c) { return c.duelsDone >= 1; }],
+    ['better', '📈', function (c) { return c.better; }],
+    ['comeback', '💪', function (c) { return c.comeback; }]
   ];
   const SKINS = [['night', 0, '#6a5cff'], ['dawn', 2, '#ff7a1a'], ['aurora', 4, '#19e0a0'], ['storm', 6, '#43c7ff'], ['gold', 8, '#ffd24a']];
   function rankIndex() { return rankFor(DP.peak(S.tips)).i; }
@@ -864,7 +872,15 @@
     let maxDays = 0, run = 0, prev = null;
     days.forEach(function (d) { run = prev && DP.addDays(prev, 1) === d ? run + 1 : 1; if (run > maxDays) maxDays = run; prev = d; });
     const st = DP.stats(rs);
-    return { n: rs.length, hits: st.hits, cal: st.calibration, maxCombo: maxCombo, bold: bold, ouch: ouch, maxDays: maxDays,
+    let run2 = 0, low = 0;
+    rs.forEach(function (r) { run2 += r.pts || 0; if (run2 < low) low = run2; });
+    const comeback = low <= -10 && run2 >= 0;
+    let better = false;
+    if (rs.length >= 20) {
+      const a = DP.stats(rs.slice(0, 10)).calibration, b = DP.stats(rs.slice(-10)).calibration;
+      better = a !== null && b !== null && b >= a + 10;
+    }
+    return { better: better, comeback: comeback, n: rs.length, hits: st.hits, cal: st.calibration, maxCombo: maxCombo, bold: bold, ouch: ouch, maxDays: maxDays,
       exams: (S.exams || []).length, stamps: stampSet(list).length, duelsDone: Object.keys(S.duels || {}).filter(function (k) { return S.duels[k].done; }).length, maxPerDay: Math.max(0, Math.max.apply(null, days.map(function (d) { return perDay[d]; }).concat([0]))), topics: Object.keys(topics).length };
   }
   function earnedBadges(list) {

@@ -37,7 +37,7 @@ Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
 
 ## Spielgefühl
 
-Ränge (12 Stufen, an vier Stufen mit Aufstiegsprüfung), 18 Abzeichen, Serie mit einem Joker-Tag, Story, Töne und Vibration (abschaltbar), Farbwelten (freigeschaltet über Ränge), Daumen-Typ ab 10 Tipps, Weltreise-Pass (Stempel pro Stadt).
+Ränge (12 Stufen, an vier Stufen mit Aufstiegsprüfung), 20 Abzeichen (u. a. „Besser eingeschätzt“ und „Wieder da“ fürs Aufholen), Serie mit einem Joker-Tag, Story, Töne und Vibration (abschaltbar), Farbwelten (freigeschaltet über Ränge), Daumen-Typ ab 10 Tipps, Weltreise-Pass (Stempel pro Stadt).
 
 - Tagesfrage: dieselbe Frage für alle auf der Welt (aus dem Datum abgeleitet).
 - Duell per Link: 5 gleiche Behauptungen, das Ergebnis steckt im Link nach dem `#` und geht nie an einen Server. Ein Duell pro Tag.
