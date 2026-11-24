@@ -676,3 +676,10 @@ body[data-theme="hit"] .beta, body[data-theme="miss"] .beta { color: inherit; }
 
 /* Tipp-Bildschirm: Punkte etwas tiefer, damit die Safari-Leiste sie nicht verdeckt */
 @media (max-width: 899px) { .top:not(:has(.brand)) { padding-top: 14px; } }
+
+/* Startknopf direkt unter den Punkten; Beschriftung der Plus/Minus-Kacheln lesbar */
+.col-a > .btn[data-act="start"] { margin: 4px 0 16px; }
+body[data-theme="yes"] .stake span, body[data-theme="no"] .stake span { color: rgba(255,255,255,.78); opacity: 1; }
+body[data-theme="yes"] .slider, body[data-theme="no"] .slider { background: linear-gradient(to right, rgba(0,0,0,.72) var(--p, 0%), rgba(0,0,0,.22) var(--p, 0%)); }
+body[data-theme="yes"] .slider::-webkit-slider-thumb, body[data-theme="no"] .slider::-webkit-slider-thumb { border-color: rgba(0,0,0,.72); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+body[data-theme="yes"] .slider::-moz-range-thumb, body[data-theme="no"] .slider::-moz-range-thumb { border-color: rgba(0,0,0,.72); }

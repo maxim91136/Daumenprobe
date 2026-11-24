@@ -1137,13 +1137,13 @@
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div>' +
       (function () { const w = weekPts(); return w.n ? '<div class="hero-sub week"><span>' + esc(t.week_now) + ' ' + signed(w.now) + '</span>' + (w.prev ? '<span>' + esc(t.week_prev) + ' ' + signed(w.prev) + '</span>' : '') + '</div>' : ''; })() + '</div>';
+    if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(firstRun() ? t.first_go : t.go) + '</button>';
     h += lessonCard(st, peak) + levelHint();
     h += typeCard();
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
     h += skinRow();
     h += '</div><div class="col col-b">';
-    if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(firstRun() ? t.first_go : t.go) + '</button>';
     const dKey = utcKey(), dDone = dailyTip(dKey);
     h += '<section class="daily"><div><b>' + esc(t.daily_title) + ' #' + dailyNumber(dKey) + '</b><small>' + esc(t.daily_sub) + '</small></div>' +
       (dDone && dDone.resolved ? '<div class="daily-res"><span>' + dailyRow() + '</span><button class="chip" data-act="share-daily">' + esc(t.share) + '</button></div>'
