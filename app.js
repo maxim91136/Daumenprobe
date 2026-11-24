@@ -693,7 +693,8 @@
       '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button>' +
       '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + (S.mute ? '🔇' : '🔊') + '</button></div>';
   }
-  function header() { return '<header class="top"><div><h1 class="mark">' + esc(T().title) + '</h1><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs() + '</header>'; }
+  const THUMB = '<svg class="thumb-logo" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="5" y="30" width="12" height="27" rx="3.5" fill="#ffe45c"/><rect x="20" y="29" width="39" height="28" rx="9" fill="#ffe45c"/><rect x="21.5" y="6" width="12" height="31" rx="6" fill="#ffe45c"/><path d="M38 38.5h17M38 45h17M38 51.5h14" stroke="#0d0b1f" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>';
+  function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs() + '</header>'; }
   function topbar() {
     const n = Math.min(DAILY_LIMIT, todayCount());
     let d = '<div class="dots" role="img" aria-label="' + n + ' / ' + DAILY_LIMIT + '">';

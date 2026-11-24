@@ -305,3 +305,13 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 .typecard p { font-size: .92rem; line-height: 1.3; margin: 2px 0 4px; opacity: .9; }
 .typecard small { opacity: .7; font-weight: 600; }
 .typecard .chip { align-self: flex-start; }
+
+.brand { display: flex; align-items: center; gap: 8px; }
+.thumb-logo { flex: none; width: clamp(2.4rem, 10.5vw, 3.5rem); height: clamp(2.4rem, 10.5vw, 3.5rem); transform: rotate(-8deg); transform-origin: 40% 90%; }
+@media (prefers-reduced-motion: no-preference) {
+  .thumb-logo { animation: thumbup .7s cubic-bezier(.2,1.6,.4,1) .2s backwards; }
+  @keyframes thumbup { from { transform: rotate(35deg) translateY(10px) scale(.6); opacity: 0; } }
+}
+.brand .mark { font-size: clamp(1.8rem, 8vw, 3rem); }
+.langs { flex: none; gap: 4px; }
+.langs .chip { padding: 4px 10px; }
