@@ -488,7 +488,7 @@ body[data-theme="hit"] .coach, body[data-theme="miss"] .coach { background: rgba
 .pts-pos { color: var(--green); font-weight: 600; } .pts-neg { color: var(--red); font-weight: 600; }
 
 /* Startseite: große, ruhige Zahl */
-.hero-n { font-size: clamp(4.5rem, 24vw, 7rem); font-weight: 700; letter-spacing: -.05em; line-height: .95; }
+.hero-n { font-size: clamp(3rem, 15vw, 4.4rem); font-weight: 700; letter-spacing: -.05em; line-height: .95; }
 .hero-l { font-weight: 500; }
 .hero-sub span { border: 0; background: var(--seg); color: var(--fg); font-weight: 500; font-size: .85rem; }
 .rank-top b { font-size: 1.0625rem; font-weight: 600; }
@@ -648,14 +648,14 @@ body[data-theme="yes"], body[data-theme="hit"] { --fg2: rgba(3,38,15,.8); }
   .brand { min-width: 0; }
 }
 @media (max-width: 380px) {
-  .brand .mark, .mark { font-size: 1.12rem; }
+  .brand .mark, .mark { font-size: 1.2rem; }
   .print-logo { height: 1.5rem; }
   .langs { gap: 3px; }
   .langs .chip { padding: 5px 8px; font-size: .74rem; }
   .brand { gap: 5px; }
 }
 @media (min-width: 381px) and (max-width: 430px) {
-  .brand .mark, .mark { font-size: 1.18rem; }
+  .brand .mark, .mark { font-size: 1.32rem; }
   .langs .chip { padding: 5px 9px; font-size: .78rem; }
 }
 
