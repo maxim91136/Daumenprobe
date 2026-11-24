@@ -71,6 +71,8 @@
       import_ok: 'Geladen: {n} Tipps.', import_bad: 'Das hat nicht geklappt. Ist es ein Code von Daumenprobe?',
       remind: 'Du hast länger nicht gesichert. Sichere deinen Stand unten.',
       lang: 'Sprache',
+      made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
+      privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter) und wheretheiss.at (ISS) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
       data_credit: 'Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Nur Spielpunkte, nie Geld.',
       measure_msg: {
         temp: 'In {city} sind es {v} °C.',
@@ -152,6 +154,8 @@
       import_ok: 'Loaded: {n} tips.', import_bad: 'That did not work. Is it a Daumenprobe code?',
       remind: 'You have not saved for a while. Save your progress below.',
       lang: 'Language',
+      made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
+      privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather) and wheretheiss.at (ISS); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
       data_credit: 'Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Play points only, never money.',
       measure_msg: {
         temp: 'It is {v} °C in {city}.',
@@ -527,7 +531,11 @@
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', THEME_HEX[theme]);
     root.innerHTML = views[ui.view]();
-    document.getElementById('foot').textContent = T().data_credit;
+    const t = T();
+    document.getElementById('foot').innerHTML =
+      '<p>' + esc(t.made_by) + ' <a href="https://dreierlabs.com/" rel="noopener"><b>Dreier Labs</b></a> · <a href="https://dreierlabs.com/impressum.html" rel="noopener">' + esc(t.imprint) + '</a></p>' +
+      '<details><summary>' + esc(t.privacy) + '</summary><p>' + esc(t.privacy_text) + '</p></details>' +
+      '<p class="credit">' + esc(t.data_credit) + '</p>';
     window.scrollTo(0, 0);
     if (ui.view === 'result') countUp();
   }
