@@ -22,8 +22,16 @@ Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
 
 ## Punkte und Stufen
 
-- Punkte nach Brier-Prinzip: Treffer +5 (geraten) bis +10 (ganz sicher), Daneben -5 bis -20. Münzwerfen bringt im Schnitt 0, ehrliches Einschätzen zahlt sich aus.
-- Stufen Leicht (Wörter statt Prozent, halbe Punkte, kein Minus), Mittel (Wörter, 75 %, Minus bis -8) und Schwer (Prozent, volle Punkte).
+- Punkte pro Stufe der Sicherheit (Schwer, volle Punkte):
+
+  | Sicherheit | 50 | 60 | 70 | 80 | 90 | 100 |
+  |---|---|---|---|---|---|---|
+  | Treffer | +5 | +6 | +7 | +8 | +9 | +10 |
+  | Daneben | -5 | -6 | -8 | -11 | -17 | -30 |
+
+  Treffer wachsen gleichmäßig, die Strafe wächst von Stufe zu Stufe schneller (logarithmische Regel, bei 100 % gedeckelt). Wer seine Sicherheit ehrlich einschätzt, steht auf Dauer am besten da: bei jeder wahren Trefferquote lohnt sich die dazu passende Stufe. Zwischenwerte (75 %) werden gerade verbunden. Alte Tipps wurden einmalig auf diese Tabelle umgerechnet (Punkte-Version 2).
+- Stufen: Leicht (Wörter, halbe Punkte, kein Minus), Mittel (Wörter, drei Viertel der Punkte, Minus höchstens -8) und Schwer (Prozent, volle Punkte).
+- Regelwerk im Spiel („So geht's“): Frage, Tipp, Sicherheit, Messung, einmal pro Frage zurück vor dem Messen, Punktetabelle, zehn Behauptungen pro Tag, Verwerfen zählt als Versuch, Messregel vorab, Tagesfrage/Duell/Prüfung zählen nicht zu den zehn, nur Spielpunkte.
 - Zwei Werte: Trefferquote und Kalibrierung („stimmt meine Sicherheit?", ab 5 Tipps).
 
 ## Spielgefühl
@@ -41,7 +49,7 @@ Sichern und Laden per Datei oder Code. Browser können Daten löschen (Safari na
 
 ## Design
 
-Dunkles Spielkartenfeeling mit Vollbild-Farbflächen pro Ansicht, Wisch-Karte (rechts = stimmt, links = stimmt nicht, auch per Knopf und Pfeiltasten), Sicherheits-Schieber, Ergebnis in Mint (Treffer) oder Pink (Daneben). Logo: Daumenabdruck aus Wetterkarten-Linien (Isobaren) mit gelbem Punkt. Schrift: Bricolage Grotesque (SIL Open Font License, Datei und Lizenz in `fonts/`). Bewegung nur als Antwort auf Eingaben und mit `prefers-reduced-motion` abschaltbar.
+Auf dem Desktop breites Layout (Startseite in zwei Spalten, Spielansichten zentriert), auf dem Handy eine Spalte. Dunkles Spielkartenfeeling mit Vollbild-Farbflächen pro Ansicht, Wisch-Karte (rechts = stimmt, links = stimmt nicht, auch per Knopf und Pfeiltasten), Sicherheits-Schieber, Ergebnis in Mint (Treffer) oder Pink (Daneben). Logo: Daumenabdruck aus Wetterkarten-Linien (Isobaren) mit gelbem Punkt. Schrift: Bricolage Grotesque (SIL Open Font License, Datei und Lizenz in `fonts/`). Bewegung nur als Antwort auf Eingaben und mit `prefers-reduced-motion` abschaltbar.
 
 ## Dateien
 

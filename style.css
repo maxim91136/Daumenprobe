@@ -351,3 +351,14 @@ body[data-skin="gold"][data-theme="home"], body[data-skin="gold"][data-theme^="c
   .finger { animation: finger 2.4s ease-in-out .4s infinite; }
   @keyframes finger { 0%, 100% { transform: translateX(-50%) rotate(0); } 25% { transform: translateX(calc(-50% + 64px)) rotate(14deg); } 50% { transform: translateX(-50%) rotate(0); } 75% { transform: translateX(calc(-50% - 64px)) rotate(-14deg); } }
 }
+
+.cols { display: block; }
+@media (min-width: 900px) {
+  #app { max-width: 1120px; padding-left: 36px; padding-right: 36px; }
+  footer { max-width: 1120px; padding-left: 36px; padding-right: 36px; }
+  body[data-view="home"] .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 44px; align-items: start; }
+  body[data-view="home"] .col-a { position: sticky; top: 20px; }
+  body:not([data-view="home"]) #app { max-width: 860px; }
+  body:not([data-view="home"]) footer { max-width: 860px; }
+  .swipe { min-height: 44dvh; }
+}

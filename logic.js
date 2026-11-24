@@ -8,21 +8,26 @@
     return tip ? conf / 100 : 1 - conf / 100;
   };
 
-  /* Spielpunkte (nie Geld), streng und ehrlich:
-     Treffer: +5 (geraten, 50 %) bis +10 (ganz sicher, 100 %).
-     Daneben: -5 (geraten) bis -20 (ganz sicher).
-     Reines Münzwerfen bringt im Schnitt genau 0. Wer sicherer tippt, kann mehr gewinnen und mehr
-     verlieren; wer seine Sicherheit ehrlich einschätzt, steht auf Dauer am besten da (Brier-Regel).
-     Aufbau: 5 * (1 - 4 * (p - o)^2) plus 5 Punkte bei Treffer, minus 5 bei Daneben. Der Treffer-Anteil
-     (+5/-5) hängt nicht von der Sicherheit ab, ändert also nicht, welche Sicherheit sich lohnt. */
-  /* level: Schwierigkeit zählt. 'l' (schwer, Standard) volle Punkte. 'm' (mittel) drei Viertel, Daneben höchstens -8.
-     's' (leicht) die Hälfte, Daneben kostet nichts. Wer schwer mit 100 % trifft, bekommt also +10, leicht nur +5. */
+  /* Spielpunkte (nie Geld), streng und ehrlich. Pro Stufe der Sicherheit gibt es klar abgestufte Punkte:
+     Sicherheit  50  60  70  80  90  100
+     Treffer     +5  +6  +7  +8  +9  +10
+     Daneben     -5  -6  -8  -11 -17 -30
+     Treffer wachsen gleichmäßig, die Strafe wächst von Stufe zu Stufe schneller (logarithmische Regel,
+     bis 90 % im Kern ehrlich, bei 100 % gedeckelt). Münzwerfen bringt im Schnitt 0 oder weniger. Wer seine
+     Sicherheit ehrlich einschätzt, steht auf Dauer am besten da. Zwischenwerte (75 %) werden gerade verbunden.
+     level: Schwierigkeit zählt. 'l' (schwer, Standard) volle Punkte. 'm' (mittel) drei Viertel, Daneben höchstens -8.
+     's' (leicht) die Hälfte, Daneben kostet nichts. */
+  const HIT = { 50: 5, 60: 6, 70: 7, 80: 8, 90: 9, 100: 10 };
+  const MISS = { 50: -5, 60: -6, 70: -8, 80: -11, 90: -17, 100: -30 };
+  function tab(T, conf) {
+    const c = Math.min(100, Math.max(50, conf));
+    const lo = Math.floor(c / 10) * 10;
+    if (lo >= 100) return T[100];
+    return T[lo] + (T[lo + 10] - T[lo]) * (c - lo) / 10;
+  }
   L.points = function (tip, conf, outcome, level) {
-    const p = L.probYes(tip, conf);
-    const o = outcome ? 1 : 0;
-    const base = 5 * (1 - 4 * (p - o) * (p - o));
     const isHit = L.isHit(tip, outcome);
-    const raw = Math.round(base + (isHit ? 5 : -5));
+    const raw = Math.round(isHit ? tab(HIT, conf) : tab(MISS, conf));
     if (level === 's') return isHit ? Math.round(raw * 0.5) : 0;
     if (level === 'm') return isHit ? Math.round(raw * 0.75) : Math.max(Math.round(raw * 0.75), -8);
     return raw;

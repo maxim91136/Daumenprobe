@@ -65,6 +65,7 @@
       none: 'Noch nichts getippt.',
       backup: 'Sichern und laden',
       backup_help: 'Dein Spielstand liegt nur in diesem Browser. Sichere ihn ab und zu, falls der Browser Daten löscht (Safari kann das nach etwa 7 Tagen ohne Besuch).',
+      rules_more: ['Zehn Behauptungen pro Tag, danach ist Schluss für heute.', 'Eine Frage zu verwerfen zählt als Versuch.', 'Die Messregel steht vorher fest und wird nach dem Tipp gezeigt.', 'Tagesfrage, Duell und Aufstiegsprüfung zählen nicht zu den zehn.', 'Ehrlich einschätzen lohnt sich: Wer immer „ganz sicher“ sagt, verliert auf Dauer.', 'Es gibt nur Spielpunkte, nie Geld.'],
       back: 'Antwort ändern',
       first_go: 'Los geht\'s', pr_swipe: 'Wische nach rechts: stimmt. Nach links: stimmt nicht.', pr_conf: 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum.', pr_done: 'Das war nur Übung, hier zählt nichts. Ab jetzt wird echt gemessen.', pr_next: 'Erste echte Frage', pr_unit: 'Übung',
       rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.',
@@ -259,6 +260,7 @@
       none: 'No tips yet.',
       backup: 'Save and load',
       backup_help: 'Your progress lives only in this browser. Save it now and then in case the browser clears data (Safari can do that after about 7 days without a visit).',
+      rules_more: ['Ten claims per day, then you are done for today.', 'Discarding a claim counts as an attempt.', 'The measuring rule is fixed beforehand and shown after your tip.', 'Daily claim, duel and rank exam do not count towards the ten.', 'Honest guessing pays off: always saying “totally sure” loses in the long run.', 'Play points only, never money.'],
       back: 'Change answer',
       first_go: 'Let\'s go', pr_swipe: 'Swipe right: true. Swipe left: not true.', pr_conf: 'The surer you are, the more a hit earns, but the more a mistake costs.', pr_done: 'That was only practice, nothing counts here. From now on it is measured for real.', pr_next: 'First real claim', pr_unit: 'practice',
       rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.',
@@ -597,13 +599,25 @@
 
   /* ---------- Speicher ---------- */
   let memory = null;
-  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
+  /* Einmalig: alte Tipps nach der neuen Punktetabelle umrechnen (Punkte-Version 2). */
+  function rescore(st) {
+    if (st.scoreV >= 2) return;
+    st.tips.forEach(function (t) {
+      if (t && t.resolved && typeof t.pts === 'number' && typeof t.conf === 'number') t.pts = DP.points(t.tip, t.conf, t.outcome, t.level || 'l');
+    });
+    Object.keys(st.duels || {}).forEach(function (k) {
+      const recs = st.tips.filter(function (t) { return t.duel === k && t.resolved; });
+      if (recs.length && typeof st.duels[k].pts === 'number') st.duels[k].pts = recs.reduce(function (a, r) { return a + (r.pts || 0); }, 0);
+    });
+    st.scoreV = 2;
+  }
+  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', scoreV: 2, lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
       if (raw) {
         const s = JSON.parse(raw);
-        if (s && Array.isArray(s.tips)) return Object.assign(blank(), s);
+        if (s && Array.isArray(s.tips)) { const st = Object.assign(blank(), s); rescore(st); return st; }
       }
     } catch (e) { /* Speicher gesperrt */ }
     return memory || blank();
@@ -863,12 +877,12 @@
     t.howto.forEach(function (r, i) { h += '<li>' + esc(i === 2 && lv ? lv.how3 : r) + '</li>'; });
     h += '</ol><p class="goal">' + esc(lv ? lv.goal : t.rules_goal) + '</p>';
     h += '<table class="scale"><thead><tr><th>' + esc(t.rules_cols[0]) + '</th><th>' + esc(t.rules_cols[1]) + '</th><th>' + esc(t.rules_cols[2]) + '</th></tr></thead><tbody>';
-    (lvl() === 's' ? [50, 75, 100] : [50, 70, 100]).forEach(function (c) {
+    (lvl() === 's' ? [50, 75, 100] : [50, 60, 70, 80, 90, 100]).forEach(function (c) {
       const w = lvl() === 's' ? confWord(c) : null;
       const label = w ? w : c + ' %' + (c === 50 ? ' (' + t.conf50 + ')' : c === 100 ? ' (' + t.conf100 + ')' : '');
       h += '<tr><td>' + esc(label) + '</td><td class="hit">' + signed(DP.points(true, c, true, lvl())) + '</td><td class="miss">' + signed(DP.points(true, c, false, lvl())) + '</td></tr>';
     });
-    h += '</tbody></table><p class="small">' + esc(t.rules_foot) + '</p></details>';
+    h += '</tbody></table><p class="small">' + esc(t.rules_foot) + '</p><ul class="howto more">' + t.rules_more.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></details>';
     return h;
   }
 
@@ -884,6 +898,7 @@
     if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<div class="notice">' + esc(t.remind) + '</div>';
 
     const rk = rankFor(st.pts), sk = streakDays();
+    h += '<div class="cols"><div class="col col-a">';
     h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
       '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">🔥 ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
       '<div class="rank-bar" role="img" aria-label="' + esc(rk.name) + '"><i style="width:' + rk.pct + '%"></i></div>' +
@@ -898,6 +913,7 @@
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
       ['s', 'm', 'l'].map(function (k) { return '<button class="chip" data-act="level" data-v="' + k + '" aria-pressed="' + (lvl() === k) + '">' + esc(t.lvl[k]) + '</button>'; }).join('') + '</div>';
     h += skinRow();
+    h += '</div><div class="col col-b">';
     if (left > 0) h += '<button class="btn pulse" data-act="start">' + esc(firstRun() ? t.first_go : t.go) + '</button>';
     const dKey = utcKey(), dDone = dailyTip(dKey);
     h += '<section class="daily"><div><b>' + esc(t.daily_title) + ' #' + dailyNumber(dKey) + '</b><small>' + esc(t.daily_sub) + '</small></div>' +
@@ -955,6 +971,7 @@
       '<button class="btn ghost" data-act="import-file">' + esc(t.import_file) + '</button>' +
       '<input id="impfile" type="file" accept="application/json,.json,.txt" hidden>' +
       '<p class="small" id="bmsg" style="margin-top:10px"></p></details>';
+    h += '</div></div>';
     return h;
   }
 
@@ -1247,6 +1264,7 @@
     const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd, examend: viewExamEnd };
     const theme = themeFor();
     document.body.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-view', ui.view);
     document.body.setAttribute('data-skin', activeSkin());
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', THEME_HEX[theme]);
