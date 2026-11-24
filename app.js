@@ -6,14 +6,14 @@
   const DAILY_LIMIT = 10;
 
   const CITIES = [
-    { id: 'hannover', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 52.37, lon: 9.73, de: 'Hannover', en: 'Hanover', eu: true },
-    { id: 'berlin', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 52.52, lon: 13.41, de: 'Berlin', en: 'Berlin', eu: true },
-    { id: 'muenchen', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 48.14, lon: 11.58, de: 'München', en: 'Munich', eu: true },
-    { id: 'hamburg', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 53.55, lon: 9.99, de: 'Hamburg', en: 'Hamburg', eu: true },
-    { id: 'tokio', tz: 'Asia/Tokyo', flag: '🇯🇵', lat: 35.68, lon: 139.69, de: 'Tokio', en: 'Tokyo', eu: false },
-    { id: 'sydney', tz: 'Australia/Sydney', flag: '🇦🇺', lat: -33.87, lon: 151.21, de: 'Sydney', en: 'Sydney', eu: false },
-    { id: 'newyork', tz: 'America/New_York', flag: '🇺🇸', lat: 40.71, lon: -74.01, de: 'New York', en: 'New York', eu: false },
-    { id: 'kapstadt', tz: 'Africa/Johannesburg', flag: '🇿🇦', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false }
+    { id: 'hannover', tz: 'Europe/Berlin', code: 'HAJ', lat: 52.37, lon: 9.73, de: 'Hannover', en: 'Hanover', eu: true },
+    { id: 'berlin', tz: 'Europe/Berlin', code: 'BER', lat: 52.52, lon: 13.41, de: 'Berlin', en: 'Berlin', eu: true },
+    { id: 'muenchen', tz: 'Europe/Berlin', code: 'MUC', lat: 48.14, lon: 11.58, de: 'München', en: 'Munich', eu: true },
+    { id: 'hamburg', tz: 'Europe/Berlin', code: 'HAM', lat: 53.55, lon: 9.99, de: 'Hamburg', en: 'Hamburg', eu: true },
+    { id: 'tokio', tz: 'Asia/Tokyo', code: 'TYO', lat: 35.68, lon: 139.69, de: 'Tokio', en: 'Tokyo', eu: false },
+    { id: 'sydney', tz: 'Australia/Sydney', code: 'SYD', lat: -33.87, lon: 151.21, de: 'Sydney', en: 'Sydney', eu: false },
+    { id: 'newyork', tz: 'America/New_York', code: 'NYC', lat: 40.71, lon: -74.01, de: 'New York', en: 'New York', eu: false },
+    { id: 'kapstadt', tz: 'Africa/Johannesburg', code: 'CPT', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false }
   ];
 
   const I18N = {
@@ -26,7 +26,7 @@
       rules_title: 'So geht\'s',
       howto: [
         'Du bekommst eine Behauptung.',
-        'Tippe: stimmt (👍) oder stimmt nicht (👎).',
+        'Tippe: stimmt (Daumen hoch) oder stimmt nicht (Daumen runter).',
         'Sag, wie sicher du bist: 50 % ist geraten, 100 % ist ganz sicher.',
         'Wir messen live nach. Recht gehabt gibt Punkte, Daneben kostet Punkte.',
         'Verklickt? Einmal pro Frage kannst du vor dem Messen zurück und neu antworten.'
@@ -94,7 +94,7 @@
       import_ph: 'Code oder Sicherungsdatei-Inhalt hier einfügen',
       import_btn: 'Laden', import_file: 'Datei wählen',
       import_ok: 'Geladen: {n} Tipps.', import_bad: 'Das hat nicht geklappt. Ist es ein Code von Daumenprobe?',
-      remind: '💾 Zeit für ein Backup. Tippen zum Sichern →',
+      remind: 'Zeit für ein Backup. Tippen zum Sichern →',
       lang: 'Sprache',
       made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
       privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) und services.swpc.noaa.gov (Polarlicht-Index) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
@@ -125,7 +125,7 @@
       lvl_up: 'Läuft gut. Bereit für {l}?', lvl_down: 'Zäh gerade. Mit {l} macht es mehr Spaß.', lvl_try: '{l} probieren',
       lvl_title: 'Schwierigkeit', lvl: { s: 'Leicht', m: 'Mittel', l: 'Schwer' },
       words: {
-        s: ['Geraten 🤷', 'Ziemlich sicher 🙂', 'Ganz sicher 💪'],
+        s: ['Geraten', 'Ziemlich sicher', 'Ganz sicher'],
         m: ['Geraten', 'Eher sicher', 'Ziemlich sicher', 'Sehr sicher', 'Fast sicher', 'Ganz sicher']
       },
       lv: {
@@ -174,13 +174,13 @@
       duel_new: 'Duell mit Freund', duel_sub: 'Gleiche 5 Behauptungen, ein Link, kein Konto', duel_once: 'Ein Duell pro Tag.', duel_cont: 'Duell fortsetzen ({i}/5)',
       duel_invite: 'Duell-Einladung', duel_friend: 'Freund: {row} · {p} Punkte', duel_accept: 'Annehmen', duel_next: 'Weiter ({i}/5)', duel_eval: 'Auswerten',
       duel_title: 'Duell', duel_you: 'Du', duel_them: 'Freund', duel_win: 'Gewonnen!', duel_lose: 'Knapp verloren.', duel_draw: 'Unentschieden.',
-      duel_share_text: 'Daumenprobe-Duell ⚔️ {row} · {p} Punkte. Schaffst du mehr?', duel_waiting: 'Schick den Link. Dein Freund spielt dieselben 5 Behauptungen und sieht dein Ergebnis.', duel_show: 'Duell-Ergebnis',
+      duel_share_text: 'Daumenprobe-Duell {row} · {p} Punkte. Schaffst du mehr?', duel_waiting: 'Schick den Link. Dein Freund spielt dieselben 5 Behauptungen und sieht dein Ergebnis.', duel_show: 'Duell-Ergebnis',
       types: {
-        coin: ['🪙', 'Der Münzwerfer', 'Du tippst fast immer auf Nummer sicher bei 50 %. Mut bringt mehr Punkte, wenn du etwas ahnst.'],
-        wolf: ['🐺', 'Der Draufgänger', 'Du bist sicherer, als es die Treffer hergeben. Etwas weniger Prozent, und es gibt weniger Autsch.'],
-        turtle: ['🐢', 'Der Zauderer', 'Du triffst öfter, als du dir zutraust. Trau dich, höher zu gehen.'],
-        falcon: ['🦅', 'Der Falke', 'Du bist mutig und liegst dabei richtig. Selten und stark.'],
-        fox: ['🦊', 'Der Fuchs', 'Du schätzt dich fast genau richtig ein. Das ist die Kunst.']
+        coin: ['', 'Der Münzwerfer', 'Du tippst fast immer auf Nummer sicher bei 50 %. Mut bringt mehr Punkte, wenn du etwas ahnst.'],
+        wolf: ['', 'Der Draufgänger', 'Du bist sicherer, als es die Treffer hergeben. Etwas weniger Prozent, und es gibt weniger Autsch.'],
+        turtle: ['', 'Der Zauderer', 'Du triffst öfter, als du dir zutraust. Trau dich, höher zu gehen.'],
+        falcon: ['', 'Der Falke', 'Du bist mutig und liegst dabei richtig. Selten und stark.'],
+        fox: ['', 'Der Fuchs', 'Du schätzt dich fast genau richtig ein. Das ist die Kunst.']
       },
       type_title: 'Dein Daumen-Typ', type_more: 'Noch {n} gemessene Tipps bis dein Typ feststeht.', type_open: '{k} warten noch auf ihre Messung.', type_more1: 'Noch 1 gemessener Tipp bis dein Typ feststeht.', type_stats: 'Ø Sicherheit {c} % · Trefferquote {h} %', type_share: 'Mein Daumen-Typ: {e} {n}. {d}',
       exam_title: 'Aufstiegsprüfung', exam_ready: 'Prüfung für {r}: 3 schwere Behauptungen, mindestens 2 Treffer.', exam_start: 'Prüfung starten', exam_cont: 'Prüfung fortsetzen ({i}/3)',
@@ -247,7 +247,7 @@
       rules_title: 'How it works',
       howto: [
         'You get a claim.',
-        'Tip: true (👍) or not true (👎).',
+        'Tip: true (thumb up) or not true (thumb down).',
         'Say how sure you are: 50 % is a guess, 100 % is totally sure.',
         'We measure it live. Being right earns points, being wrong costs points.',
         'Mis-tapped? Once per claim you can go back before measuring and answer again.'
@@ -315,7 +315,7 @@
       import_ph: 'Paste a code or the contents of a backup file here',
       import_btn: 'Load', import_file: 'Choose file',
       import_ok: 'Loaded: {n} tips.', import_bad: 'That did not work. Is it a Daumenprobe code?',
-      remind: '💾 Time for a backup. Tap to save →',
+      remind: 'Time for a backup. Tap to save →',
       lang: 'Language',
       made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
       privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) and services.swpc.noaa.gov (aurora index); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
@@ -346,7 +346,7 @@
       lvl_up: 'Going well. Ready for {l}?', lvl_down: 'Tough lately. {l} is more fun.', lvl_try: 'Try {l}',
       lvl_title: 'Difficulty', lvl: { s: 'Easy', m: 'Medium', l: 'Hard' },
       words: {
-        s: ['A guess 🤷', 'Pretty sure 🙂', 'Totally sure 💪'],
+        s: ['A guess', 'Pretty sure', 'Totally sure'],
         m: ['A guess', 'Leaning yes', 'Pretty sure', 'Very sure', 'Almost certain', 'Totally sure']
       },
       lv: {
@@ -397,13 +397,13 @@
       duel_new: 'Duel a friend', duel_sub: 'Same 5 claims, one link, no account', duel_once: 'One duel per day.', duel_cont: 'Continue duel ({i}/5)',
       duel_invite: 'Duel invitation', duel_friend: 'Friend: {row} · {p} points', duel_accept: 'Accept', duel_next: 'Next ({i}/5)', duel_eval: 'See result',
       duel_title: 'Duel', duel_you: 'You', duel_them: 'Friend', duel_win: 'You won!', duel_lose: 'Narrowly lost.', duel_draw: 'A draw.',
-      duel_share_text: 'Daumenprobe duel ⚔️ {row} · {p} points. Can you beat it?', duel_waiting: 'Send the link. Your friend plays the same 5 claims and sees your result.', duel_show: 'Duel result',
+      duel_share_text: 'Daumenprobe duel {row} · {p} points. Can you beat it?', duel_waiting: 'Send the link. Your friend plays the same 5 claims and sees your result.', duel_show: 'Duel result',
       types: {
-        coin: ['🪙', 'The Coin Flipper', 'You almost always play it safe at 50 %. Boldness pays more when you sense something.'],
-        wolf: ['🐺', 'The Daredevil', 'You are surer than your hits justify. A few percent less, and fewer ouches.'],
-        turtle: ['🐢', 'The Hesitant One', 'You hit more often than you think. Dare to go higher.'],
-        falcon: ['🦅', 'The Falcon', 'You are bold and right at the same time. Rare and strong.'],
-        fox: ['🦊', 'The Fox', 'You judge yourself almost exactly right. That is the art.']
+        coin: ['', 'The Coin Flipper', 'You almost always play it safe at 50 %. Boldness pays more when you sense something.'],
+        wolf: ['', 'The Daredevil', 'You are surer than your hits justify. A few percent less, and fewer ouches.'],
+        turtle: ['', 'The Hesitant One', 'You hit more often than you think. Dare to go higher.'],
+        falcon: ['', 'The Falcon', 'You are bold and right at the same time. Rare and strong.'],
+        fox: ['', 'The Fox', 'You judge yourself almost exactly right. That is the art.']
       },
       type_title: 'Your thumb type', type_more: '{n} more measured tips until your type is set.', type_open: '{k} still waiting to be measured.', type_more1: '1 more measured tip until your type is set.', type_stats: 'Avg. confidence {c} % · hit rate {h} %', type_share: 'My thumb type: {e} {n}. {d}',
       exam_title: 'Rank exam', exam_ready: 'Exam for {r}: 3 hard claims, at least 2 hits.', exam_start: 'Start exam', exam_cont: 'Continue exam ({i}/3)',
@@ -829,6 +829,67 @@
     return out;
   }
   /* Abzeichen: alles aus den gemessenen Tipps berechnet, nichts extra gespeichert. */
+  /* Daumen-Typen: fünf eigene Fantasiewesen (Kopfbilder, flache Farben, große Augen) */
+  function eye(cx, cy, r) { return '<g class="eye"><circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="#fff"/><circle cx="' + (cx + r * .15) + '" cy="' + (cy + r * .1) + '" r="' + (r * .58) + '" fill="#1b1530"/><circle cx="' + (cx + r * .35) + '" cy="' + (cy - r * .2) + '" r="' + (r * .2) + '" fill="#fff"/></g>'; }
+  const CREATURES = {
+    wolf: function () { /* kleiner Feuerdrache */
+      return '<path d="M24 54C10 46 8 30 14 20C22 26 30 34 34 48Z" fill="#ff9a3d"/><path d="M72 54C86 46 88 30 82 20C74 26 66 34 62 48Z" fill="#ff9a3d"/>' +
+        '<ellipse cx="48" cy="68" rx="22" ry="18" fill="#ff6a3d"/><ellipse cx="48" cy="72" rx="13" ry="11" fill="#ffc27a"/>' +
+        '<ellipse cx="35" cy="84" rx="8" ry="4.5" fill="#e8502a"/><ellipse cx="61" cy="84" rx="8" ry="4.5" fill="#e8502a"/>' +
+        '<path d="M70 78C77 72 74 65 79 60C84 69 88 74 81 82C77 86 70 84 70 78Z" fill="#ffd24a"/>' +
+        '<path d="M34 24L29 8L43 19Z M62 24L67 8L53 19Z" fill="#ffe08a"/><circle cx="48" cy="42" r="22" fill="#ff7a45"/>' +
+        '<ellipse cx="48" cy="50" rx="11" ry="8" fill="#ffb070"/><circle cx="44" cy="49" r="1.7" fill="#b13a1a"/><circle cx="52" cy="49" r="1.7" fill="#b13a1a"/>' +
+        eye(38, 38, 5.5) + eye(58, 38, 5.5) + '<path d="M31 31L42 34M65 31L54 34" stroke="#b13a1a" stroke-width="2.4" stroke-linecap="round"/>';
+    },
+    turtle: function () { /* Nebelschnecke mit Kristallhaus */
+      return '<path d="M8 80C8 68 18 62 30 62L68 62C78 62 84 70 84 80Z" fill="#5ad1b5"/><path d="M12 80C8 58 16 40 28 40C40 40 44 54 42 64L38 80Z" fill="#5ad1b5"/>' +
+        '<path d="M22 42L17 24M33 41L36 22" stroke="#3fb59a" stroke-width="4" stroke-linecap="round"/>' + eye(17, 22, 6) + eye(36, 20, 6) +
+        '<path d="M19 58Q25 63 31 58" stroke="#1b4a3f" stroke-width="2.4" fill="none" stroke-linecap="round"/>' +
+        '<circle cx="64" cy="50" r="25" fill="#9b6bff"/><path d="M64 28L78 40L72 62L56 66L46 52L52 34Z" fill="#b48cff"/><path d="M64 28L52 34L46 52M64 28L78 40M64 50L52 34M64 50L78 40M64 50L72 62M64 50L56 66M64 50L46 52" stroke="#e1d0ff" stroke-width="2" fill="none" stroke-linejoin="round"/>' +
+        '<path d="M80 18L82 24L88 26L82 28L80 34L78 28L72 26L78 24Z" fill="#fff"/>';
+    },
+    falcon: function () { /* Sturmgreif */
+      return '<path d="M30 52C14 50 4 38 4 22C16 24 26 30 34 42Z" fill="#2c6fe0"/><path d="M30 56C18 58 8 54 2 46C12 44 24 46 32 50Z" fill="#6aaeff"/>' +
+        '<path d="M66 52C82 50 92 38 92 22C80 24 70 30 62 42Z" fill="#2c6fe0"/><path d="M66 56C78 58 88 54 94 46C84 44 72 46 64 50Z" fill="#6aaeff"/>' +
+        '<ellipse cx="48" cy="64" rx="16" ry="20" fill="#3d8bff"/><ellipse cx="48" cy="68" rx="9" ry="13" fill="#cfe6ff"/>' +
+        '<path d="M40 82L37 90M46 84V91M52 84L55 91" stroke="#ffb020" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="M39 22L34 8L46 17L52 5L55 19Z" fill="#ffd24a"/><circle cx="48" cy="36" r="17" fill="#4d9aff"/>' +
+        '<path d="M41 40L48 56L55 40Z" fill="#ffb020"/>' + eye(40, 34, 4.8) + eye(56, 34, 4.8) + '<path d="M33 28L44 32M63 28L52 32" stroke="#1b1530" stroke-width="2.6" stroke-linecap="round"/>';
+    },
+    fox: function () { /* Mondfuchs */
+      return '<path d="M20 86C2 74 4 52 20 50C22 64 30 74 40 78Z" fill="#ff9f4a"/><circle cx="12" cy="68" r="5" fill="#fff6ea"/>' +
+        '<path d="M76 86C94 74 92 52 76 50C74 64 66 74 56 78Z" fill="#ff9f4a"/><circle cx="84" cy="68" r="5" fill="#fff6ea"/>' +
+        '<path d="M14 38L19 8L38 24Q48 21 58 24L77 8L82 38C82 62 66 80 48 80C30 80 14 62 14 38Z" fill="#ff8a3d"/>' +
+        '<path d="M22 17L32 27L24 32Z M74 17L64 27L72 32Z" fill="#ffd0a8"/>' +
+        '<path d="M14 52C26 54 38 62 48 80C34 80 18 68 14 52Z M82 52C70 54 58 62 48 80C62 80 78 68 82 52Z" fill="#fff3e6"/>' +
+        '<path d="M46 26A8.5 8.5 0 1 0 46 43A6.8 6.8 0 1 1 46 26Z" fill="#ffe27a"/>' + eye(35, 54, 5) + eye(61, 54, 5) +
+        '<circle cx="48" cy="72" r="3.4" fill="#2a1a2e"/><path d="M42 77Q48 81 54 77" stroke="#2a1a2e" stroke-width="2" fill="none" stroke-linecap="round"/>';
+    },
+    coin: function () { /* Münz-Wicht */
+      return '<g class="coin"><ellipse cx="48" cy="16" rx="14" ry="14" fill="#ffd24a"/><circle cx="48" cy="16" r="9" fill="none" stroke="#e6a800" stroke-width="2.4"/><path d="M48 9L52 16L48 23L44 16Z" fill="#e6a800"/></g>' +
+        '<ellipse cx="48" cy="62" rx="27" ry="24" fill="#b36bff"/><ellipse cx="48" cy="68" rx="14" ry="12" fill="#dcb8ff"/>' +
+        '<circle cx="21" cy="66" r="7" fill="#9a52e8"/><circle cx="75" cy="66" r="7" fill="#9a52e8"/><ellipse cx="38" cy="85" rx="8" ry="4.5" fill="#8d45dd"/><ellipse cx="58" cy="85" rx="8" ry="4.5" fill="#8d45dd"/>' +
+        '<path d="M31 42L24 30L39 37Z M65 42L72 30L57 37Z" fill="#ffd24a"/>' + eye(39, 55, 5.5) + eye(57, 55, 5.5) +
+        '<path d="M35 66Q48 79 61 66Z" fill="#3a1466"/><ellipse cx="48" cy="72" rx="5" ry="3" fill="#ff6b8a"/>';
+    }
+  };
+  function creature(key) { return '<svg class="cr" viewBox="0 0 96 96" aria-hidden="true">' + (CREATURES[key] ? CREATURES[key]() : '') + '</svg>'; }
+  /* Kleine Symbole im Stil der Abzeichen (24er Raster, Strich) */
+  const ICONS = {
+    up: '<path d="M7 11V21H4V11Z"/><path d="M7 11L11 3C13 3 14 4.5 13.5 6.5L13 9H19C20.5 9 21.5 10.5 21 12L19 19C18.6 20.3 17.5 21 16.3 21H7"/>',
+    sound: '<path d="M4 9V15H8L13 19V5L8 9Z"/><path d="M16.5 9C18 10.5 18 13.5 16.5 15M19 6.5C22 9.5 22 14.5 19 17.5"/>',
+    mute: '<path d="M4 9V15H8L13 19V5L8 9Z"/><path d="M17 9L22 15M22 9L17 15"/>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="3"/><path d="M8 11V8A4 4 0 0 1 16 8V11"/>',
+    gift: '<rect x="4" y="9" width="16" height="12" rx="2"/><path d="M12 9V21M3 9H21V12"/><path d="M12 9C12 9 10 3 7.5 4.5C5 6 8 9 12 9ZM12 9C12 9 14 3 16.5 4.5C19 6 16 9 12 9Z"/>',
+    save: '<path d="M12 4V15M7 11L12 16L17 11M5 20H19"/>',
+    star: '<path d="M12 3L14.8 9L21 9.8L16.5 14.2L17.7 20.5L12 17.4L6.3 20.5L7.5 14.2L3 9.8L9.2 9Z"/>',
+    flame: '<path d="M12 3C13 8 18 10 18 15A6 6 0 0 1 6 15C6 12 8 10.5 9 8C10.5 9.5 11 10.5 12 11C12.5 8 11.5 6 12 3Z"/>',
+    swords: '<path d="M5 5L17 17M19 5L7 17"/><path d="M15 19L20 14M4 14L9 19"/>',
+    point: '<path d="M9 11V5A1.5 1.5 0 0 1 12 5V11M12 10V9A1.5 1.5 0 0 1 15 9V11M15 11A1.5 1.5 0 0 1 18 11V16C18 19 16 21 13 21H11C8 21 6 19 5 17L3 13C2.5 12 4 11 5 12L9 15"/>'
+  };
+  function ico(n, cls) { return '<svg class="ic' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true">' + ICONS[n] + '</svg>'; }
+  function rowDots(row) { return '<span class="sqs">' + row.split('').map(function (c) { return '<i class="sq ' + (c === 'h' ? 'h' : 'm') + '"></i>'; }).join('') + '</span>'; }
+
   /* Abzeichen-Grafiken: eigene Strichbilder im einheitlichen Stil (64er Raster, runde Enden, eine Strichstärke, Farbe nach Familie). */
   const BADGE_ART = {
     first: ['green', '<path d="M32 52V30"/><path d="M32 36C32 26 25 21 15 22C15 32 22 37 32 36Z"/><path d="M32 30C32 20 40 15 50 16C50 26 43 31 32 30Z"/>'],
@@ -857,26 +918,26 @@
     return '<span class="bi c-' + a[0] + (on ? '' : ' off') + (small ? ' sm' : '') + '" aria-hidden="true"><svg viewBox="0 0 64 64">' + a[1] + '</svg></span>';
   }
   const BADGE_DEFS = [
-    ['first', '🌱', function (c) { return c.n >= 1; }],
-    ['hit1', '🎯', function (c) { return c.hits >= 1; }],
-    ['combo3', '🔥', function (c) { return c.maxCombo >= 3; }],
-    ['combo5', '⚡', function (c) { return c.maxCombo >= 5; }],
-    ['combo10', '🚀', function (c) { return c.maxCombo >= 10; }],
-    ['bold', '💎', function (c) { return c.bold; }],
-    ['ouch', '🤕', function (c) { return c.ouch; }],
-    ['honest', '🧭', function (c) { return c.n >= 10 && c.cal !== null && c.cal >= 85; }],
-    ['t10', '🔟', function (c) { return c.n >= 10; }],
-    ['t50', '🏅', function (c) { return c.n >= 50; }],
-    ['t100', '🏆', function (c) { return c.n >= 100; }],
-    ['d3', '📅', function (c) { return c.maxDays >= 3; }],
-    ['d7', '👑', function (c) { return c.maxDays >= 7; }],
-    ['full', '🃏', function (c) { return c.maxPerDay >= DAILY_LIMIT; }],
-    ['world', '🌍', function (c) { return c.topics >= 5; }],
-    ['exam', '🎓', function (c) { return c.exams >= 1; }],
-    ['pass', '🧳', function (c) { return c.stamps >= 8; }],
-    ['duel', '⚔️', function (c) { return c.duelsDone >= 1; }],
-    ['better', '📈', function (c) { return c.better; }],
-    ['comeback', '💪', function (c) { return c.comeback; }]
+    ['first', '', function (c) { return c.n >= 1; }],
+    ['hit1', '', function (c) { return c.hits >= 1; }],
+    ['combo3', '', function (c) { return c.maxCombo >= 3; }],
+    ['combo5', '', function (c) { return c.maxCombo >= 5; }],
+    ['combo10', '', function (c) { return c.maxCombo >= 10; }],
+    ['bold', '', function (c) { return c.bold; }],
+    ['ouch', '', function (c) { return c.ouch; }],
+    ['honest', '', function (c) { return c.n >= 10 && c.cal !== null && c.cal >= 85; }],
+    ['t10', '', function (c) { return c.n >= 10; }],
+    ['t50', '', function (c) { return c.n >= 50; }],
+    ['t100', '', function (c) { return c.n >= 100; }],
+    ['d3', '', function (c) { return c.maxDays >= 3; }],
+    ['d7', '', function (c) { return c.maxDays >= 7; }],
+    ['full', '', function (c) { return c.maxPerDay >= DAILY_LIMIT; }],
+    ['world', '', function (c) { return c.topics >= 5; }],
+    ['exam', '', function (c) { return c.exams >= 1; }],
+    ['pass', '', function (c) { return c.stamps >= 8; }],
+    ['duel', '', function (c) { return c.duelsDone >= 1; }],
+    ['better', '', function (c) { return c.better; }],
+    ['comeback', '', function (c) { return c.comeback; }]
   ];
   const SKINS = [['night', 0, '#6a5cff'], ['dawn', 2, '#ff7a1a'], ['aurora', 4, '#19e0a0'], ['storm', 6, '#43c7ff'], ['gold', 8, '#ffd24a']];
   function rankIndex() { return rankFor(DP.peak(S.tips)).i; }
@@ -887,7 +948,7 @@
     return '<div class="levels skins" role="group" aria-label="' + esc(t.skin_title) + '"><span>' + esc(t.skin_title) + '</span>' + SKINS.map(function (k) {
       const ok = ri >= k[1];
       return '<button class="chip skin" data-act="skin" data-v="' + k[0] + '" aria-pressed="' + (activeSkin() === k[0]) + '"' + (ok ? '' : ' disabled title="' + esc(fill(t.skin_locked, { r: t.ranks[k[1]] })) + '"') + '>' +
-        '<i style="background:' + k[2] + '"></i>' + (ok ? esc(t.skins[k[0]]) : '🔒') + '</button>';
+        '<i style="background:' + k[2] + '"></i>' + (ok ? esc(t.skins[k[0]]) : ico('lock')) + '</button>';
     }).join('') + '</div>';
   }
   function stampSet(list) {
@@ -900,7 +961,7 @@
     let h = '<details class="dark shelf"' + (got.length ? ' open' : '') + '><summary>' + esc(t.pass_title) + ' <span class="count">' + got.length + ' / ' + CITIES.length + '</span></summary><div class="grid stamps">';
     CITIES.forEach(function (c) {
       const on = got.indexOf(c.id) >= 0;
-      h += '<div class="bdg' + (on ? ' on' : '') + '"><span class="e" aria-hidden="true">' + (on ? c.flag : '🔒') + '</span><b>' + esc(c[S.lang]) + '</b></div>';
+      h += '<div class="bdg' + (on ? ' on' : '') + '"><span class="stampi' + (on ? ' on' : '') + '" aria-hidden="true">' + (on ? '<b>' + c.code + '</b>' : ico('lock')) + '</span><b>' + esc(c[S.lang]) + '</b></div>';
     });
     return h + '</div><p class="small" style="margin-top:10px">' + esc(t.pass_help) + '</p></details>';
   }
@@ -975,7 +1036,7 @@
       (withFaq ? '<button class="chip faq" data-act="faq" aria-label="' + esc(T().faq_title) + '">' + '<span class="f-long">' + esc(T().faq_btn) + '</span><span class="f-short" aria-hidden="true">?</span></button>' : '') +
       '<button class="chip" data-act="lang" data-v="de" aria-pressed="' + (S.lang === 'de') + '">DE</button>' +
       '<button class="chip" data-act="lang" data-v="en" aria-pressed="' + (S.lang === 'en') + '">EN</button>' +
-      '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + (S.mute ? '🔇' : '🔊') + '</button></div>';
+      '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + ico(S.mute ? 'mute' : 'sound') + '</button></div>';
   }
   const THUMB = '<svg class="print-logo" viewBox="-60 -60 120 120" aria-hidden="true" focusable="false"><g transform="rotate(-12)" fill="none" stroke="#fbfbff" stroke-width="6" stroke-linecap="round"><ellipse rx="11" ry="15"/><ellipse rx="21" ry="29" stroke-dasharray="120 14 40 10"/><ellipse rx="31" ry="43" stroke-dasharray="150 12 70 16"/><ellipse rx="41" ry="57" stroke-dasharray="200 14 100 20" opacity=".7"/><circle r="4" fill="#ffd24a" stroke="none"/></g></svg>';
   function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + '</p></div>' + langs(true) + '</header>'; }
@@ -1011,13 +1072,13 @@
     let h = header();
 
     const lastExport = S.lastExport ? Date.now() - S.lastExport : Infinity;
-    if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<button class="notice" data-act="export-file">' + esc(t.remind) + '</button>';
+    if (S.tips.length >= 3 && lastExport > 7 * 86400000) h += '<button class="notice" data-act="export-file">' + ico('save') + ' ' + esc(t.remind) + '</button>';
 
     const peak = DP.peak(S.tips);
     const rk = rankFor(peak), sk = streakDays();
     h += '<div class="cols"><div class="col col-a">';
     h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
-      '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">🔥 ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
+      '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">' + ico('flame') + ' ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
       '<div class="rank-bar" role="img" aria-label="' + esc(rk.name) + '"><i style="width:' + rk.pct + '%"></i></div>' +
       (rk.pending ? '<small>' + esc(fill(t.exam_ready, { r: T().ranks[rk.pending] })) + '</small>' +
         (S.examActive ? '<button class="btn pulse" data-act="exam-start">' + esc(fill(t.exam_cont, { i: examRecs(S.examActive.key).length })) + '</button>'
@@ -1106,11 +1167,11 @@
     return topbar() + '<main class="stage"><div class="deck"><div class="swipe" id="swipe">' +
       '<div class="tint yes"></div><div class="tint no"></div>' +
       '<span class="stamp yes">' + esc(t.yes) + '!</span><span class="stamp no">' + esc(t.no) + '!</span>' +
-      '<p class="claim-big" lang="' + S.lang + '">' + esc(claimText(ui.claim, S.lang)) + '</p>' + (ui.practice ? '<span class="finger" aria-hidden="true">👆</span>' : '') + '</div></div>' +
+      '<p class="claim-big" lang="' + S.lang + '">' + esc(claimText(ui.claim, S.lang)) + '</p>' + (ui.practice ? '<span class="finger" aria-hidden="true">' + ico('point', 'big') + '</span>' : '') + '</div></div>' +
       (ui.practice ? '<p class="hint practice">' + esc(t.pr_swipe) + '</p>' : '<p class="hint">' + esc(t.swipe_hint) + '</p>') +
       '<div class="thumbs">' +
-      '<button class="thumb" data-act="tip" data-v="0"><span class="emoji" aria-hidden="true">👎</span>' + esc(t.no) + '</button>' +
-      '<button class="thumb" data-act="tip" data-v="1"><span class="emoji" aria-hidden="true">👍</span>' + esc(t.yes) + '</button></div>' +
+      '<button class="thumb" data-act="tip" data-v="0"><span class="emoji" aria-hidden="true">' + ico('up', 'big down') + '</span>' + esc(t.no) + '</button>' +
+      '<button class="thumb" data-act="tip" data-v="1"><span class="emoji" aria-hidden="true">' + ico('up', 'big') + '</span>' + esc(t.yes) + '</button></div>' +
       '<button class="linkbtn" data-act="home">' + esc(ui.practice ? t.home : t.cancel) + '</button></main>';
   }
 
@@ -1229,12 +1290,12 @@
     const t = T();
     let inner, a = S.duelActive;
     const last = Object.keys(S.duels || {}).filter(function (k) { return S.duels[k].done && S.duels[k].day === utcKey(); })[0];
-    if (a) inner = '<div><b>⚔️ ' + esc(t.duel_title) + '</b><small>' + esc(t.duel_sub) + '</small></div><button class="chip go" data-act="duel-continue">' + esc(fill(t.duel_cont, { i: duelRecs(a.seed).length })) + '</button>';
+    if (a) inner = '<div><b>' + ico('swords') + ' ' + esc(t.duel_title) + '</b><small>' + esc(t.duel_sub) + '</small></div><button class="chip go" data-act="duel-continue">' + esc(fill(t.duel_cont, { i: duelRecs(a.seed).length })) + '</button>';
     else if (ui.invite && !(S.duels[ui.invite.seed] && S.duels[ui.invite.seed].done)) {
-      inner = '<div><b>⚔️ ' + esc(t.duel_invite) + '</b><small>' + (ui.invite.row ? esc(fill(t.duel_friend, { row: rowEmoji(ui.invite.row), p: signed(ui.invite.pts || 0) })) : esc(t.duel_sub)) + '</small></div><button class="chip go" data-act="duel-accept">' + esc(t.duel_accept) + '</button>';
+      inner = '<div><b>' + ico('swords') + ' ' + esc(t.duel_invite) + '</b><small>' + (ui.invite.row ? esc(fill(t.duel_friend, { row: rowEmoji(ui.invite.row), p: signed(ui.invite.pts || 0) })) : esc(t.duel_sub)) + '</small></div><button class="chip go" data-act="duel-accept">' + esc(t.duel_accept) + '</button>';
     }
-    else if (last) inner = '<div><b>⚔️ ' + esc(t.duel_title) + '</b><small>' + rowEmoji(S.duels[last].row) + ' ' + signed(S.duels[last].pts) + '</small></div><button class="chip" data-act="duel-show" data-v="' + esc(last) + '">' + esc(t.duel_show) + '</button>';
-    else inner = '<div><b>⚔️ ' + esc(t.duel_new) + '</b><small>' + esc(t.duel_sub) + '</small></div><button class="chip go" data-act="duel-new">' + esc(t.go) + '</button>';
+    else if (last) inner = '<div><b>' + ico('swords') + ' ' + esc(t.duel_title) + '</b><small>' + rowDots(S.duels[last].row) + ' ' + signed(S.duels[last].pts) + '</small></div><button class="chip" data-act="duel-show" data-v="' + esc(last) + '">' + esc(t.duel_show) + '</button>';
+    else inner = '<div><b>' + ico('swords') + ' ' + esc(t.duel_new) + '</b><small>' + esc(t.duel_sub) + '</small></div><button class="chip go" data-act="duel-new">' + esc(t.go) + '</button>';
     return '<section class="daily duel">' + inner + '</section>';
   }
   /* Daumen-Typ: Wie gut passt die Sicherheit zur Trefferquote? Ab 10 gemessenen Tipps. */
@@ -1251,14 +1312,14 @@
     const t = T(), ty = thumbType();
     if (ty.more) return '<section class="typecard"><b>' + esc(t.type_title) + '</b><small>' + esc(fill(ty.more === 1 ? t.type_more1 : t.type_more, { n: ty.more })) + (S.tips.some(function (x) { return !x.resolved; }) ? ' ' + esc(fill(t.type_open, { k: S.tips.filter(function (x) { return !x.resolved; }).length })) : '') + '</small></section>';
     const d = t.types[ty.key];
-    return '<section class="typecard on"><div class="te" aria-hidden="true">' + d[0] + '</div><div><small>' + esc(t.type_title) + '</small><b>' + esc(d[1]) + '</b><p>' + esc(d[2]) + '</p><small>' +
+    return '<section class="typecard on"><div class="te" aria-hidden="true">' + creature(ty.key) + '</div><div><small>' + esc(t.type_title) + '</small><b>' + esc(d[1]) + '</b><p>' + esc(d[2]) + '</p><small>' +
       esc(fill(t.type_stats, { c: ty.avg, h: ty.hit })) + '</small></div><button class="chip" data-act="share-type">' + esc(t.share) + '</button></section>';
   }
   function shareType() {
     const t = T(), ty = thumbType();
     if (ty.more) return;
     const d = t.types[ty.key];
-    const text = fill(t.type_share, { e: d[0], n: d[1], d: d[2] }) + '\n' + location.origin + location.pathname;
+    const text = fill(t.type_share, { e: '', n: d[1], d: d[2] }).replace(/:\s+/, ': ') + '\n' + location.origin + location.pathname;
     if (navigator.share) { navigator.share({ text: text }).catch(function () { /* abgebrochen */ }); return; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say(t.share_copied); });
   }
@@ -1290,13 +1351,13 @@
       const b = BADGE_DEFS.filter(function (x) { return x[0] === id; })[0];
       out.push('<span class="badge up">' + bIcon(id, true, true) + ' ' + esc(t.badge_new) + ': ' + esc(t.badges[id][0]) + '</span>');
     });
-    if (after.i > before.i) out.push('<span class="badge up">⭐ ' + esc(fill(t.rankup, { r: after.name })) + '</span>');
+    if (after.i > before.i) out.push('<span class="badge up">' + ico('star') + ' ' + esc(fill(t.rankup, { r: after.name })) + '</span>');
     const combo = comboCount();
-    if (hit && combo >= 2) out.push('<span class="badge">🔥 ' + esc(fill(t.combo_n, { n: combo })) + '</span>');
+    if (hit && combo >= 2) out.push('<span class="badge">' + ico('flame') + ' ' + esc(fill(t.combo_n, { n: combo })) + '</span>');
     const k = DP.dayKey(new Date(r.ts));
     const firstToday = all.filter(function (x) { return DP.dayKey(new Date(x.ts)) === k; }).length === 1;
     const sk = streakDays();
-    if (firstToday && sk >= 2) out.push('<span class="badge">🔥 ' + esc(fill(t.streak_n, { n: sk })) + '</span>');
+    if (firstToday && sk >= 2) out.push('<span class="badge">' + ico('flame') + ' ' + esc(fill(t.streak_n, { n: sk })) + '</span>');
     if (after.i > before.i) out.push('<span class="lore-line">' + esc(t.rank_lore[after.i]) + '</span>');
     return out.length ? '<div class="badges">' + out.join('') + '</div>' : '';
   }
@@ -1348,7 +1409,7 @@
       '<p class="big-word">' + esc(hit ? t.hit : t.miss) + '</p>' +
       '<div class="points"><span id="pn" data-v="' + r.pts + '">' + signed(r.pts) + '</span><small>' + esc(t.pts_unit) + '</small></div>' +
       '<p class="said">' + esc(r.outcome ? t.truth_yes : t.truth_no) + ' ' + esc((r.level === 's' || r.level === 'm') ? fill(t.you_tipped_w, { tip: r.tip ? t.yes : t.no, conf: confWord(r.conf, r.level).toLowerCase() }) : fill(t.you_tipped, { tip: r.tip ? t.yes : t.no, conf: r.conf })) + '</p>' +
-      (r.free ? '<span class="badge up">🎁 ' + esc(t.free_note) + '</span>' : '') +
+      (r.free ? '<span class="badge up">' + ico('gift') + ' ' + esc(t.free_note) + '</span>' : '') +
       badges(r, hit) +
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +

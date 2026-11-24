@@ -588,3 +588,36 @@ body[data-theme="hit"] .report, body[data-theme="miss"] .report { color: inherit
 .bdg { opacity: 1; }
 .bdg:not(.on) b { color: var(--fg2); }
 .badge.up { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; }
+
+/* Symbole und Wesen */
+.ic { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.2em; flex: none; }
+.ic.big { width: 2.6rem; height: 2.6rem; stroke-width: 1.7; }
+.ic.down { transform: rotate(180deg); }
+.thumb .emoji { display: grid; place-items: center; line-height: 1; }
+.thumb[data-v="1"] .ic { color: var(--green); } .thumb[data-v="0"] .ic { color: var(--red); }
+.finger .ic.big { width: 3rem; height: 3rem; color: var(--fg); fill: var(--bg); }
+.chip .ic { width: 1.2em; height: 1.2em; vertical-align: -.25em; }
+.flame .ic { fill: currentColor; stroke: none; }
+.badge .ic { width: 1.1em; height: 1.1em; }
+.badge .ic[viewBox] { fill: none; }
+.notice .ic { color: var(--ap); margin-right: 4px; }
+.te { display: grid; place-items: center; }
+.cr { width: 92px; height: 92px; flex: none; overflow: visible; }
+.typecard.on { padding: 14px 18px 14px 12px; }
+.sqs { display: inline-flex; gap: 4px; vertical-align: middle; }
+.sq { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.sq.h { background: var(--green); } .sq.m { background: var(--red); }
+.vs b { letter-spacing: 0; }
+.stampi { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 6px; border-radius: 50%; border: 2px dashed var(--fg2); color: var(--fg2); }
+.stampi .ic { width: 22px; height: 22px; }
+.stampi.on { border: 3px solid var(--ap); color: var(--ap); background: color-mix(in srgb, var(--ap) 12%, transparent); transform: rotate(-8deg); }
+.stampi b { font-size: .85rem; font-weight: 800; letter-spacing: .04em; margin: 0; color: inherit; }
+.daily b .ic { color: var(--orange); }
+@media (prefers-reduced-motion: no-preference) {
+  .cr { animation: bob 3.4s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-4px); } }
+  .cr .eye { transform-box: fill-box; transform-origin: center; animation: blink 4.6s infinite; }
+  @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+  .cr .coin { transform-box: fill-box; transform-origin: center; animation: coinspin 2.6s linear infinite; }
+  @keyframes coinspin { 50% { transform: scaleX(.12); } }
+}
