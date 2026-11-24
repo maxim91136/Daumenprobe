@@ -621,3 +621,17 @@ body[data-theme="hit"] .report, body[data-theme="miss"] .report { color: inherit
   .cr .coin { transform-box: fill-box; transform-origin: center; animation: coinspin 2.6s linear infinite; }
   @keyframes coinspin { 50% { transform: scaleX(.12); } }
 }
+
+/* Abzeichen-Wesen */
+.bf { --fam: #34c759; display: inline-grid; place-items: center; width: 80px; height: 80px; border-radius: 20px; background: color-mix(in srgb, var(--fam) 20%, var(--surface2)); }
+.bf.c-orange { --fam: #ff9f0a; } .bf.c-blue { --fam: #0a84ff; } .bf.c-purple { --fam: #bf5af2; } .bf.c-pink { --fam: #ff375f; } .bf.c-red { --fam: #ff453a; } .bf.c-teal { --fam: #5ac8fa; }
+.cr2 { width: 88%; height: 88%; overflow: visible; }
+.bf.off { background: var(--seg); }
+.bf.off .cr2 { filter: grayscale(1) brightness(.45) contrast(.9); opacity: .55; }
+.bf.sm { width: 30px; height: 30px; border-radius: 9px; vertical-align: middle; }
+.bdg .bf { margin-bottom: 6px; }
+@media (prefers-reduced-motion: no-preference) {
+  .bf:not(.off):not(.sm) .cr2 { animation: bob 3.6s ease-in-out infinite; }
+  .bf:not(.off):not(.sm) .eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
+  .badge.up .bf { animation: pop .6s cubic-bezier(.2,1.6,.4,1) both; }
+}
