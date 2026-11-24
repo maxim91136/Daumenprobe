@@ -39,7 +39,7 @@
       go: 'Neue Behauptung',
       goDone: 'Das war\'s für heute. Morgen warten 10 neue Behauptungen auf dich.',
       left: 'noch {n} heute',
-      stat_hit: 'Treffer', stat_pts: 'Punkte', stat_cal: 'Kalibrierung',
+      stat_hit: 'Treffer', stat_pts: 'Punkte', stat_cal: 'Kalibrierung', week_now: 'Diese Woche', week_prev: 'Letzte Woche',
       cal_need: 'ab 5 Tipps',
       cal_title: 'Stimmt deine Sicherheit?',
       cal_help: 'Der Balken ist die Trefferquote, der Strich deine Sicherheit. Liegen sie beieinander, schätzt du gut ein.',
@@ -262,7 +262,7 @@
       go: 'New claim',
       goDone: 'That\'s it for today. 10 new claims tomorrow.',
       left: '{n} left today',
-      stat_hit: 'Hits', stat_pts: 'Points', stat_cal: 'Calibration',
+      stat_hit: 'Hits', stat_pts: 'Points', stat_cal: 'Calibration', week_now: 'This week', week_prev: 'Last week',
       cal_need: 'after 5 tips',
       cal_title: 'Is your confidence right?',
       cal_help: 'The bar is how often you were right, the line is how sure you were. If they match, you judge well.',
@@ -1082,6 +1082,12 @@
       '<button class="chip" data-act="sound" aria-label="' + esc(S.mute ? T().sound_on : T().sound_off) + '">' + ico(S.mute ? 'mute' : 'sound') + '</button></div>';
   }
   const THUMB = '<svg class="print-logo" viewBox="-60 -60 120 120" aria-hidden="true" focusable="false"><g transform="rotate(-12)" fill="none" stroke="#fbfbff" stroke-width="6" stroke-linecap="round"><ellipse rx="11" ry="15"/><ellipse rx="21" ry="29" stroke-dasharray="120 14 40 10"/><ellipse rx="31" ry="43" stroke-dasharray="150 12 70 16"/><ellipse rx="41" ry="57" stroke-dasharray="200 14 100 20" opacity=".7"/><circle r="4" fill="#ffd24a" stroke="none"/></g></svg>';
+  function weekPts() {
+    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    const a = d.getTime(), p = a - 7 * 864e5; let now = 0, prev = 0, n = 0;
+    S.tips.forEach(function (x) { if (!x.resolved || typeof x.pts !== 'number' || x.exam) return; if (x.ts >= a) { now += x.pts; n++; } else if (x.ts >= p) prev += x.pts; });
+    return { now: now, prev: prev, n: n };
+  }
   function header() { return '<header class="top"><div><div class="brand">' + THUMB + '<h1 class="mark">' + esc(T().title) + '</h1></div><p class="tagline">' + esc(T().tagline) + ' <span class="beta">Beta</span></p></div>' + langs(true) + '</header>'; }
   function topbar() {
     const n = Math.min(DAILY_LIMIT, todayCount());
@@ -1129,7 +1135,8 @@
         : '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + (peak > st.pts && peak > 0 ? ' · ' + esc(fill(t.peak_short, { n: peak })) : '') + '</small>') +
       '<p class="lore">' + esc(t.rank_lore[rk.i]) + '</p></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
-      '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
+      '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div>' +
+      (function () { const w = weekPts(); return w.n ? '<div class="hero-sub week"><span>' + esc(t.week_now) + ' ' + signed(w.now) + '</span>' + (w.prev ? '<span>' + esc(t.week_prev) + ' ' + signed(w.prev) + '</span>' : '') + '</div>' : ''; })() + '</div>';
     h += lessonCard(st, peak) + levelHint();
     h += typeCard();
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
