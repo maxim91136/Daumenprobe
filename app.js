@@ -132,6 +132,10 @@
         'Man erzählt, dein Daumen ersetze den Wetterdienst.',
         'Der Orden hat dir nichts mehr beizubringen. Außer Demut.'
       ],
+      duel_new: 'Duell mit Freund', duel_sub: 'Gleiche 5 Behauptungen, ein Link, kein Konto', duel_once: 'Ein Duell pro Tag.', duel_cont: 'Duell fortsetzen ({i}/5)',
+      duel_invite: 'Duell-Einladung', duel_friend: 'Freund: {row} · {p} Punkte', duel_accept: 'Annehmen', duel_next: 'Weiter ({i}/5)', duel_eval: 'Auswerten',
+      duel_title: 'Duell', duel_you: 'Du', duel_them: 'Freund', duel_win: 'Gewonnen!', duel_lose: 'Knapp verloren.', duel_draw: 'Unentschieden.',
+      duel_share_text: 'Daumenprobe-Duell ⚔️ {row} · {p} Punkte. Schaffst du mehr?', duel_waiting: 'Schick den Link. Dein Freund spielt dieselben 5 Behauptungen und sieht dein Ergebnis.', duel_show: 'Duell-Ergebnis',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} Punkte',
@@ -282,6 +286,10 @@
         'They say your thumb replaces the weather service.',
         'The Order has nothing left to teach you. Except humility.'
       ],
+      duel_new: 'Duel a friend', duel_sub: 'Same 5 claims, one link, no account', duel_once: 'One duel per day.', duel_cont: 'Continue duel ({i}/5)',
+      duel_invite: 'Duel invitation', duel_friend: 'Friend: {row} · {p} points', duel_accept: 'Accept', duel_next: 'Next ({i}/5)', duel_eval: 'See result',
+      duel_title: 'Duel', duel_you: 'You', duel_them: 'Friend', duel_win: 'You won!', duel_lose: 'Narrowly lost.', duel_draw: 'A draw.',
+      duel_share_text: 'Daumenprobe duel ⚔️ {row} · {p} points. Can you beat it?', duel_waiting: 'Send the link. Your friend plays the same 5 claims and sees your result.', duel_show: 'Duel result',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe #{n}', share_pts: '{p} points',
@@ -453,7 +461,7 @@
 
   /* ---------- Speicher ---------- */
   let memory = null;
-  function blank() { return { v: 1, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, duels: {}, duelActive: null, level: 'l', lang: null, tips: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -471,7 +479,7 @@
 
   let S = load();
   if (!S.lang) S.lang = (navigator.language || 'de').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
-  const ui = { daily: null, view: 'home', claim: null, tip: null, conf: null, result: null, error: false, busy: false, msg: '' };
+  const ui = { duel: null, duelEnd: null, invite: null, daily: null, view: 'home', claim: null, tip: null, conf: null, result: null, error: false, busy: false, msg: '' };
 
   function T() { return I18N[S.lang]; }
   function esc(s) {
@@ -483,7 +491,7 @@
   function todayCount() {
     const k = DP.dayKey();
     const drawn = (S.draws || []).filter(function (ts) { return DP.dayKey(new Date(ts)) === k; }).length;
-    const tipped = S.tips.filter(function (t) { return !t.daily && DP.dayKey(new Date(t.ts)) === k; }).length;
+    const tipped = S.tips.filter(function (t) { return !t.daily && !t.duel && DP.dayKey(new Date(t.ts)) === k; }).length;
     return Math.max(drawn, tipped);
   }
   function resolvedTips() { return S.tips.filter(function (t) { return t.resolved; }); }
@@ -501,7 +509,7 @@
   function submitInstant() {
     ui.busy = true; ui.error = false; render();
     measure(ui.claim).then(function (m) {
-      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, daily: ui.daily || undefined, ts: Date.now(), resolved: false };
+      const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: ui.duel ? 'l' : S.level, daily: ui.daily || undefined, duel: ui.duel ? ui.duel.seed : undefined, ts: Date.now(), resolved: false };
       finishTip(rec, m);
       S.tips.push(rec); S.current = null; save(S);
       ui.result = rec; ui.view = 'result'; ui.busy = false; render();
@@ -511,7 +519,7 @@
   }
 
   function submitLater() {
-    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: S.level, daily: ui.daily || undefined, ts: Date.now(), resolved: false };
+    const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, level: ui.duel ? 'l' : S.level, daily: ui.daily || undefined, duel: ui.duel ? ui.duel.seed : undefined, ts: Date.now(), resolved: false };
     S.tips.push(rec); S.current = null; save(S);
     ui.result = rec; ui.view = 'later'; render();
   }
@@ -537,6 +545,7 @@
     if (ui.view === 'conf') return ui.tip ? 'yes' : 'no';
     if (ui.view === 'result') return DP.isHit(ui.result.tip, ui.result.outcome) ? 'hit' : 'miss';
     if (ui.view === 'later') return 'wait';
+    if (ui.view === 'duelend') return 'wait';
     return 'home';
   }
   const STEPS = { s: [50, 75, 100], m: [50, 60, 70, 80, 90, 100], l: [50, 60, 70, 80, 90, 100] };
@@ -578,7 +587,7 @@
   }
   function todaySlots() {
     const k = DP.dayKey();
-    const todays = S.tips.filter(function (x) { return !x.daily && DP.dayKey(new Date(x.ts)) === k; }).sort(function (a, b) { return a.ts - b.ts; });
+    const todays = S.tips.filter(function (x) { return !x.daily && !x.duel && DP.dayKey(new Date(x.ts)) === k; }).sort(function (a, b) { return a.ts - b.ts; });
     const out = [];
     for (let i = 0; i < DAILY_LIMIT; i++) {
       const x = todays[i];
@@ -718,6 +727,7 @@
     h += '<section class="daily"><div><b>' + esc(t.daily_title) + ' #' + dailyNumber(dKey) + '</b><small>' + esc(t.daily_sub) + '</small></div>' +
       (dDone && dDone.resolved ? '<div class="daily-res"><span>' + dailyRow() + '</span><button class="chip" data-act="share-daily">' + esc(t.share) + '</button></div>'
         : dDone ? '<span class="small">…</span>' : '<button class="chip go" data-act="daily">' + esc(t.daily_go) + '</button>') + '</section>';
+    h += duelCard();
     h += '<div class="slots" role="img" aria-label="' + esc(fill(t.left, { n: left })) + '">' + todaySlots().map(function (k) { return '<i class="' + k + '"></i>'; }).join('') + '</div>';
     if (left > 0) h += '<p class="hint">' + esc(fill(t.left, { n: left })) + '</p>';
     else h += '<p class="small" style="margin:14px 0 0;text-align:center">' + esc(t.goDone) + '</p>';
@@ -813,6 +823,69 @@
     return h;
   }
 
+  /* ---------- Duell: gleiche fünf Behauptungen per Link, Ergebnis des Freundes steckt im Link (nach dem #, geht nie an einen Server) ---------- */
+  function duelClaims(seed) { return claimsFromSeed('duell:' + seed, 5); }
+  function duelRecs(seed) { return S.tips.filter(function (t) { return t.duel === seed; }).sort(function (a, b) { return a.ts - b.ts; }); }
+  function duelToday() { return Object.keys(S.duels || {}).some(function (k) { return S.duels[k].day === utcKey(); }); }
+  function rowEmoji(row) { return row.split('').map(function (c) { return c === 'h' ? '🟩' : '🟥'; }).join(''); }
+  function readInvite() {
+    const m = /[#&]d=([a-z0-9]{4,12})(?:&o=([hm]{5}))?(?:&p=(-?\d{1,4}))?/i.exec(location.hash || '');
+    ui.invite = m ? { seed: m[1].toLowerCase(), row: m[2] || null, pts: m[3] === undefined ? null : Number(m[3]) } : null;
+  }
+  function startDuelClaim() {
+    const a = S.duelActive;
+    if (!a) return;
+    const i = duelRecs(a.seed).length;
+    if (i >= 5) { finishDuel(a.seed); return; }
+    ui.duel = { seed: a.seed, i: i }; ui.daily = null; ui.claim = duelClaims(a.seed)[i];
+    ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip'; render();
+  }
+  function finishDuel(seed) {
+    const recs = duelRecs(seed);
+    const d = S.duels[seed] || (S.duels[seed] = { day: utcKey() });
+    d.row = recs.map(function (r) { return DP.isHit(r.tip, r.outcome) ? 'h' : 'm'; }).join('');
+    d.pts = recs.reduce(function (a, r) { return a + (r.pts || 0); }, 0);
+    d.done = true;
+    S.duelActive = null; save(S);
+    ui.duel = null; ui.duelEnd = seed; ui.view = 'duelend'; render();
+  }
+  function duelLink(seed) {
+    const d = S.duels[seed];
+    return location.origin + location.pathname + '#d=' + seed + '&o=' + d.row + '&p=' + d.pts;
+  }
+  function shareDuel(seed) {
+    const t = T(), d = S.duels[seed];
+    if (!d || !d.done) return;
+    const text = fill(t.duel_share_text, { row: rowEmoji(d.row), p: signed(d.pts) }) + '\n' + duelLink(seed);
+    if (navigator.share) { navigator.share({ text: text }).catch(function () { /* abgebrochen */ }); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say(t.share_copied); });
+  }
+  function viewDuelEnd() {
+    const t = T(), seed = ui.duelEnd, d = S.duels[seed];
+    let verdict = '';
+    if (d.opp) verdict = d.pts > d.opp.pts ? t.duel_win : d.pts < d.opp.pts ? t.duel_lose : t.duel_draw;
+    let h = topbar() + '<main class="stage"><p class="small-claim">' + esc(t.duel_title) + '</p>' +
+      '<p class="big-word" style="font-size:clamp(3rem,15vw,5rem)">' + esc(verdict || t.duel_you) + '</p>' +
+      '<div class="vs"><div><small>' + esc(t.duel_you) + '</small><b>' + rowEmoji(d.row) + '</b><span>' + signed(d.pts) + '</span></div>' +
+      (d.opp ? '<div><small>' + esc(t.duel_them) + '</small><b>' + rowEmoji(d.opp.row) + '</b><span>' + signed(d.opp.pts) + '</span></div>' : '') + '</div>';
+    if (!d.opp) h += '<p class="said">' + esc(t.duel_waiting) + '</p>';
+    h += '<div class="spacer"></div><button class="btn" data-act="share-duel">' + esc(t.share) + '</button>' +
+      '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
+    return h;
+  }
+
+  function duelCard() {
+    const t = T();
+    let inner, a = S.duelActive;
+    const last = Object.keys(S.duels || {}).filter(function (k) { return S.duels[k].done && S.duels[k].day === utcKey(); })[0];
+    if (a) inner = '<div><b>⚔️ ' + esc(t.duel_title) + '</b><small>' + esc(t.duel_sub) + '</small></div><button class="chip go" data-act="duel-continue">' + esc(fill(t.duel_cont, { i: duelRecs(a.seed).length })) + '</button>';
+    else if (ui.invite && !(S.duels[ui.invite.seed] && S.duels[ui.invite.seed].done)) {
+      inner = '<div><b>⚔️ ' + esc(t.duel_invite) + '</b><small>' + (ui.invite.row ? esc(fill(t.duel_friend, { row: rowEmoji(ui.invite.row), p: signed(ui.invite.pts || 0) })) : esc(t.duel_sub)) + '</small></div><button class="chip go" data-act="duel-accept">' + esc(t.duel_accept) + '</button>';
+    }
+    else if (last) inner = '<div><b>⚔️ ' + esc(t.duel_title) + '</b><small>' + rowEmoji(S.duels[last].row) + ' ' + signed(S.duels[last].pts) + '</small></div><button class="chip" data-act="duel-show" data-v="' + esc(last) + '">' + esc(t.duel_show) + '</button>';
+    else inner = '<div><b>⚔️ ' + esc(t.duel_new) + '</b><small>' + esc(t.duel_sub) + '</small></div><button class="chip go" data-act="duel-new">' + esc(t.go) + '</button>';
+    return '<section class="daily duel">' + inner + '</section>';
+  }
   function dailyRow() {
     let row = '';
     for (let i = 6; i >= 0; i--) {
@@ -864,7 +937,7 @@
       '<div class="measure"><b>' + esc(t.measured) + ':</b> ' + esc(measuredText(r.claim, r.shown, S.lang)) +
       '<span class="small"><b>' + esc(t.rule) + ':</b> ' + esc(ruleText(r.claim, S.lang)) + '</span></div>' +
       '<div class="spacer"></div>' +
-      (r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
+      (r.duel ? '<button class="btn" data-act="duel-next">' + esc(duelRecs(r.duel).length >= 5 ? t.duel_eval : fill(t.duel_next, { i: duelRecs(r.duel).length })) + '</button>' : r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
       '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
   }
 
@@ -923,7 +996,7 @@
   function render() {
     const root = document.getElementById('app');
     document.documentElement.lang = S.lang;
-    const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater };
+    const views = { home: viewHome, tip: viewTip, conf: viewConf, result: viewResult, later: viewLater, duelend: viewDuelEnd };
     const theme = themeFor();
     document.body.setAttribute('data-theme', theme);
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -976,10 +1049,10 @@
     else if (act === 'level') { if (STEPS[v]) { S.level = v; save(S); render(); } }
     else if (act === 'home') {
       if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {
-        if (ui.error && !ui.daily && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
+        if (ui.error && !ui.daily && !ui.duel && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
         S.current = null; save(S);
       }
-      ui.daily = null; ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
+      ui.daily = null; ui.duel = null; ui.duelEnd = null; ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
     }
     else if (act === 'daily') {
       const key = utcKey();
@@ -989,6 +1062,20 @@
       save(S); render();
     }
     else if (act === 'share-daily') { shareDaily(); }
+    else if (act === 'share-duel') { shareDuel(ui.duelEnd); }
+    else if (act === 'duel-new' || act === 'duel-accept') {
+      if (S.duelActive) { startDuelClaim(); return; }
+      if (act === 'duel-accept' && !ui.invite) return;
+      const seed = act === 'duel-new' ? Math.random().toString(36).slice(2, 8) : ui.invite.seed;
+      if (S.duels[seed] && S.duels[seed].done) { ui.duelEnd = seed; ui.view = 'duelend'; render(); return; }
+      if (duelToday()) { ui.msg = T().duel_once; render(); return; }
+      const opp = act === 'duel-accept' && ui.invite.row && ui.invite.pts !== null ? { row: ui.invite.row, pts: ui.invite.pts } : null;
+      S.duels[seed] = { day: utcKey(), opp: opp }; S.duelActive = { seed: seed };
+      try { history.replaceState(null, '', location.pathname); } catch (e) { /* egal */ }
+      ui.invite = null; save(S); startDuelClaim();
+    }
+    else if (act === 'duel-continue' || act === 'duel-next') { startDuelClaim(); }
+    else if (act === 'duel-show') { ui.duelEnd = v; ui.view = 'duelend'; render(); }
     else if (act === 'start') {
       ui.daily = null;
       if (todayCount() >= DAILY_LIMIT) return;
@@ -1097,6 +1184,8 @@
     else if (e.key === 'ArrowLeft') chooseTip(false);
   });
 
+  readInvite();
+  window.addEventListener('hashchange', function () { readInvite(); if (ui.view === 'home') render(); });
   if (S.current && validClaim(S.current.claim) && DP.dayKey(new Date(S.current.ts)) === DP.dayKey()) {
     ui.claim = S.current.claim; ui.view = 'tip'; ui.daily = S.current.daily || null;
   } else if (S.current) { S.current = null; save(S); }

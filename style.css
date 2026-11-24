@@ -289,3 +289,11 @@ footer .links details[open] > p { display: block; margin: 8px 0 0; }
 .daily small { opacity: .75; font-weight: 600; }
 .daily .go { background: var(--mint); color: var(--night); border-color: var(--mint); white-space: nowrap; }
 .daily-res { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; }
+
+.daily.duel { background: linear-gradient(120deg, rgba(255,59,141,.16), rgba(255,122,26,.16)); border-color: rgba(255,59,141,.45); }
+.daily.duel .go { background: var(--pink); border-color: var(--pink); color: var(--night); }
+.vs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 12px; margin: 10px 0 14px; }
+.vs > div { background: var(--night); color: #fff; border-radius: 22px; padding: 14px; }
+.vs small { display: block; opacity: .7; font-weight: 700; }
+.vs b { display: block; font-size: 1.1rem; margin: 4px 0; letter-spacing: 1px; }
+.vs span { font-size: 2.2rem; font-weight: 900; font-stretch: 75%; }
