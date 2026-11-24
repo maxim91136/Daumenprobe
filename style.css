@@ -673,3 +673,6 @@ body[data-theme="hit"] .beta, body[data-theme="miss"] .beta { color: inherit; }
   .top:has(.brand) .tagline { grid-column: 1; grid-row: 2; margin: 0; }
   .top:has(.brand) .langs { grid-column: 2; grid-row: 2; align-self: start; }
 }
+
+/* Tipp-Bildschirm: Punkte etwas tiefer, damit die Safari-Leiste sie nicht verdeckt */
+@media (max-width: 899px) { .top:not(:has(.brand)) { padding-top: 14px; } }

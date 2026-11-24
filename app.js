@@ -698,7 +698,7 @@
     });
     st.scoreV = 3;
   }
-  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', scoreV: 3, lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 's', scoreV: 3, lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -876,7 +876,7 @@
         '<path d="M14 38L19 8L38 24Q48 21 58 24L77 8L82 38C82 62 66 80 48 80C30 80 14 62 14 38Z" fill="#ff8a3d"/>' +
         '<path d="M22 17L32 27L24 32Z M74 17L64 27L72 32Z" fill="#ffd0a8"/>' +
         '<path d="M14 52C26 54 38 62 48 80C34 80 18 68 14 52Z M82 52C70 54 58 62 48 80C62 80 78 68 82 52Z" fill="#fff3e6"/>' +
-        '<path d="M46 26A8.5 8.5 0 1 0 46 43A6.8 6.8 0 1 1 46 26Z" fill="#ffe27a"/>' + eye(35, 54, 5) + eye(61, 54, 5) +
+        '<circle cx="46" cy="35" r="11.5" fill="#fff4a8"/><circle cx="52" cy="32" r="10" fill="#ff8a3d"/>' + eye(35, 54, 5) + eye(61, 54, 5) +
         '<circle cx="48" cy="72" r="3.4" fill="#2a1a2e"/><path d="M42 77Q48 81 54 77" stroke="#2a1a2e" stroke-width="2" fill="none" stroke-linecap="round"/>';
     },
     coin: function () { /* Münz-Wicht */
@@ -953,7 +953,7 @@
     exam: function () { return '<path d="M28 40L23 24L41 34Z M68 40L73 24L55 34Z" fill="#4f6fe0"/><ellipse cx="48" cy="62" rx="26" ry="26" fill="#6f8cff"/><path d="M22 58C15 66 18 77 27 81Z M74 58C81 66 78 77 69 81Z" fill="#4f6fe0"/>' + eye(38, 52, 6) + eye(58, 52, 6) + '<circle cx="38" cy="52" r="10" fill="none" stroke="#1f2a44" stroke-width="2.4"/><circle cx="58" cy="52" r="10" fill="none" stroke="#1f2a44" stroke-width="2.4"/><path d="M48 52H48" stroke="#1f2a44" stroke-width="2.4"/><path d="M44 62L48 69L52 62Z" fill="#ffb020"/><rect x="37" y="72" width="22" height="12" rx="3" fill="#fff4dc"/><circle cx="48" cy="78" r="3" fill="#ff453a"/><path d="M48 8L80 21L48 34L16 21Z" fill="#1f2a44"/><path d="M34 29V38C34 43 62 43 62 38V29" fill="#2c3a5c"/><path d="M80 21V36" stroke="#ffd24a" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="38" r="3" fill="#ffd24a"/>'; },
     pass: function () { return '<ellipse cx="34" cy="86" rx="9" ry="4" fill="#1b7585"/><ellipse cx="62" cy="86" rx="9" ry="4" fill="#1b7585"/><path d="M38 30V23C38 19 40 17 44 17H52C56 17 58 19 58 23V30" stroke="#1b7585" stroke-width="4.5" fill="none" stroke-linecap="round"/><rect x="18" y="29" width="60" height="55" rx="12" fill="#2bb3c7"/><path d="M18 55H78" stroke="#1b7585" stroke-width="3"/>' + eye(38, 44, 5.4) + eye(58, 44, 5.4) + '<path d="M43 52Q48 57 53 52" stroke="#0f4a55" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="30" cy="68" r="6" fill="#ffd24a"/><rect x="50" y="62" width="16" height="12" rx="3" fill="#ff6a5e" transform="rotate(-8 58 68)"/><path d="M30 65V71M27 68H33" stroke="#c98f00" stroke-width="1.6"/>'; },
     duel: function () { return '<path d="M14 14L44 44M82 14L52 44" stroke="#dfe6f0" stroke-width="5.5" stroke-linecap="round"/><path d="M10 26L26 10M86 26L70 10" stroke="#ffd24a" stroke-width="5" stroke-linecap="round"/>' + bBody('#ff6a5e', '#cf2a20', '#ffc5be') + '<path d="M25 48C34 44 62 44 71 48V58C62 63 34 63 25 58Z" fill="#1b1530"/>' + eye(39, 53, 4.4) + eye(57, 53, 4.4) + '<path d="M42 68Q48 73 54 68" stroke="#7a1410" stroke-width="2.4" fill="none" stroke-linecap="round"/>'; },
-    better: function () { return bBody('#35c9a5', '#1f9c7e', '#c8f5e8') + bFace('#0f5a47') + '<path d="M38 79L46 71L51 75L60 65" stroke="#1f9c7e" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M53 65H60V72" stroke="#1f9c7e" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 42C34 36 62 36 70 42" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M60 30L66 22L72 30Z" fill="#ffd24a" transform="translate(0 6)"/>'; },
+    better: function () { return bBody('#35c9a5', '#1f9c7e', '#c8f5e8') + bFace('#0f5a47') + '<path d="M36 80L45 70L51 75L62 63" stroke="#0f7a5f" stroke-width="4.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 62H63V73" stroke="#0f7a5f" stroke-width="4.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 42C34 36 62 36 70 42" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".55"/><path d="M80 24L82 30L88 32L82 34L80 40L78 34L72 32L78 30Z M14 30L15.5 34L19.5 35.5L15.5 37L14 41L12.5 37L8.5 35.5L12.5 34Z" fill="#ffd24a"/>'; },
     comeback: function () { return '<path d="M24 58C11 52 8 38 14 29C21 37 27 47 30 58Z M72 58C85 52 88 38 82 29C75 37 69 47 66 58Z" fill="#ff9a3d"/>' + bBody('#ff7a3d', '#d94f1c', '#ffd0a0') + '<path d="M48 42C51 34 45 30 47 18C55 25 61 33 57 42Z" fill="#ffd24a"/><path d="M40 43C41 36 36 32 37 25C45 29 47 36 45 43Z" fill="#ff9a3d"/>' + eye(39, 55, 5.2) + eye(57, 55, 5.2) + '<path d="M32 48L44 52M64 48L52 52" stroke="#7a2a0a" stroke-width="2.6" stroke-linecap="round"/><path d="M44 63L48 70L52 63Z" fill="#ffb020"/>'; }
   };
   function bIcon(id, on, small) {
