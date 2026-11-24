@@ -85,7 +85,7 @@ Grenzen liegen nahe am Üblichen (Monatsmittel der Stadt für Temperatur, typisc
 
 ## God Mode
 
-Unten auf der Seite gibt es den Knopf „God Mode“. Er hebt das Tageslimit auf und zeigt auf dem Tipp-Bildschirm „Lösung ansehen“. Gedacht für die Testphase, wird vor dem offiziellen Start entfernt (Suche nach `S.beta` und `dailyLimit` in app.js).
+Unten auf der Seite gibt es den Knopf „God Mode“. Beim Einschalten wird der aktuelle Spielstand gesichert. Danach ist alles spielbar (alle Stufen, Tagesfrage, Duell, Prüfung, Almanach), das Tageslimit ist aufgehoben und auf dem Tipp-Bildschirm gibt es „Lösung ansehen“. Beim Ausschalten wird alles aus der Testphase verworfen und der gesicherte Stand kommt zurück, es zählt also nichts. Gedacht für die Testphase, wird vor dem offiziellen Start entfernt (Suche nach `S.beta` und `dailyLimit` in app.js).
 
 ## Almanach (Nebenspiel)
 
