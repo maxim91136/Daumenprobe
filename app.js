@@ -6,14 +6,14 @@
   const DAILY_LIMIT = 10;
 
   const CITIES = [
-    { id: 'hannover', flag: '🇩🇪', lat: 52.37, lon: 9.73, de: 'Hannover', en: 'Hanover', eu: true },
-    { id: 'berlin', flag: '🇩🇪', lat: 52.52, lon: 13.41, de: 'Berlin', en: 'Berlin', eu: true },
-    { id: 'muenchen', flag: '🇩🇪', lat: 48.14, lon: 11.58, de: 'München', en: 'Munich', eu: true },
-    { id: 'hamburg', flag: '🇩🇪', lat: 53.55, lon: 9.99, de: 'Hamburg', en: 'Hamburg', eu: true },
-    { id: 'tokio', flag: '🇯🇵', lat: 35.68, lon: 139.69, de: 'Tokio', en: 'Tokyo', eu: false },
-    { id: 'sydney', flag: '🇦🇺', lat: -33.87, lon: 151.21, de: 'Sydney', en: 'Sydney', eu: false },
-    { id: 'newyork', flag: '🇺🇸', lat: 40.71, lon: -74.01, de: 'New York', en: 'New York', eu: false },
-    { id: 'kapstadt', flag: '🇿🇦', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false }
+    { id: 'hannover', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 52.37, lon: 9.73, de: 'Hannover', en: 'Hanover', eu: true },
+    { id: 'berlin', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 52.52, lon: 13.41, de: 'Berlin', en: 'Berlin', eu: true },
+    { id: 'muenchen', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 48.14, lon: 11.58, de: 'München', en: 'Munich', eu: true },
+    { id: 'hamburg', tz: 'Europe/Berlin', flag: '🇩🇪', lat: 53.55, lon: 9.99, de: 'Hamburg', en: 'Hamburg', eu: true },
+    { id: 'tokio', tz: 'Asia/Tokyo', flag: '🇯🇵', lat: 35.68, lon: 139.69, de: 'Tokio', en: 'Tokyo', eu: false },
+    { id: 'sydney', tz: 'Australia/Sydney', flag: '🇦🇺', lat: -33.87, lon: 151.21, de: 'Sydney', en: 'Sydney', eu: false },
+    { id: 'newyork', tz: 'America/New_York', flag: '🇺🇸', lat: 40.71, lon: -74.01, de: 'New York', en: 'New York', eu: false },
+    { id: 'kapstadt', tz: 'Africa/Johannesburg', flag: '🇿🇦', lat: -33.92, lon: 18.42, de: 'Kapstadt', en: 'Cape Town', eu: false }
   ];
 
   const I18N = {
@@ -28,7 +28,8 @@
         'Du bekommst eine Behauptung.',
         'Tippe: stimmt (👍) oder stimmt nicht (👎).',
         'Sag, wie sicher du bist: 50 % ist geraten, 100 % ist ganz sicher.',
-        'Wir messen live nach. Recht gehabt gibt Punkte, Daneben kostet Punkte.'
+        'Wir messen live nach. Recht gehabt gibt Punkte, Daneben kostet Punkte.',
+        'Verklickt? Einmal pro Frage kannst du vor dem Messen zurück und neu antworten.'
       ],
       rules_goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer bringen Punkte, Daneben kosten Punkte, und zwar mehr, je sicherer du dich gibst.',
       rules_cols: ['Sicherheit', 'Treffer', 'Daneben'],
@@ -64,6 +65,7 @@
       none: 'Noch nichts getippt.',
       backup: 'Sichern und laden',
       backup_help: 'Dein Spielstand liegt nur in diesem Browser. Sichere ihn ab und zu, falls der Browser Daten löscht (Safari kann das nach etwa 7 Tagen ohne Besuch).',
+      back: 'Antwort ändern',
       first_go: 'Los geht\'s', pr_swipe: 'Wische nach rechts: stimmt. Nach links: stimmt nicht.', pr_conf: 'Je sicherer du bist, desto mehr bringt ein Treffer, aber desto mehr kostet ein Irrtum.', pr_done: 'Das war nur Übung, hier zählt nichts. Ab jetzt wird echt gemessen.', pr_next: 'Erste echte Frage', pr_unit: 'Übung',
       rep_q: 'Stimmt etwas mit der Frage nicht?', rep_unclear: 'Unklar', rep_boring: 'Langweilig', rep_odd: 'Messung komisch', rep_thanks: 'Danke, gemerkt.',
       export_file: 'Datei sichern', export_code: 'Code kopieren', copied: 'Kopiert.',
@@ -87,6 +89,8 @@
         humidity: 'In {city} liegt die Luftfeuchtigkeit bei {v} %.',
         cloud: 'In {city} sind {v} % des Himmels bewölkt.',
         warmer: 'In {city} sind es {a} °C, in {city2} {b} °C.',
+        sunhigh: 'In {city} steht die Sonne {a}° hoch, in {city2} {b}°.',
+        clock: 'In {city} ist es jetzt {v} Uhr.',
         moon: 'Der Mond ist zu {v} % beleuchtet.',
         temp: 'In {city} sind es {v} °C.',
         isday: 'In {city} steht die Sonne gerade {v}.',
@@ -175,6 +179,8 @@
         humidity: 'Die Luftfeuchtigkeit in {city} liegt gerade über {H} %.',
         cloud: 'In {city} ist der Himmel gerade mehr als zur Hälfte bewölkt.',
         warmer: 'Gerade ist es in {city} wärmer als in {city2}.',
+        sunhigh: 'Die Sonne steht gerade in {city} höher am Himmel als in {city2}.',
+        clock: 'In {city} ist es gerade später als {H} Uhr (Ortszeit).',
         moon: 'Der Mond ist gerade mehr als halb beleuchtet.',
         temp: 'In {city} sind es gerade mehr als {T} °C.',
         isday: 'In {city} steht die Sonne gerade über dem Horizont.',
@@ -194,6 +200,8 @@
         humidity: 'Stimmt, wenn die relative Luftfeuchtigkeit in {city} jetzt über {H} % liegt (Open-Meteo).',
         cloud: 'Stimmt, wenn der Bewölkungsgrad in {city} jetzt über 50 % liegt (Open-Meteo).',
         warmer: 'Stimmt, wenn die Temperatur jetzt in {city} höher ist als in {city2} (Open-Meteo).',
+        sunhigh: 'Stimmt, wenn der Winkel der Sonne über dem Horizont jetzt in {city} größer ist als in {city2}. Minuswerte heißen: Die Sonne ist unten. Berechnet aus Ort und Uhrzeit.',
+        clock: 'Stimmt, wenn die Uhrzeit vor Ort jetzt nach {H}:00 Uhr liegt. Das Gerät kennt die Zeitzone der Stadt.',
         moon: 'Stimmt, wenn der Mond jetzt zu mehr als 50 % beleuchtet ist. Das wird aus dem Mondalter gerechnet, nicht gemessen.',
         temp: 'Stimmt, wenn die gemessene Temperatur über {T} °C liegt (Open-Meteo, aktueller Wert).',
         isday: 'Stimmt, wenn die Sonne am Ort laut Open-Meteo jetzt über dem Horizont steht. Dämmerung nach Sonnenuntergang zählt als nein.',
@@ -214,7 +222,8 @@
         'You get a claim.',
         'Tip: true (👍) or not true (👎).',
         'Say how sure you are: 50 % is a guess, 100 % is totally sure.',
-        'We measure it live. Being right earns points, being wrong costs points.'
+        'We measure it live. Being right earns points, being wrong costs points.',
+        'Mis-tapped? Once per claim you can go back before measuring and answer again.'
       ],
       rules_goal: 'The one with the most points wins. Hits earn points, misses cost points, and the more so the surer you say you are.',
       rules_cols: ['Confidence', 'Hit', 'Miss'],
@@ -250,6 +259,7 @@
       none: 'No tips yet.',
       backup: 'Save and load',
       backup_help: 'Your progress lives only in this browser. Save it now and then in case the browser clears data (Safari can do that after about 7 days without a visit).',
+      back: 'Change answer',
       first_go: 'Let\'s go', pr_swipe: 'Swipe right: true. Swipe left: not true.', pr_conf: 'The surer you are, the more a hit earns, but the more a mistake costs.', pr_done: 'That was only practice, nothing counts here. From now on it is measured for real.', pr_next: 'First real claim', pr_unit: 'practice',
       rep_q: 'Something off about this question?', rep_unclear: 'Unclear', rep_boring: 'Boring', rep_odd: 'Odd measurement', rep_thanks: 'Thanks, noted.',
       export_file: 'Save file', export_code: 'Copy code', copied: 'Copied.',
@@ -273,6 +283,8 @@
         humidity: 'In {city} the humidity is {v} %.',
         cloud: 'In {city} {v} % of the sky is covered by clouds.',
         warmer: 'In {city} it is {a} °C, in {city2} {b} °C.',
+        sunhigh: 'In {city} the sun is {a}° high, in {city2} {b}°.',
+        clock: 'In {city} it is {v} right now.',
         moon: 'The moon is {v} % lit.',
         temp: 'It is {v} °C in {city}.',
         isday: 'In {city} the sun is {v} right now.',
@@ -361,6 +373,8 @@
         humidity: 'The humidity in {city} is above {H} % right now.',
         cloud: 'The sky in {city} is more than half covered by clouds right now.',
         warmer: 'Right now it is warmer in {city} than in {city2}.',
+        sunhigh: 'Right now the sun is higher in the sky in {city} than in {city2}.',
+        clock: 'In {city} it is later than {H}:00 local time right now.',
         moon: 'The moon is more than half lit right now.',
         temp: 'It is warmer than {T} °C in {city} right now.',
         isday: 'The sun is above the horizon in {city} right now.',
@@ -380,6 +394,8 @@
         humidity: 'True if the relative humidity in {city} is above {H} % right now (Open-Meteo).',
         cloud: 'True if cloud cover in {city} is above 50 % right now (Open-Meteo).',
         warmer: 'True if the temperature right now is higher in {city} than in {city2} (Open-Meteo).',
+        sunhigh: 'True if the angle of the sun above the horizon is bigger in {city} than in {city2} right now. Negative values mean the sun is down. Calculated from place and time.',
+        clock: 'True if the local time in {city} is after {H}:00 right now. Your device knows the time zone of the city.',
         moon: 'True if the moon is more than 50 % lit right now. This is calculated from the moon age, not measured.',
         temp: 'True if the measured temperature is above {T} °C (Open-Meteo, current value).',
         isday: 'True if, per Open-Meteo, the sun is above the horizon at the place right now. Twilight after sunset counts as no.',
@@ -404,12 +420,25 @@
     };
   }
   /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
-  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer'];
+  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'clock'];
+  /* Erst die Kategorie, dann das Thema: Wetter, Luft, Erde, Weltraum, Himmel, Zeit wechseln sich ab. */
+  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'luft', quake: 'erde', quakemax: 'erde', iss: 'raum', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
+  function balanced(pool, used) {
+    const cats = {};
+    pool.forEach(function (t) { (cats[CAT_OF[t]] = cats[CAT_OF[t]] || []).push(t); });
+    const names = Object.keys(cats);
+    const cnt = function (c) { return used.filter(function (t) { return CAT_OF[t] === c; }).length; };
+    const min = Math.min.apply(null, names.map(cnt));
+    const cat = pick(names.filter(function (c) { return cnt(c) === min; }));
+    const fresh = cats[cat].filter(function (t) { return used.indexOf(t) < 0; });
+    return pick(fresh.length ? fresh : cats[cat]);
+  }
   function claimsFromSeed(seed, n) {
     RNG = mulberry(hashStr(seed));
     try {
       const out = [];
-      for (let i = 0; i < n; i++) out.push(MAKERS[pick(SHARED_POOL)]());
+      const used = [];
+      for (let i = 0; i < n; i++) { const t = balanced(SHARED_POOL, used); used.push(t); out.push(MAKERS[t]()); }
       return out;
     } finally { RNG = null; }
   }
@@ -447,6 +476,13 @@
       while (b.id === a.id) b = pick(CITIES);
       return { tpl: 'warmer', city: a.id, city2: b.id };
     },
+    sunhigh: function () {
+      const a = pick(CITIES);
+      let b = pick(CITIES);
+      while (b.id === a.id) b = pick(CITIES);
+      return { tpl: 'sunhigh', city: a.id, city2: b.id };
+    },
+    clock: function () { return { tpl: 'clock', city: pick(CITIES).id, H: pick([6, 12, 18, 21]) }; },
     moon: function () { return { tpl: 'moon' }; },
     tomorrow: function () {
       const today = DP.dayKey();
@@ -455,9 +491,9 @@
     }
   };
   const POOLS = {
-    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon'],
-    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon'],
-    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon']
+    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock'],
+    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock'],
+    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock']
   };
   const NOCITY = { iss: 1, quake: 1, quakemax: 1, moon: 1 };
 
@@ -467,14 +503,10 @@
     const pool = POOLS[S.level] || POOLS.l;
     const k = DP.dayKey();
     const todays = S.tips.filter(function (x) { return !x.daily && !x.duel && !x.exam && DP.dayKey(new Date(x.ts)) === k && x.claim; }).sort(function (a, b) { return a.ts - b.ts; });
-    const used = {};
-    todays.forEach(function (x) { used[x.claim.tpl] = 1; });
-    let cand = pool.filter(function (t) { return !used[t]; });
-    if (!cand.length) cand = pool;
     const recent = todays.slice(-3).reduce(function (a, x) { return a.concat([x.claim.city, x.claim.city2]); }, []);
     let c;
     for (let i = 0; i < 8; i++) {
-      c = MAKERS[pick(cand)]();
+      c = MAKERS[balanced(pool, todays.map(function (x) { return x.claim.tpl; }))]();
       if (!c.city || recent.indexOf(c.city) < 0) break;
     }
     return c;
@@ -483,7 +515,7 @@
   function validClaim(c) {
     if (!c || !MAKERS[c.tpl]) return false;
     if (!NOCITY[c.tpl] && !cityById(c.city)) return false;
-    if ((c.tpl === 'daylen' || c.tpl === 'warmer') && !cityById(c.city2)) return false;
+    if ((c.tpl === 'daylen' || c.tpl === 'warmer' || c.tpl === 'sunhigh') && !cityById(c.city2)) return false;
     if (c.tpl === 'winddir' && ['N', 'E', 'S', 'W'].indexOf(c.D) < 0) return false;
     if (c.tpl === 'tomorrow' && !(/^\d{4}-\d{2}-\d{2}$/.test(c.created) && /^\d{4}-\d{2}-\d{2}$/.test(c.due))) return false;
     return true;
@@ -508,6 +540,8 @@
     const vars = claimVars(claim, lang);
     if (claim.tpl === 'tomorrow') { vars.a = num(shown.today, lang); vars.b = num(shown.tomorrow, lang); }
     else if (claim.tpl === 'daylen' || claim.tpl === 'warmer') { vars.a = num(shown.a, lang); vars.b = num(shown.b, lang); }
+    else if (claim.tpl === 'sunhigh') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
+    else if (claim.tpl === 'clock') { vars.v = String(Math.floor(shown / 60)).padStart(2, '0') + ':' + String(shown % 60).padStart(2, '0'); }
     else if (claim.tpl === 'winddir') { vars.v = Math.round(shown); vars.dir = t.dir[['N', 'E', 'S', 'W'].filter(function (k) { return DP.inSector(shown, k); })[0]]; }
     else if (claim.tpl === 'isday') vars.v = shown === 1 ? t.day : t.night;
     else vars.v = num(shown, lang, claim.tpl === 'iss' ? 2 : 1);
@@ -527,6 +561,14 @@
     if (claim.tpl === 'iss') return fetchJson('https://api.wheretheiss.at/v1/satellites/25544');
     if (claim.tpl === 'quake' || claim.tpl === 'quakemax') return fetchJson('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson');
     if (claim.tpl === 'moon') return Promise.resolve({ now: Date.now() });
+    if (claim.tpl === 'sunhigh') { const a = cityById(claim.city), b = cityById(claim.city2); return Promise.resolve({ now: Date.now(), a: { lat: a.lat, lon: a.lon }, b: { lat: b.lat, lon: b.lon } }); }
+    if (claim.tpl === 'clock') {
+      try {
+        const p = {};
+        new Intl.DateTimeFormat('en-GB', { timeZone: cityById(claim.city).tz, hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).forEach(function (x) { p[x.type] = Number(x.value); });
+        return Promise.resolve({ hour: p.hour, minute: p.minute });
+      } catch (e) { return Promise.reject(e); }
+    }
     if (claim.tpl === 'aqi') {
       const ca = cityById(claim.city);
       return fetchJson('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=' + ca.lat + '&longitude=' + ca.lon + '&current=european_aqi&timezone=auto');
@@ -954,6 +996,7 @@
     if (ui.busy) h += '<p class="hint" style="margin-top:12px">' + esc(t.measuring) + '</p>';
     if (ui.error) h += '<div class="notice" style="margin-top:12px">' + esc(t.err) + '</div><button class="btn" data-act="retry">' + esc(t.retry) + '</button>';
     else h += '<button class="btn" data-act="measure"' + (ui.busy ? ' disabled' : '') + '>' + esc(t.measure) + '</button>';
+    if (!ui.busy && ui.backFor !== ui.claim) h += '<button class="btn ghost" data-act="back">← ' + esc(t.back) + '</button>';
     h += '<button class="linkbtn" data-act="home">' + esc(ui.practice ? t.home : t.cancel) + '</button></main>';
     return h;
   }
@@ -1317,6 +1360,7 @@
       save(S); render();
     }
     else if (act === 'tip') { chooseTip(v === '1'); }
+    else if (act === 'back') { if (ui.view === 'conf' && !ui.busy && ui.backFor !== ui.claim) { ui.backFor = ui.claim; ui.tip = null; ui.error = false; ui.view = 'tip'; render(); } }
     else if (act === 'measure') {
       if (ui.busy) return;
       const sl = document.getElementById('sl');

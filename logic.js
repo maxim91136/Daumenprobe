@@ -34,6 +34,21 @@
     const age = (((jd - 2451550.1) % 29.530588853) + 29.530588853) % 29.530588853;
     return (1 - Math.cos(2 * Math.PI * age / 29.530588853)) / 2;
   };
+  /* Höhe der Sonne über dem Horizont in Grad (Näherung nach NOAA, auf etwa ein Grad genau). */
+  L.sunElevation = function (lat, lon, ms) {
+    const rad = Math.PI / 180;
+    const n = ms / 86400000 + 2440587.5 - 2451545.0;
+    const L0 = (280.46 + 0.9856474 * n) % 360;
+    const g = ((357.528 + 0.9856003 * n) % 360) * rad;
+    const lam = (L0 + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) * rad;
+    const eps = (23.439 - 0.0000004 * n) * rad;
+    const decl = Math.asin(Math.sin(eps) * Math.sin(lam));
+    const ra = Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam)) / rad;
+    const gmst = (280.46061837 + 360.98564736629 * n) % 360;
+    const ha = (gmst + lon - ra) * rad;
+    const la = lat * rad;
+    return Math.asin(Math.sin(la) * Math.sin(decl) + Math.cos(la) * Math.cos(decl) * Math.cos(ha)) / rad;
+  };
   const SECTORS = { N: [315, 45], E: [45, 135], S: [135, 225], W: [225, 315] };
   L.inSector = function (deg, key) {
     const s = SECTORS[key];
@@ -170,6 +185,17 @@
       const b = data && data[1] && data[1].current && data[1].current.temperature_2m;
       if (typeof a !== 'number' || typeof b !== 'number') return null;
       return { outcome: a > b, shown: { a: a, b: b } };
+    },
+    sunhigh: function (claim, data) {
+      if (!data || typeof data.now !== 'number' || !data.a || !data.b) return null;
+      const a = L.sunElevation(data.a.lat, data.a.lon, data.now);
+      const b = L.sunElevation(data.b.lat, data.b.lon, data.now);
+      return { outcome: a > b, shown: { a: a, b: b } };
+    },
+    clock: function (claim, data) {
+      if (!data || typeof data.hour !== 'number' || typeof data.minute !== 'number') return null;
+      const mins = data.hour * 60 + data.minute;
+      return { outcome: mins > claim.H * 60, shown: mins };
     },
     moon: function (claim, data) {
       const now = data && data.now;

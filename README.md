@@ -9,14 +9,15 @@ Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
 - Eine statische Seite, kein Server, kein Konto, keine Tracker. Spielstand nur im Browser (localStorage). Installierbar als App (PWA, Offline-Hülle).
 - Deutsch und Englisch.
 - Für die Allgemeinheit gedacht, auch für Kinder: nichts Kritisches (kein Geld, keine Finanzthemen), keine Altersabfrage. Die drei Schwierigkeitsstufen ändern nur Bedienung und Punkte, schalten aber keine Inhalte frei.
-- 16 Behauptungstypen, jede Frage wird aus Vorlage, Stadt und Schwelle frisch gebaut (kein fester Katalog):
+- 18 Behauptungstypen, jede Frage wird aus Vorlage, Stadt und Schwelle frisch gebaut (kein fester Katalog):
   - Wetter, Open-Meteo: Temperatur, Tag/Nacht, Regen, Wind, Windrichtung, Luftdruck, Luftfeuchtigkeit, Bewölkung, „wo ist es wärmer" (Stadtvergleich), Tageslänge (Sonnenaufgang bis Sonnenuntergang, Stadtvergleich)
   - Luftqualität, Open-Meteo (EU-Luftindex)
   - Erdbeben, USGS: Anzahl und Stärke der letzten 24 Stunden
   - ISS-Position, wheretheiss.at
   - Mond (lokal berechnet)
   - „morgen wärmer als heute" (wird einen Tag später aufgelöst)
-- Abwechslung: Pro Tag kommt jedes Thema erst wieder, wenn alle durch sind, und die Stadt wechselt.
+- Abwechslung: Erst wechselt die Kategorie (Wetter, Luft, Erde, Weltraum, Himmel, Zeit), dann das Thema; die Stadt wechselt auch. Himmel und Zeit werden lokal berechnet (Sonnenhöhe, Ortszeit), ohne Schnittstelle.
+- Verklickt: Einmal pro Frage kann man vor dem Messen zurück und neu antworten.
 - Tageslimit 10 Behauptungen (Verwerfen und Neuladen zählen mit), danach „Das war's für heute". Kein Push, kein Dauerscrollen.
 
 ## Punkte und Stufen
