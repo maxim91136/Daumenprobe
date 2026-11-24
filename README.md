@@ -9,7 +9,7 @@ Der Name ist vorläufig (Arbeitstitel „Project 7").
 - Eine statische Seite, kein Server, kein Konto. Spielstand nur im Browser (localStorage).
 - Deutsch und Englisch.
 - Sechs Behauptungstypen aus offenen Daten: Temperatur, Tag/Nacht, Regen, Wind (Open-Meteo), ISS-Position (wheretheiss.at) und „morgen wärmer als heute" (wird einen Tag später aufgelöst).
-- Punkte: 0 bei Raten (50 %), bis +100 bei sicherem Treffer, bis -100 bei sicherem Daneben.
+- Punkte: Sicherheits-Punkte (0 bei Raten, bis +90 bei sicherem Treffer, bis -90 bei sicherem Daneben) plus 10 Punkte Bonus für jeden Treffer. Ein geratener Treffer gibt also 10, ein geratenes Daneben 0.
 - Zwei Werte: Trefferquote und Kalibrierung („stimmt meine Sicherheit?", ab 5 Tipps).
 - Tageslimit 5 Behauptungen, danach „Das war's für heute". Kein Push, kein Dauerscrollen.
 - Sichern und Laden per Datei oder Code (Browser können Daten löschen, Safari nach etwa 7 Tagen ohne Besuch).
