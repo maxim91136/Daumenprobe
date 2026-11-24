@@ -829,6 +829,33 @@
     return out;
   }
   /* Abzeichen: alles aus den gemessenen Tipps berechnet, nichts extra gespeichert. */
+  /* Abzeichen-Grafiken: eigene Strichbilder im einheitlichen Stil (64er Raster, runde Enden, eine Strichstärke, Farbe nach Familie). */
+  const BADGE_ART = {
+    first: ['green', '<path d="M32 52V30"/><path d="M32 36C32 26 25 21 15 22C15 32 22 37 32 36Z"/><path d="M32 30C32 20 40 15 50 16C50 26 43 31 32 30Z"/>'],
+    hit1: ['green', '<circle cx="30" cy="34" r="18"/><circle cx="30" cy="34" r="8"/><path d="M32 32L52 12M44 12H52V20"/>'],
+    combo3: ['orange', '<path d="M32 10C34 21 45 25 45 38A13 13 0 0 1 19 38C19 31 24 28 26 21C29 25 30 27 33 28C34 22 31 16 32 10Z"/>'],
+    combo5: ['orange', '<path d="M37 9L19 36H31L27 55L45 27H33L37 9Z"/>'],
+    combo10: ['orange', '<path d="M18 26L32 12L46 26"/><path d="M18 38L32 24L46 38"/><path d="M18 50L32 36L46 50"/>'],
+    bold: ['blue', '<path d="M20 14H44L54 26L32 52L10 26Z"/><path d="M10 26H54"/><path d="M26 14L22 26L32 52L42 26L38 14"/>'],
+    ouch: ['red', '<g transform="rotate(-35 32 32)"><rect x="8" y="22" width="48" height="20" rx="10"/><rect x="24" y="22" width="16" height="20"/></g>'],
+    honest: ['blue', '<circle cx="32" cy="32" r="21"/><path d="M42 22L36 36L22 42L28 28Z"/>'],
+    t10: ['purple', '<circle cx="32" cy="32" r="21"/><text x="32" y="39" text-anchor="middle" font-size="21" font-weight="700" fill="currentColor" stroke="none">10</text>'],
+    t50: ['purple', '<circle cx="32" cy="32" r="21"/><circle cx="32" cy="32" r="15"/><text x="32" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor" stroke="none">50</text>'],
+    t100: ['purple', '<circle cx="32" cy="32" r="21"/><circle cx="32" cy="32" r="15"/><text x="32" y="37" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" stroke="none">100</text>'],
+    d3: ['pink', '<rect x="11" y="15" width="42" height="38" rx="9"/><path d="M11 27H53M23 10V19M41 10V19"/><text x="32" y="47" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor" stroke="none">3</text>'],
+    d7: ['pink', '<path d="M11 45L15 21L26 33L32 16L38 33L49 21L53 45Z"/><path d="M11 53H53"/>'],
+    full: ['purple', '<rect x="13" y="22" width="28" height="34" rx="6" transform="rotate(-12 27 39)"/><rect x="24" y="10" width="28" height="34" rx="6" transform="rotate(10 38 27)" class="fillt"/>'],
+    world: ['teal', '<circle cx="32" cy="32" r="21"/><ellipse cx="32" cy="32" rx="9" ry="21"/><path d="M11 32H53M15 21H49M15 43H49"/>'],
+    exam: ['blue', '<path d="M32 15L57 28L32 41L7 28Z"/><path d="M17 34V45C17 50 47 50 47 45V34"/><path d="M57 28V42"/>'],
+    pass: ['teal', '<rect x="11" y="22" width="42" height="29" rx="7"/><path d="M24 22V17C24 15 25 14 27 14H37C39 14 40 15 40 17V22"/><path d="M11 35H53"/>'],
+    duel: ['red', '<path d="M15 15L46 46M49 15L18 46"/><path d="M38 51L51 38M13 38L26 51"/>'],
+    better: ['blue', '<path d="M11 12V52H53"/><path d="M18 42L29 31L37 37L52 20"/><path d="M43 20H52V29"/>'],
+    comeback: ['red', '<path d="M17 14V32C17 47 47 47 47 32V20"/><path d="M38 28L47 17L56 28"/>']
+  };
+  function bIcon(id, on, small) {
+    const a = BADGE_ART[id] || ['green', ''];
+    return '<span class="bi c-' + a[0] + (on ? '' : ' off') + (small ? ' sm' : '') + '" aria-hidden="true"><svg viewBox="0 0 64 64">' + a[1] + '</svg></span>';
+  }
   const BADGE_DEFS = [
     ['first', '🌱', function (c) { return c.n >= 1; }],
     ['hit1', '🎯', function (c) { return c.hits >= 1; }],
@@ -914,7 +941,7 @@
     let h = '<details class="dark shelf"' + (have.length ? ' open' : '') + '><summary>' + esc(t.badges_title) + ' <span class="count">' + have.length + ' / ' + BADGE_DEFS.length + '</span></summary><div class="grid">';
     BADGE_DEFS.forEach(function (b) {
       const on = have.indexOf(b[0]) >= 0, txt = t.badges[b[0]];
-      h += '<div class="bdg' + (on ? ' on' : '') + '" title="' + esc(txt[1]) + '"><span class="e" aria-hidden="true">' + (on ? b[1] : '🔒') + '</span><b>' + esc(txt[0]) + '</b><small>' + esc(txt[1]) + '</small></div>';
+      h += '<div class="bdg' + (on ? ' on' : '') + '" title="' + esc(txt[1]) + '">' + bIcon(b[0], on) + '<b>' + esc(txt[0]) + '</b><small>' + esc(txt[1]) + '</small></div>';
     });
     return h + '</div></details>';
   }
@@ -1261,7 +1288,7 @@
     const before = rankFor(DP.peak(all.filter(function (x) { return x !== r; }))), after = rankFor(DP.peak(all));
     newBadges(r).forEach(function (id) {
       const b = BADGE_DEFS.filter(function (x) { return x[0] === id; })[0];
-      out.push('<span class="badge up">' + b[1] + ' ' + esc(t.badge_new) + ': ' + esc(t.badges[id][0]) + '</span>');
+      out.push('<span class="badge up">' + bIcon(id, true, true) + ' ' + esc(t.badge_new) + ': ' + esc(t.badges[id][0]) + '</span>');
     });
     if (after.i > before.i) out.push('<span class="badge up">⭐ ' + esc(fill(t.rankup, { r: after.name })) + '</span>');
     const combo = comboCount();
