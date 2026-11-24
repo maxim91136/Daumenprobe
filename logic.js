@@ -150,6 +150,27 @@
       if (typeof a !== 'number' || typeof b !== 'number') return null;
       return { outcome: a > b, shown: { a: a / 3600, b: b / 3600 } };
     },
+    pressure: function (claim, data) {
+      const v = data && data.current && data.current.pressure_msl;
+      if (typeof v !== 'number') return null;
+      return { outcome: v > claim.P, shown: v };
+    },
+    humidity: function (claim, data) {
+      const v = data && data.current && data.current.relative_humidity_2m;
+      if (typeof v !== 'number') return null;
+      return { outcome: v > claim.H, shown: v };
+    },
+    cloud: function (claim, data) {
+      const v = data && data.current && data.current.cloud_cover;
+      if (typeof v !== 'number') return null;
+      return { outcome: v > 50, shown: v };
+    },
+    warmer: function (claim, data) {
+      const a = data && data[0] && data[0].current && data[0].current.temperature_2m;
+      const b = data && data[1] && data[1].current && data[1].current.temperature_2m;
+      if (typeof a !== 'number' || typeof b !== 'number') return null;
+      return { outcome: a > b, shown: { a: a, b: b } };
+    },
     moon: function (claim, data) {
       const now = data && data.now;
       if (typeof now !== 'number') return null;

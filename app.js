@@ -80,6 +80,10 @@
         aqi: 'In {city} liegt der Luftindex bei {v}.',
         winddir: 'In {city} kommt der Wind aus {v}° ({dir}).',
         daylen: 'Sonnenaufgang bis Sonnenuntergang: {city} {a} Stunden, {city2} {b} Stunden.',
+        pressure: 'In {city} liegt der Luftdruck bei {v} hPa.',
+        humidity: 'In {city} liegt die Luftfeuchtigkeit bei {v} %.',
+        cloud: 'In {city} sind {v} % des Himmels bewölkt.',
+        warmer: 'In {city} sind es {a} °C, in {city2} {b} °C.',
         moon: 'Der Mond ist zu {v} % beleuchtet.',
         temp: 'In {city} sind es {v} °C.',
         isday: 'In {city} steht die Sonne gerade {v}.',
@@ -163,6 +167,10 @@
         aqi: 'Die Luft in {city} ist gerade besser als Stufe {A} (EU-Luftindex, kleiner ist besser).',
         winddir: 'In {city} kommt der Wind gerade aus {D}.',
         daylen: 'Heute vergeht zwischen Sonnenaufgang und Sonnenuntergang in {city} mehr Zeit als in {city2}.',
+        pressure: 'Der Luftdruck in {city} (auf Meereshöhe umgerechnet) liegt gerade über {P} hPa.',
+        humidity: 'Die Luftfeuchtigkeit in {city} liegt gerade über {H} %.',
+        cloud: 'In {city} ist der Himmel gerade mehr als zur Hälfte bewölkt.',
+        warmer: 'Gerade ist es in {city} wärmer als in {city2}.',
         moon: 'Der Mond ist gerade mehr als halb beleuchtet.',
         temp: 'In {city} sind es gerade mehr als {T} °C.',
         isday: 'In {city} ist die Sonne gerade über dem Horizont (nach Sonnenuntergang: nein).',
@@ -177,6 +185,10 @@
         aqi: 'Stimmt, wenn der europäische Luftqualitäts-Index laut Open-Meteo jetzt unter {A} liegt.',
         winddir: 'Stimmt, wenn die gemessene Windrichtung im Sektor {D} liegt (90° breit, Open-Meteo).',
         daylen: 'Stimmt, wenn die Zeit von Sonnenaufgang bis Sonnenuntergang heute in {city} länger ist als in {city2}. Wolken zählen nicht (Open-Meteo).',
+        pressure: 'Stimmt, wenn der auf Meereshöhe umgerechnete Luftdruck in {city} jetzt über {P} hPa liegt (Open-Meteo).',
+        humidity: 'Stimmt, wenn die relative Luftfeuchtigkeit in {city} jetzt über {H} % liegt (Open-Meteo).',
+        cloud: 'Stimmt, wenn der Bewölkungsgrad in {city} jetzt über 50 % liegt (Open-Meteo).',
+        warmer: 'Stimmt, wenn die Temperatur jetzt in {city} höher ist als in {city2} (Open-Meteo).',
         moon: 'Stimmt, wenn der Mond jetzt zu mehr als 50 % beleuchtet ist. Das wird aus dem Mondalter gerechnet, nicht gemessen.',
         temp: 'Stimmt, wenn die gemessene Temperatur über {T} °C liegt (Open-Meteo, aktueller Wert).',
         isday: 'Stimmt, wenn die Sonne am Ort laut Open-Meteo jetzt über dem Horizont steht. Dämmerung nach Sonnenuntergang zählt als nein.',
@@ -249,6 +261,10 @@
         aqi: 'The air index in {city} is {v}.',
         winddir: 'In {city} the wind comes from {v}° ({dir}).',
         daylen: 'Sunrise to sunset: {city} {a} hours, {city2} {b} hours.',
+        pressure: 'In {city} the air pressure is {v} hPa.',
+        humidity: 'In {city} the humidity is {v} %.',
+        cloud: 'In {city} {v} % of the sky is covered by clouds.',
+        warmer: 'In {city} it is {a} °C, in {city2} {b} °C.',
         moon: 'The moon is {v} % lit.',
         temp: 'It is {v} °C in {city}.',
         isday: 'In {city} the sun is {v} right now.',
@@ -332,6 +348,10 @@
         aqi: 'The air in {city} is better than level {A} right now (EU air index, lower is better).',
         winddir: 'The wind in {city} is coming from the {D} right now.',
         daylen: 'Today, more time passes between sunrise and sunset in {city} than in {city2}.',
+        pressure: 'The air pressure in {city} (sea level) is above {P} hPa right now.',
+        humidity: 'The humidity in {city} is above {H} % right now.',
+        cloud: 'The sky in {city} is more than half covered by clouds right now.',
+        warmer: 'Right now it is warmer in {city} than in {city2}.',
         moon: 'The moon is more than half lit right now.',
         temp: 'It is warmer than {T} °C in {city} right now.',
         isday: 'The sun is above the horizon in {city} right now (after sunset: no).',
@@ -346,6 +366,10 @@
         aqi: 'True if the European air quality index per Open-Meteo is below {A} right now.',
         winddir: 'True if the measured wind direction is within the {D} sector (90° wide, Open-Meteo).',
         daylen: 'True if the time from sunrise to sunset today is longer in {city} than in {city2}. Clouds do not matter (Open-Meteo).',
+        pressure: 'True if the sea-level air pressure in {city} is above {P} hPa right now (Open-Meteo).',
+        humidity: 'True if the relative humidity in {city} is above {H} % right now (Open-Meteo).',
+        cloud: 'True if cloud cover in {city} is above 50 % right now (Open-Meteo).',
+        warmer: 'True if the temperature right now is higher in {city} than in {city2} (Open-Meteo).',
         moon: 'True if the moon is more than 50 % lit right now. This is calculated from the moon age, not measured.',
         temp: 'True if the measured temperature is above {T} °C (Open-Meteo, current value).',
         isday: 'True if, per Open-Meteo, the sun is above the horizon at the place right now. Twilight after sunset counts as no.',
@@ -370,7 +394,7 @@
     };
   }
   /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
-  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon'];
+  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer'];
   function claimsFromSeed(seed, n) {
     RNG = mulberry(hashStr(seed));
     try {
@@ -404,6 +428,15 @@
       while (b.id === a.id) b = pick(CITIES);
       return { tpl: 'daylen', city: a.id, city2: b.id };
     },
+    pressure: function () { return { tpl: 'pressure', city: pick(CITIES).id, P: pick([1000, 1010, 1020]) }; },
+    humidity: function () { return { tpl: 'humidity', city: pick(CITIES).id, H: pick([50, 65, 80]) }; },
+    cloud: function () { return { tpl: 'cloud', city: pick(CITIES).id }; },
+    warmer: function () {
+      const a = pick(CITIES);
+      let b = pick(CITIES);
+      while (b.id === a.id) b = pick(CITIES);
+      return { tpl: 'warmer', city: a.id, city2: b.id };
+    },
     moon: function () { return { tpl: 'moon' }; },
     tomorrow: function () {
       const today = DP.dayKey();
@@ -412,18 +445,34 @@
     }
   };
   const POOLS = {
-    s: ['temp', 'isday', 'isday', 'rain', 'wind', 'daylen', 'moon'],
-    m: ['temp', 'isday', 'rain', 'wind', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon'],
-    l: ['temp', 'temp', 'isday', 'rain', 'wind', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon']
+    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon'],
+    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon'],
+    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon']
   };
   const NOCITY = { iss: 1, quake: 1, quakemax: 1, moon: 1 };
 
-  function newClaim() { return MAKERS[pick(POOLS[S.level] || POOLS.l)](); }
+  /* Abwechslung: heute noch nicht gespielte Themen zuerst, und keine Stadt aus den letzten drei Behauptungen. */
+  function newClaim() {
+    const pool = POOLS[S.level] || POOLS.l;
+    const k = DP.dayKey();
+    const todays = S.tips.filter(function (x) { return !x.daily && !x.duel && !x.exam && DP.dayKey(new Date(x.ts)) === k && x.claim; }).sort(function (a, b) { return a.ts - b.ts; });
+    const used = {};
+    todays.forEach(function (x) { used[x.claim.tpl] = 1; });
+    let cand = pool.filter(function (t) { return !used[t]; });
+    if (!cand.length) cand = pool;
+    const recent = todays.slice(-3).reduce(function (a, x) { return a.concat([x.claim.city, x.claim.city2]); }, []);
+    let c;
+    for (let i = 0; i < 8; i++) {
+      c = MAKERS[pick(cand)]();
+      if (!c.city || recent.indexOf(c.city) < 0) break;
+    }
+    return c;
+  }
   function isLater(claim) { return claim.tpl === 'tomorrow'; }
   function validClaim(c) {
     if (!c || !MAKERS[c.tpl]) return false;
     if (!NOCITY[c.tpl] && !cityById(c.city)) return false;
-    if (c.tpl === 'daylen' && !cityById(c.city2)) return false;
+    if ((c.tpl === 'daylen' || c.tpl === 'warmer') && !cityById(c.city2)) return false;
     if (c.tpl === 'winddir' && ['N', 'E', 'S', 'W'].indexOf(c.D) < 0) return false;
     if (c.tpl === 'tomorrow' && !(/^\d{4}-\d{2}-\d{2}$/.test(c.created) && /^\d{4}-\d{2}-\d{2}$/.test(c.due))) return false;
     return true;
@@ -435,7 +484,7 @@
   function claimVars(claim, lang) {
     const c = claim.city ? cityById(claim.city) : null;
     const c2 = claim.city2 ? cityById(claim.city2) : null;
-    return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A,
+    return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A, P: claim.P, H: claim.H, P: claim.P, H: claim.H,
       M: claim.M === undefined ? undefined : num(claim.M, lang, 1), D: claim.D ? I18N[lang].dir[claim.D] : undefined };
   }
   function claimText(claim, lang) { return fill(I18N[lang].claims[claim.tpl], claimVars(claim, lang)); }
@@ -447,7 +496,7 @@
     const t = I18N[lang];
     const vars = claimVars(claim, lang);
     if (claim.tpl === 'tomorrow') { vars.a = num(shown.today, lang); vars.b = num(shown.tomorrow, lang); }
-    else if (claim.tpl === 'daylen') { vars.a = num(shown.a, lang); vars.b = num(shown.b, lang); }
+    else if (claim.tpl === 'daylen' || claim.tpl === 'warmer') { vars.a = num(shown.a, lang); vars.b = num(shown.b, lang); }
     else if (claim.tpl === 'winddir') { vars.v = Math.round(shown); vars.dir = t.dir[['N', 'E', 'S', 'W'].filter(function (k) { return DP.inSector(shown, k); })[0]]; }
     else if (claim.tpl === 'isday') vars.v = shown === 1 ? t.day : t.night;
     else vars.v = num(shown, lang, claim.tpl === 'iss' ? 2 : 1);
@@ -471,6 +520,10 @@
       const ca = cityById(claim.city);
       return fetchJson('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=' + ca.lat + '&longitude=' + ca.lon + '&current=european_aqi&timezone=auto');
     }
+    if (claim.tpl === 'warmer') {
+      const a = cityById(claim.city), b = cityById(claim.city2);
+      return fetchJson('https://api.open-meteo.com/v1/forecast?latitude=' + a.lat + ',' + b.lat + '&longitude=' + a.lon + ',' + b.lon + '&current=temperature_2m&timezone=auto');
+    }
     if (claim.tpl === 'daylen') {
       const a = cityById(claim.city), b = cityById(claim.city2);
       return fetchJson('https://api.open-meteo.com/v1/forecast?latitude=' + a.lat + ',' + b.lat + '&longitude=' + a.lon + ',' + b.lon + '&daily=daylight_duration&forecast_days=1&timezone=auto');
@@ -478,7 +531,7 @@
     const c = cityById(claim.city);
     let url = 'https://api.open-meteo.com/v1/forecast?latitude=' + c.lat + '&longitude=' + c.lon + '&timezone=auto';
     if (claim.tpl === 'tomorrow') url += '&daily=temperature_2m_max&past_days=5&forecast_days=2';
-    else url += '&current=temperature_2m,is_day,precipitation,wind_speed_10m,wind_direction_10m';
+    else url += '&current=temperature_2m,is_day,precipitation,wind_speed_10m,wind_direction_10m,pressure_msl,relative_humidity_2m,cloud_cover';
     return fetchJson(url);
   }
   function measure(claim) {
