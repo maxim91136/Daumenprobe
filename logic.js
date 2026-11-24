@@ -202,6 +202,29 @@
       const mins = data.hour * 60 + data.minute;
       return { outcome: mins > claim.H * 60, shown: mins };
     },
+    aurora: function (claim, data) {
+      /* NOAA SWPC: altes Format = erste Zeile Spaltennamen, neues Format = Liste von Objekten mit time_tag. Beides lesen. */
+      if (!Array.isArray(data) || data.length < 1) return null;
+      let rows = [];
+      if (Array.isArray(data[0])) {
+        const head = data[0].map(function (h) { return String(h); });
+        const ki = head.findIndex(function (h) { return /^kp/i.test(h) && !/frac/i.test(h); });
+        const ti = head.findIndex(function (h) { return /time/i.test(h); });
+        if (ki < 0) return null;
+        rows = data.slice(1).map(function (r) { return { t: ti >= 0 ? String(r[ti]) : '', v: Number(r[ki]) }; });
+      } else {
+        rows = data.map(function (o) {
+          if (!o || typeof o !== 'object') return { t: '', v: NaN };
+          const k = Object.keys(o).find(function (x) { return /^kp/i.test(x) && !/frac/i.test(x); });
+          return { t: String(o.time_tag || ''), v: k === undefined ? NaN : Number(o[k]) };
+        });
+      }
+      rows = rows.filter(function (r) { return isFinite(r.v); });
+      if (!rows.length) return null;
+      rows.sort(function (a, b) { return a.t < b.t ? -1 : a.t > b.t ? 1 : 0; });
+      const kp = rows[rows.length - 1].v;
+      return { outcome: kp > claim.K, shown: kp };
+    },
     moon: function (claim, data) {
       const now = data && data.now;
       if (typeof now !== 'number') return null;
