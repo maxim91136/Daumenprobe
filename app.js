@@ -41,7 +41,7 @@
       next: 'Weiter', home: 'Zur Startseite',
       err: 'Die Messung hat gerade nicht geklappt. Dein Tipp wird erst gezählt, wenn gemessen wurde.',
       retry: 'Nochmal messen',
-      cancel: 'Abbrechen',
+      cancel: 'Verwerfen (zählt als Versuch)',
       waiting: 'Wartet auf morgen',
       open_title: 'Offene Behauptungen',
       resolve: 'Jetzt auflösen',
@@ -108,7 +108,7 @@
       next: 'Next', home: 'Home',
       err: 'The measurement did not work right now. Your tip only counts once it has been measured.',
       retry: 'Measure again',
-      cancel: 'Cancel',
+      cancel: 'Discard (counts as an attempt)',
       waiting: 'Waiting for tomorrow',
       open_title: 'Open claims',
       resolve: 'Resolve now',
@@ -228,7 +228,7 @@
 
   /* ---------- Speicher ---------- */
   let memory = null;
-  function blank() { return { v: 1, lang: null, tips: [], lastExport: null }; }
+  function blank() { return { v: 1, lang: null, tips: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
@@ -254,9 +254,12 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;' }[c];
     });
   }
+  /* Gezogene Behauptungen heute: Wegwerfen und Neuladen zählen mit, damit man sich keine leichten aussucht. */
   function todayCount() {
     const k = DP.dayKey();
-    return S.tips.filter(function (t) { return DP.dayKey(new Date(t.ts)) === k; }).length;
+    const drawn = (S.draws || []).filter(function (ts) { return DP.dayKey(new Date(ts)) === k; }).length;
+    const tipped = S.tips.filter(function (t) { return DP.dayKey(new Date(t.ts)) === k; }).length;
+    return Math.max(drawn, tipped);
   }
   function resolvedTips() { return S.tips.filter(function (t) { return t.resolved; }); }
   function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
@@ -275,7 +278,7 @@
     measure(ui.claim).then(function (m) {
       const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, ts: Date.now(), resolved: false };
       finishTip(rec, m);
-      S.tips.push(rec); save(S);
+      S.tips.push(rec); S.current = null; save(S);
       ui.result = rec; ui.view = 'result'; ui.busy = false; render();
     }).catch(function () {
       ui.busy = false; ui.error = true; render();
@@ -284,7 +287,7 @@
 
   function submitLater() {
     const rec = { id: newId(), claim: ui.claim, tip: ui.tip, conf: ui.conf, ts: Date.now(), resolved: false };
-    S.tips.push(rec); save(S);
+    S.tips.push(rec); S.current = null; save(S);
     ui.result = rec; ui.view = 'later'; render();
   }
 
@@ -467,10 +470,19 @@
     const act = el.getAttribute('data-act');
     const v = el.getAttribute('data-v');
     if (act === 'lang') { S.lang = v; save(S); render(); }
-    else if (act === 'home') { ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render(); }
+    else if (act === 'home') {
+      if ((ui.view === 'tip' || ui.view === 'conf') && S.current && !ui.busy) {
+        if (ui.error && S.draws && S.draws.length) S.draws.pop(); /* Messung ausgefallen: nicht anrechnen */
+        S.current = null; save(S);
+      }
+      ui.view = 'home'; ui.error = false; ui.busy = false; ui.msg = ''; render();
+    }
     else if (act === 'start') {
       if (todayCount() >= DAILY_LIMIT) return;
-      ui.claim = newClaim(); ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip'; render();
+      ui.claim = newClaim(); ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip';
+      S.current = { claim: ui.claim, ts: Date.now() };
+      S.draws = (S.draws || []).concat(Date.now());
+      save(S); render();
     }
     else if (act === 'tip') { ui.tip = v === '1'; ui.view = 'conf'; render(); }
     else if (act === 'conf') {
@@ -512,6 +524,10 @@
       f.click();
     }
   });
+
+  if (S.current && validClaim(S.current.claim) && DP.dayKey(new Date(S.current.ts)) === DP.dayKey()) {
+    ui.claim = S.current.claim; ui.view = 'tip';
+  } else if (S.current) { S.current = null; save(S); }
 
   render();
 })();

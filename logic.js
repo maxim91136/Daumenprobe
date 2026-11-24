@@ -8,17 +8,19 @@
     return tip ? conf / 100 : 1 - conf / 100;
   };
 
-  /* Spielpunkte (nie Geld), klein gehalten:
-     Treffer: 5 Punkte (geraten, 50 %) bis 10 Punkte (ganz sicher, 100 %).
-     Daneben: 0 Punkte (geraten) bis -15 Punkte (ganz sicher). Wer sicherer tippt, kann mehr gewinnen
-     und mehr verlieren; wer ehrlich einschätzt, steht auf Dauer am besten da (Brier-Regel).
-     Aufbau: 5 * (1 - 4 * (p - o)^2) plus 5 Punkte Treffer-Bonus. */
+  /* Spielpunkte (nie Geld), streng und ehrlich:
+     Treffer: +5 (geraten, 50 %) bis +10 (ganz sicher, 100 %).
+     Daneben: -5 (geraten) bis -20 (ganz sicher).
+     Reines Münzwerfen bringt im Schnitt genau 0. Wer sicherer tippt, kann mehr gewinnen und mehr
+     verlieren; wer seine Sicherheit ehrlich einschätzt, steht auf Dauer am besten da (Brier-Regel).
+     Aufbau: 5 * (1 - 4 * (p - o)^2) plus 5 Punkte bei Treffer, minus 5 bei Daneben. Der Treffer-Anteil
+     (+5/-5) hängt nicht von der Sicherheit ab, ändert also nicht, welche Sicherheit sich lohnt. */
   L.points = function (tip, conf, outcome) {
     const p = L.probYes(tip, conf);
     const o = outcome ? 1 : 0;
     const base = 5 * (1 - 4 * (p - o) * (p - o));
-    const bonus = L.isHit(tip, outcome) ? 5 : 0;
-    return Math.round(base + bonus);
+    const hit = L.isHit(tip, outcome) ? 5 : -5;
+    return Math.round(base + hit);
   };
 
   L.isHit = function (tip, outcome) {
