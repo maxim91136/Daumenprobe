@@ -211,6 +211,38 @@
       const mins = data.hour * 60 + data.minute;
       return { outcome: mins > claim.H * 60, shown: mins };
     },
+    isssun: function (claim, data) {
+      const v = data && data.visibility;
+      if (typeof v !== 'string' || !v) return null;
+      return { outcome: v === 'daylight' || v === 'visible', shown: v };
+    },
+    isseast: function (claim, data) {
+      const v = data && data.longitude;
+      if (typeof v !== 'number' || !isFinite(v)) return null;
+      return { outcome: v > 0, shown: v };
+    },
+    solarwind: function (claim, data) {
+      /* NOAA SWPC: Tabelle mit Kopfzeile oder Liste von Objekten; wir brauchen die jüngste Geschwindigkeit. */
+      if (!Array.isArray(data) || data.length < 1) return null;
+      let rows;
+      if (Array.isArray(data[0])) {
+        const head = data[0].map(function (h) { return String(h).toLowerCase(); });
+        const si = head.indexOf('speed'), ti = head.findIndex(function (h) { return /time/.test(h); });
+        if (si < 0) return null;
+        rows = data.slice(1).map(function (r) { return { t: ti >= 0 ? String(r[ti]) : '', v: Number(r[si]) }; });
+      } else {
+        rows = data.map(function (o) { return { t: o && o.time_tag ? String(o.time_tag) : '', v: o ? Number(o.speed) : NaN }; });
+      }
+      rows = rows.filter(function (r) { return isFinite(r.v) && r.v > 0; });
+      if (!rows.length) return null;
+      rows.sort(function (a, b) { return a.t < b.t ? -1 : a.t > b.t ? 1 : 0; });
+      const v = rows[rows.length - 1].v;
+      return { outcome: v > claim.S, shown: v };
+    },
+    wikisize: function (claim, data) {
+      if (!data || typeof data.a !== 'number' || typeof data.b !== 'number' || !isFinite(data.a) || !isFinite(data.b)) return null;
+      return { outcome: data.a > data.b, shown: { a: data.a, b: data.b } };
+    },
     wiki: function (claim, data) {
       if (!data || typeof data.a !== 'number' || typeof data.b !== 'number' || !isFinite(data.a) || !isFinite(data.b)) return null;
       return { outcome: data.a > data.b, shown: { a: data.a, b: data.b } };

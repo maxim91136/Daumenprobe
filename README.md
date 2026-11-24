@@ -9,12 +9,13 @@ Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
 - Eine statische Seite, kein Server, kein Konto, keine Tracker. Spielstand nur im Browser (localStorage). Installierbar als App (PWA, Offline-Hülle).
 - Deutsch und Englisch.
 - Für die Allgemeinheit gedacht, auch für Kinder: nichts Kritisches (kein Geld, keine Finanzthemen), keine Altersabfrage. Die drei Schwierigkeitsstufen ändern nur Bedienung und Punkte, schalten aber keine Inhalte frei.
-- 20 Behauptungstypen, jede Frage wird aus Vorlage, Stadt und Schwelle frisch gebaut (kein fester Katalog):
+- 24 Behauptungstypen, jede Frage wird aus Vorlage, Stadt und Schwelle frisch gebaut (kein fester Katalog):
   - Wetter, Open-Meteo: Temperatur, Tag/Nacht, Regen, Wind, Windrichtung, Luftdruck, Luftfeuchtigkeit, Bewölkung, „wo ist es wärmer" (Stadtvergleich), Tageslänge (Sonnenaufgang bis Sonnenuntergang, Stadtvergleich)
   - Luftqualität, Open-Meteo (EU-Luftindex)
   - Erdbeben, USGS: Anzahl und Stärke der letzten 24 Stunden
   - Polarlicht-Index (Kp), NOAA SWPC: liest das alte und das neue JSON-Format, neues Format noch nicht live bestätigt
   - Wikipedia-Vergleich, Wikimedia Pageviews: „Welcher Artikel wurde vorgestern öfter aufgerufen?“ Feste, kinderfreundliche Titelliste (deutsche Wikipedia, nur menschliche Aufrufe), Tag = vorgestern nach UTC. Gegen eine nachgestellte Antwort getestet, die echte Schnittstelle ist noch nicht live bestätigt, die Titel sind nicht gegen die Wikipedia geprüft.
+  - ISS im Sonnenlicht und ISS östlich von Greenwich (wheretheiss.at), Sonnenwind-Geschwindigkeit (NOAA SWPC, 5-Minuten-Werte), Wikipedia-Sprachvergleich „welche Sprache hat mehr Artikel“ (Statistik der jeweiligen Wikipedia, CORS über origin=*). Alle vier gegen nachgestellte Antworten getestet, nicht live bestätigt.
   - ISS-Position, wheretheiss.at
   - Mond (lokal berechnet)
   - „morgen wärmer als heute" (wird einen Tag später aufgelöst)

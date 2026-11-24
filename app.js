@@ -99,8 +99,9 @@
       remind: 'Zeit für ein Backup. Tippen zum Sichern →',
       lang: 'Sprache',
       made_by: 'Ein Spiel von', imprint: 'Impressum', privacy: 'Datenschutz',
-      privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) services.swpc.noaa.gov (Polarlicht-Index) und wikimedia.org (Wikipedia-Aufrufe) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
+      privacy_text: 'Daumenprobe speichert Tipps und Punkte nur in deinem Browser (localStorage). Kein Konto, kein Tracking, keine Cookies. Zum Messen ruft dein Browser Open-Meteo.com (Wetter, Luft), wheretheiss.at (ISS) und earthquake.usgs.gov (Erdbeben) services.swpc.noaa.gov (Polarlicht-Index) und wikimedia.org und wikipedia.org (Wikipedia-Zahlen) ab; diese Dienste sehen dabei deine IP-Adresse. Dein Standort wird nicht abgefragt, die Orte sind fest vorgegeben. Hosting: Cloudflare.',
       data_credit: 'Beta: Das Spiel ist noch in Entwicklung. Regeln, Punkte und Fragen können sich jederzeit ändern. Wetterdaten: Open-Meteo.com (CC BY 4.0). ISS-Position: wheretheiss.at. Erdbeben: USGS. Polarlicht-Index: NOAA SWPC. Wikipedia-Aufrufe: Wikimedia. Nur Spielpunkte, nie Geld.',
+      iss_vis: { daylight: 'im Sonnenlicht', visible: 'im Sonnenlicht und vom Boden aus zu sehen', eclipsed: 'im Erdschatten' },
       measure_msg: {
         quake: 'Der USGS meldet {v} Beben ab Stärke 4,5 in den letzten 24 Stunden.',
         quakemax: 'Das stärkste Beben hatte Stärke {v}.',
@@ -116,6 +117,8 @@
         clock: 'In {city} ist es jetzt {v} Uhr.',
         aurora: 'Der Kp-Index liegt gerade bei {v}.',
         wiki: 'Vorgestern: „{X}“ {a} Aufrufe, „{Y}“ {b} Aufrufe.',
+        isssun: 'Die ISS ist {v}.', isseast: 'Die ISS ist bei {v}° Länge.', solarwind: 'Der Sonnenwind weht mit {v} km/s.',
+        wikisize: 'Artikel: {X} {a}, {Y} {b}.',
         moon: 'Der Mond ist zu {v} % beleuchtet.',
         temp: 'In {city} sind es {v} °C.',
         isday: 'In {city} steht die Sonne gerade {v}.',
@@ -211,6 +214,10 @@
         clock: 'In {city} ist es gerade später als {H} Uhr (Ortszeit).',
         aurora: 'Der Kp-Index (Maß für Polarlicht-Chancen) liegt gerade über {K}.',
         wiki: 'Auf der deutschen Wikipedia wurde „{X}“ vorgestern öfter aufgerufen als „{Y}“.',
+        isssun: 'Die ISS fliegt gerade im Sonnenlicht.',
+        isseast: 'Die ISS fliegt gerade östlich von Greenwich (Längengrad über 0°).',
+        solarwind: 'Der Sonnenwind, der Teilchenstrom von der Sonne, weht gerade schneller als {S} km/s.',
+        wikisize: 'Die Wikipedia auf {X} hat mehr Artikel als die auf {Y}.',
         moon: 'Der Mond ist gerade mehr als halb beleuchtet.',
         temp: 'In {city} sind es gerade mehr als {T} °C.',
         isday: 'In {city} steht die Sonne gerade über dem Horizont.',
@@ -234,6 +241,10 @@
         clock: 'Stimmt, wenn die Uhrzeit vor Ort jetzt nach {H}:00 Uhr liegt. Das Gerät kennt die Zeitzone der Stadt.',
         aurora: 'Stimmt, wenn der Kp-Index der NOAA (0 bis 9, misst die Unruhe im Magnetfeld der Erde) im jüngsten Wert über {K} liegt. Ab 5 gibt es Polarlicht weit im Süden.',
         wiki: 'Stimmt, wenn der Artikel „{X}“ am vorletzten Tag (nach UTC) mehr Aufrufe hatte als „{Y}“. Gezählt werden Aufrufe durch Menschen auf der deutschen Wikipedia (Wikimedia Pageviews). Bei Gleichstand stimmt es nicht.',
+        isssun: 'Stimmt, wenn wheretheiss.at die ISS als „daylight“ oder „visible“ meldet, also nicht im Erdschatten.',
+        isseast: 'Stimmt, wenn der gemeldete Längengrad der ISS größer als 0° ist (wheretheiss.at). Östlich von Greenwich liegen Europa, Afrika, Asien und Australien, westlich Amerika.',
+        solarwind: 'Stimmt, wenn die jüngste 5-Minuten-Messung der NOAA (Satellit nahe der Sonne-Erde-Linie) mehr als {S} km pro Sekunde zeigt. Üblich sind 300 bis 500.',
+        wikisize: 'Stimmt, wenn die Wikipedia auf {X} laut ihrer eigenen Statistik jetzt mehr Artikel hat als die auf {Y}. Gleichstand zählt als nein.',
         moon: 'Stimmt, wenn der Mond jetzt zu mehr als 50 % beleuchtet ist. Das wird aus dem Mondalter gerechnet, nicht gemessen.',
         temp: 'Stimmt, wenn die gemessene Temperatur über {T} °C liegt (Open-Meteo, aktueller Wert).',
         isday: 'Stimmt, wenn die Sonne am Ort laut Open-Meteo jetzt über dem Horizont steht. Dämmerung nach Sonnenuntergang zählt als nein.',
@@ -325,8 +336,9 @@
       remind: 'Time for a backup. Tap to save →',
       lang: 'Language',
       made_by: 'A game by', imprint: 'Legal notice', privacy: 'Privacy',
-      privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) services.swpc.noaa.gov (aurora index) and wikimedia.org (Wikipedia page views); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
+      privacy_text: 'Daumenprobe stores tips and points only in your browser (localStorage). No account, no tracking, no cookies. To measure, your browser calls Open-Meteo.com (weather, air), wheretheiss.at (ISS) and earthquake.usgs.gov (earthquakes) services.swpc.noaa.gov (aurora index) and wikimedia.org and wikipedia.org (Wikipedia numbers); these services see your IP address. Your location is not requested, the places are fixed. Hosting: Cloudflare.',
       data_credit: 'Beta: the game is still in development. Rules, points and claims can change at any time. Weather data: Open-Meteo.com (CC BY 4.0). ISS position: wheretheiss.at. Earthquakes: USGS. Aurora index: NOAA SWPC. Wikipedia page views: Wikimedia. Play points only, never money.',
+      iss_vis: { daylight: 'in sunlight', visible: 'in sunlight and visible from the ground', eclipsed: 'in Earth’s shadow' },
       measure_msg: {
         quake: 'The USGS reports {v} quakes of magnitude 4.5+ in the last 24 hours.',
         quakemax: 'The strongest quake had magnitude {v}.',
@@ -342,6 +354,8 @@
         clock: 'In {city} it is {v} right now.',
         aurora: 'The Kp index is {v} right now.',
         wiki: 'Day before yesterday: “{X}” {a} views, “{Y}” {b} views.',
+        isssun: 'The ISS is {v}.', isseast: 'The ISS is at {v}° longitude.', solarwind: 'The solar wind blows at {v} km/s.',
+        wikisize: 'Articles: {X} {a}, {Y} {b}.',
         moon: 'The moon is {v} % lit.',
         temp: 'It is {v} °C in {city}.',
         isday: 'In {city} the sun is {v} right now.',
@@ -439,6 +453,10 @@
         clock: 'In {city} it is later than {H}:00 local time right now.',
         aurora: 'The Kp index (a measure of aurora chances) is above {K} right now.',
         wiki: 'On the German Wikipedia, “{X}” was viewed more often than “{Y}” the day before yesterday.',
+        isssun: 'The ISS is in sunlight right now.',
+        isseast: 'The ISS is east of Greenwich right now (longitude above 0°).',
+        solarwind: 'The solar wind, the stream of particles from the Sun, blows faster than {S} km/s right now.',
+        wikisize: 'The Wikipedia in {X} has more articles than the one in {Y}.',
         moon: 'The moon is more than half lit right now.',
         temp: 'It is warmer than {T} °C in {city} right now.',
         isday: 'The sun is above the horizon in {city} right now.',
@@ -462,6 +480,10 @@
         clock: 'True if the local time in {city} is after {H}:00 right now. Your device knows the time zone of the city.',
         aurora: 'True if the NOAA Kp index (0 to 9, measures how restless Earth\'s magnetic field is) is above {K} in its latest value. From 5 up, aurora reaches far south.',
         wiki: 'True if the article “{X}” had more views than “{Y}” on the day before yesterday (UTC). Human views on the German Wikipedia are counted (Wikimedia Pageviews). A tie counts as false.',
+        isssun: 'True if wheretheiss.at reports the ISS as “daylight” or “visible”, so not in Earth’s shadow.',
+        isseast: 'True if the reported longitude of the ISS is greater than 0° (wheretheiss.at). East of Greenwich are Europe, Africa, Asia and Australia, west of it the Americas.',
+        solarwind: 'True if the latest 5-minute NOAA measurement (a satellite on the Sun–Earth line) shows more than {S} km per second. Usual values are 300 to 500.',
+        wikisize: 'True if the Wikipedia in {X} has more articles than the one in {Y} according to its own statistics right now. A tie counts as false.',
         moon: 'True if the moon is more than 50 % lit right now. This is calculated from the moon age, not measured.',
         temp: 'True if the measured temperature is above {T} °C (Open-Meteo, current value).',
         isday: 'True if, per Open-Meteo, the sun is above the horizon at the place right now. Twilight after sunset counts as no.',
@@ -486,9 +508,9 @@
     };
   }
   /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
-  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora', 'wiki'];
+  const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize'];
   /* Erst die Kategorie, dann das Thema: Wetter, Luft, Erde, Weltraum, Himmel, Zeit wechseln sich ab. */
-  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'luft', quake: 'erde', quakemax: 'erde', iss: 'raum', aurora: 'raum', wiki: 'wissen', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
+  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'luft', quake: 'erde', quakemax: 'erde', iss: 'raum', aurora: 'raum', isssun: 'raum', isseast: 'raum', solarwind: 'raum', wikisize: 'wissen', wiki: 'wissen', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
   function balanced(pool, used) {
     const cats = {};
     pool.forEach(function (t) { (cats[CAT_OF[t]] = cats[CAT_OF[t]] || []).push(t); });
@@ -575,6 +597,14 @@
       return { tpl: 'sunhigh', city: a.id, city2: b.id };
     },
     aurora: function () { return { tpl: 'aurora', K: pick([1, 2, 3]) }; },
+    isssun: function () { return { tpl: 'isssun' }; },
+    isseast: function () { return { tpl: 'isseast' }; },
+    solarwind: function () { return { tpl: 'solarwind', S: HARD ? pick([380, 420, 460]) : pick([350, 400, 450]) }; },
+    wikisize: function () {
+      const x = pick(WIKI_LANGS); let y = pick(WIKI_LANGS);
+      while (y === x) y = pick(WIKI_LANGS);
+      return { tpl: 'wikisize', x: x, y: y };
+    },
     wiki: function () {
       const g = HARD ? pick(WIKI_GROUPS) : WIKI_ALL;
       const x = pick(g); let y = pick(g);
@@ -590,9 +620,9 @@
     }
   };
   const POOLS = {
-    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki'],
-    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki'],
-    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'aurora', 'wiki']
+    s: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize'],
+    m: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'clock', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize'],
+    l: ['temp', 'isday', 'rain', 'wind', 'cloud', 'warmer', 'humidity', 'pressure', 'iss', 'tomorrow', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'sunhigh', 'aurora', 'wiki', 'isssun', 'isseast', 'solarwind', 'wikisize']
   };
   /* Wikipedia-Vergleich: feste, kinderfreundliche Liste (deutsche Titel, Unterstrich statt Leerzeichen). Nur diese Titel werden abgefragt. */
   const WIKI_GROUPS = [
@@ -603,8 +633,13 @@
     ['Fußball', 'Tennis', 'Schach', 'Basketball', 'Handball', 'Schwimmsport', 'Radsport']
   ];
   const WIKI_ALL = [].concat.apply([], WIKI_GROUPS);
+  const WIKILANG = {
+    de: { en: 'Englisch', de: 'Deutsch', fr: 'Französisch', es: 'Spanisch', it: 'Italienisch', nl: 'Niederländisch', sv: 'Schwedisch', pl: 'Polnisch', ru: 'Russisch', ja: 'Japanisch', pt: 'Portugiesisch', ar: 'Arabisch' },
+    en: { en: 'English', de: 'German', fr: 'French', es: 'Spanish', it: 'Italian', nl: 'Dutch', sv: 'Swedish', pl: 'Polish', ru: 'Russian', ja: 'Japanese', pt: 'Portuguese', ar: 'Arabic' }
+  };
+  const WIKI_LANGS = Object.keys(WIKILANG.en);
   function wikiDay() { const d = new Date(Date.now() - 2 * 864e5); return d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCDate()).padStart(2, '0'); }
-  const NOCITY = { wiki: 1, iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
+  const NOCITY = { wiki: 1, wikisize: 1, isssun: 1, isseast: 1, solarwind: 1, iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
 
   /* Abwechslung: heute noch nicht gespielte Themen zuerst, und keine Stadt aus den letzten drei Behauptungen. */
   function firstRun() { return !S.onbDone && !S.tips.length; }
@@ -626,6 +661,8 @@
     if (!c || !MAKERS[c.tpl]) return false;
     if (!NOCITY[c.tpl] && !cityById(c.city)) return false;
     if ((c.tpl === 'daylen' || c.tpl === 'warmer' || c.tpl === 'sunhigh') && !cityById(c.city2)) return false;
+    if (c.tpl === 'wikisize' && (WIKI_LANGS.indexOf(c.x) < 0 || WIKI_LANGS.indexOf(c.y) < 0 || c.x === c.y)) return false;
+    if (c.tpl === 'solarwind' && !(c.S > 0 && c.S < 2000)) return false;
     if (c.tpl === 'wiki' && (WIKI_ALL.indexOf(c.x) < 0 || WIKI_ALL.indexOf(c.y) < 0 || c.x === c.y)) return false;
     if (c.tpl === 'winddir' && ['N', 'E', 'S', 'W'].indexOf(c.D) < 0) return false;
     if (c.tpl === 'tomorrow' && !(/^\d{4}-\d{2}-\d{2}$/.test(c.created) && /^\d{4}-\d{2}-\d{2}$/.test(c.due))) return false;
@@ -638,8 +675,8 @@
   function claimVars(claim, lang) {
     const c = claim.city ? cityById(claim.city) : null;
     const c2 = claim.city2 ? cityById(claim.city2) : null;
-    return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A, P: claim.P, H: claim.H, K: claim.K, P: claim.P, H: claim.H,
-      X: claim.x ? String(claim.x).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined, Y: claim.y ? String(claim.y).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined,
+    return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A, P: claim.P, H: claim.H, K: claim.K, S: claim.S, P: claim.P, H: claim.H,
+      X: claim.tpl === 'wikisize' ? WIKILANG[lang][claim.x] : claim.x ? String(claim.x).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined, Y: claim.tpl === 'wikisize' ? WIKILANG[lang][claim.y] : claim.y ? String(claim.y).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined,
       M: claim.M === undefined ? undefined : num(claim.M, lang, 1), D: claim.D ? I18N[lang].dir[claim.D] : undefined };
   }
   function claimText(claim, lang) { return fill(I18N[lang].claims[claim.tpl], claimVars(claim, lang)); }
@@ -652,12 +689,14 @@
     const vars = claimVars(claim, lang);
     if (claim.tpl === 'tomorrow') { vars.a = num(shown.today, lang); vars.b = num(shown.tomorrow, lang); }
     else if (claim.tpl === 'daylen' || claim.tpl === 'warmer') { vars.a = num(shown.a, lang); vars.b = num(shown.b, lang); }
-    else if (claim.tpl === 'wiki') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
+    else if (claim.tpl === 'wiki' || claim.tpl === 'wikisize') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
+    else if (claim.tpl === 'isssun') vars.v = t.iss_vis[shown] || shown;
+    else if (claim.tpl === 'solarwind') vars.v = num(shown, lang, 0);
     else if (claim.tpl === 'sunhigh') { vars.a = num(shown.a, lang, 0); vars.b = num(shown.b, lang, 0); }
     else if (claim.tpl === 'clock') { vars.v = String(Math.floor(shown / 60)).padStart(2, '0') + ':' + String(shown % 60).padStart(2, '0'); }
     else if (claim.tpl === 'winddir') { vars.v = Math.round(shown); vars.dir = t.dir[['N', 'E', 'S', 'W'].filter(function (k) { return DP.inSector(shown, k); })[0]]; }
     else if (claim.tpl === 'isday') vars.v = shown === 1 ? t.day : t.night;
-    else vars.v = num(shown, lang, claim.tpl === 'iss' ? 2 : 1);
+    else vars.v = num(shown, lang, claim.tpl === 'iss' || claim.tpl === 'isseast' ? 2 : 1);
     return fill(t.measure_msg[claim.tpl], vars);
   }
 
@@ -671,7 +710,15 @@
     }).finally(function () { clearTimeout(timer); });
   }
   function getData(claim) {
-    if (claim.tpl === 'iss') return fetchJson('https://api.wheretheiss.at/v1/satellites/25544');
+    if (claim.tpl === 'iss' || claim.tpl === 'isssun' || claim.tpl === 'isseast') return fetchJson('https://api.wheretheiss.at/v1/satellites/25544');
+    if (claim.tpl === 'solarwind') return fetchJson('https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json');
+    if (claim.tpl === 'wikisize') {
+      const arts = function (code) {
+        return fetchJson('https://' + code + '.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=statistics&format=json&origin=*')
+          .then(function (j) { return j && j.query && j.query.statistics ? j.query.statistics.articles : null; });
+      };
+      return Promise.all([arts(claim.x), arts(claim.y)]).then(function (r) { return { a: r[0], b: r[1] }; });
+    }
     if (claim.tpl === 'quake' || claim.tpl === 'quakemax') return fetchJson('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson');
     if (claim.tpl === 'aurora') return fetchJson('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
     if (claim.tpl === 'wiki') {
