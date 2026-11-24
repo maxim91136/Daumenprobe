@@ -38,6 +38,7 @@
     const list = (tips || []).filter(function (t) { return t && t.resolved; }).slice().sort(function (a, b) { return (a.measuredAt || a.ts || 0) - (b.measuredAt || b.ts || 0); });
     let sum = 0, mx = 0;
     list.forEach(function (t) { sum += t.pts || 0; if (sum > mx) mx = sum; });
+    if (list.length >= 10 && mx < 10) mx = 10; /* wer 10 Tipps hinter sich hat, ist kein Neuling mehr */
     return mx;
   };
 
