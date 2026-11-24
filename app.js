@@ -180,7 +180,7 @@
         falcon: ['🦅', 'Der Falke', 'Du bist mutig und liegst dabei richtig. Selten und stark.'],
         fox: ['🦊', 'Der Fuchs', 'Du schätzt dich fast genau richtig ein. Das ist die Kunst.']
       },
-      type_title: 'Dein Daumen-Typ', type_more: 'Noch {n} Tipps bis dein Typ feststeht.', type_stats: 'Ø Sicherheit {c} % · Trefferquote {h} %', type_share: 'Mein Daumen-Typ: {e} {n}. {d}',
+      type_title: 'Dein Daumen-Typ', type_more: 'Noch {n} gemessene Tipps bis dein Typ feststeht.', type_open: '{k} warten noch auf ihre Messung.', type_stats: 'Ø Sicherheit {c} % · Trefferquote {h} %', type_share: 'Mein Daumen-Typ: {e} {n}. {d}',
       exam_title: 'Aufstiegsprüfung', exam_ready: 'Prüfung für {r}: 3 schwere Behauptungen, mindestens 2 Treffer.', exam_start: 'Prüfung starten', exam_cont: 'Prüfung fortsetzen ({i}/3)',
       exam_tomorrow: 'Nicht bestanden. Neuer Versuch morgen.', exam_next: 'Weiter ({i}/3)', exam_eval: 'Auswerten', exam_pass: 'Bestanden!', exam_fail: 'Nicht bestanden.', exam_newrank: 'Neuer Rang: {r}', exam_again: 'Du brauchtest 2 Treffer. Morgen gibt es einen neuen Versuch.',
       pass_title: 'Weltreise-Pass', pass_help: 'Triff einmal in jeder Stadt, dann bekommst du den Stempel.',
@@ -401,7 +401,7 @@
         falcon: ['🦅', 'The Falcon', 'You are bold and right at the same time. Rare and strong.'],
         fox: ['🦊', 'The Fox', 'You judge yourself almost exactly right. That is the art.']
       },
-      type_title: 'Your thumb type', type_more: '{n} more tips until your type is set.', type_stats: 'Avg. confidence {c} % · hit rate {h} %', type_share: 'My thumb type: {e} {n}. {d}',
+      type_title: 'Your thumb type', type_more: '{n} more measured tips until your type is set.', type_open: '{k} still waiting to be measured.', type_stats: 'Avg. confidence {c} % · hit rate {h} %', type_share: 'My thumb type: {e} {n}. {d}',
       exam_title: 'Rank exam', exam_ready: 'Exam for {r}: 3 hard claims, at least 2 hits.', exam_start: 'Start exam', exam_cont: 'Continue exam ({i}/3)',
       exam_tomorrow: 'Not passed. Try again tomorrow.', exam_next: 'Next ({i}/3)', exam_eval: 'See result', exam_pass: 'Passed!', exam_fail: 'Not passed.', exam_newrank: 'New rank: {r}', exam_again: 'You needed 2 hits. A new attempt opens tomorrow.',
       pass_title: 'World pass', pass_help: 'Hit once in every city to earn its stamp.',
@@ -1201,7 +1201,7 @@
   }
   function typeCard() {
     const t = T(), ty = thumbType();
-    if (ty.more) return '<section class="typecard"><b>' + esc(t.type_title) + '</b><small>' + esc(fill(t.type_more, { n: ty.more })) + '</small></section>';
+    if (ty.more) return '<section class="typecard"><b>' + esc(t.type_title) + '</b><small>' + esc(fill(t.type_more, { n: ty.more })) + (S.tips.some(function (x) { return !x.resolved; }) ? ' ' + esc(fill(t.type_open, { k: S.tips.filter(function (x) { return !x.resolved; }).length })) : '') + '</small></section>';
     const d = t.types[ty.key];
     return '<section class="typecard on"><div class="te" aria-hidden="true">' + d[0] + '</div><div><small>' + esc(t.type_title) + '</small><b>' + esc(d[1]) + '</b><p>' + esc(d[2]) + '</p><small>' +
       esc(fill(t.type_stats, { c: ty.avg, h: ty.hit })) + '</small></div><button class="chip" data-act="share-type">' + esc(t.share) + '</button></section>';
