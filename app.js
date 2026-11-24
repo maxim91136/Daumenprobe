@@ -98,8 +98,42 @@
         s: { how3: 'Sag, wie sicher du bist: geraten, ziemlich sicher oder ganz sicher.', goal: 'Treffer bringen halbe Punkte. Daneben kostet dich nichts.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer.' },
         m: { how3: 'Sag, wie sicher du bist: von geraten bis ganz sicher.', goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer zählen dreiviertel, Daneben kostet höchstens 8.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer, aber ein Daneben kostet auch mehr.' }
       },
+      badges_title: 'Abzeichen', badge_new: 'Neues Abzeichen', locked: 'Noch gesperrt',
+      badges: {
+        first: ['Erster Tipp', 'Einen Tipp abgeben und messen lassen.'],
+        hit1: ['Erster Treffer', 'Zum ersten Mal richtig liegen.'],
+        combo3: ['Heiße Phase', '3 Treffer in Folge.'],
+        combo5: ['Auf Draht', '5 Treffer in Folge.'],
+        combo10: ['Unaufhaltsam', '10 Treffer in Folge.'],
+        bold: ['Volltreffer', 'Auf Schwer mit 100 % sicher und richtig.'],
+        ouch: ['Autsch', 'Mit mindestens 90 % sicher und daneben. Passiert den Besten.'],
+        honest: ['Ehrliche Haut', 'Kalibrierung ab 85 % nach mindestens 10 Tipps.'],
+        t10: ['Zehner', '10 Tipps gemessen.'],
+        t50: ['Fünfziger', '50 Tipps gemessen.'],
+        t100: ['Hunderter', '100 Tipps gemessen.'],
+        d3: ['Dranbleiber', '3 Tage in Folge gespielt.'],
+        d7: ['Wochenmeister', '7 Tage in Folge gespielt.'],
+        full: ['Volles Haus', 'Alle fünf Behauptungen an einem Tag gespielt.'],
+        world: ['Weltenbummler', 'Fünf verschiedene Themen gespielt.']
+      },
+      story_title: 'Der Orden der Daumen',
+      story: 'Es gibt einen alten Brauch: Wer wissen will, woher der Wind weht, hält den Daumen hoch. Du bist neu im Orden der Daumen. Tippe, lass die Welt nachmessen und steige auf, bis du den Himmel lesen kannst wie ein Buch.',
+      rank_lore: [
+        'Du hast den Daumen noch nicht einmal gehoben.',
+        'Du riechst den Regen, bevor er fällt. Meistens.',
+        'Der Orden nimmt dich auf. Dein Daumen darf in den Wind.',
+        'Du entscheidest schneller, als andere Wolken zählen.',
+        'Selbst die Alten hören zu, wenn du den Himmel liest.',
+        'Das Barometer ist neidisch.',
+        'Sicherheit ist bei dir keine Behauptung mehr, sondern ein Messwert.',
+        'Du siehst Beben, die noch keiner gespürt hat. Fast.',
+        'Die Stadt fragt dich, ob sie den Schirm mitnehmen soll.',
+        'Du sagst 100 % und hast recht. Selten, aber das macht den Ruf.',
+        'Man erzählt, dein Daumen ersetze den Wetterdienst.',
+        'Der Orden hat dir nichts mehr beizubringen. Außer Demut.'
+      ],
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
-      ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumen-Kenner', 'Daumen-Profi', 'Orakel', 'Daumen-Legende'],
+      ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumenschnipper', 'Daumen-Kenner', 'Wetterprophet', 'Daumen-Profi', 'Seher', 'Orakel', 'Großes Orakel', 'Daumen-Legende', 'Daumenprobe-Meister'],
       streak_n: '{n} Tage in Folge', streak_1: '1 Tag', combo_n: '{n} Treffer in Folge', rankup: 'Neuer Rang: {r}', to_next: 'noch {n} bis {r}', top_rank: 'Höchster Rang', sound_on: 'Ton an', sound_off: 'Ton aus',
       dir: { N: 'Norden', E: 'Osten', S: 'Süden', W: 'Westen' },
       claims: {
@@ -212,8 +246,42 @@
         s: { how3: 'Say how sure you are: a guess, pretty sure or totally sure.', goal: 'Hits earn half points. A miss costs you nothing.', hint: 'The surer you are, the more a hit is worth.' },
         m: { how3: 'Say how sure you are: from a guess to totally sure.', goal: 'The one with the most points wins. Hits count three quarters, a miss costs 8 at most.', hint: 'The surer you are, the more a hit is worth, but a miss costs more too.' }
       },
+      badges_title: 'Badges', badge_new: 'New badge', locked: 'Locked',
+      badges: {
+        first: ['First tip', 'Make a tip and have it measured.'],
+        hit1: ['First hit', 'Be right for the first time.'],
+        combo3: ['Hot streak', '3 hits in a row.'],
+        combo5: ['On a roll', '5 hits in a row.'],
+        combo10: ['Unstoppable', '10 hits in a row.'],
+        bold: ['Bullseye', 'On Hard: 100 % sure and right.'],
+        ouch: ['Ouch', 'At least 90 % sure and wrong. Happens to the best.'],
+        honest: ['Honest soul', 'Calibration of 85 % or more after at least 10 tips.'],
+        t10: ['Tenner', '10 tips measured.'],
+        t50: ['Fifty', '50 tips measured.'],
+        t100: ['Hundred', '100 tips measured.'],
+        d3: ['Keeping at it', 'Played 3 days in a row.'],
+        d7: ['Week master', 'Played 7 days in a row.'],
+        full: ['Full house', 'Played all five claims in one day.'],
+        world: ['Globetrotter', 'Played five different topics.']
+      },
+      story_title: 'The Order of the Thumbs',
+      story: 'There is an old custom: whoever wants to know where the wind blows holds up a thumb. You are new to the Order of the Thumbs. Tip, let the world measure itself and climb until you can read the sky like a book.',
+      rank_lore: [
+        'You have not even raised your thumb yet.',
+        'You smell the rain before it falls. Mostly.',
+        'The Order takes you in. Your thumb may test the wind.',
+        'You decide faster than others count clouds.',
+        'Even the elders listen when you read the sky.',
+        'The barometer is jealous.',
+        'For you, certainty is no longer a claim but a measurement.',
+        'You see quakes nobody has felt yet. Almost.',
+        'The town asks you whether to bring an umbrella.',
+        'You say 100 % and you are right. Rare, but that is how legends start.',
+        'They say your thumb replaces the weather service.',
+        'The Order has nothing left to teach you. Except humility.'
+      ],
       you_tipped_w: 'Your tip: {tip}, {conf}.',
-      ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Expert', 'Thumb Pro', 'Oracle', 'Thumb Legend'],
+      ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Flicker', 'Thumb Expert', 'Weather Prophet', 'Thumb Pro', 'Seer', 'Oracle', 'Grand Oracle', 'Thumb Legend', 'Thumb Master'],
       streak_n: '{n} days in a row', streak_1: '1 day', combo_n: '{n} hits in a row', rankup: 'New rank: {r}', to_next: '{n} to {r}', top_rank: 'Top rank', sound_on: 'Sound on', sound_off: 'Sound off',
       dir: { N: 'north', E: 'east', S: 'south', W: 'west' },
       claims: {
@@ -450,7 +518,7 @@
     const i = st.indexOf(c);
     return T().words[L2][i < 0 ? 0 : i];
   }
-  const RANK_AT = [0, 25, 75, 150, 300, 600, 1200];
+  const RANK_AT = [0, 15, 40, 80, 140, 220, 320, 450, 650, 900, 1300, 2000];
   function rankFor(pts) {
     let i = 0;
     RANK_AT.forEach(function (v, k) { if (pts >= v) i = k; });
@@ -463,8 +531,12 @@
     resolvedTips().forEach(function (r) { days[DP.dayKey(new Date(r.ts))] = 1; });
     let k = DP.dayKey();
     if (!days[k]) k = DP.addDays(k, -1);
-    let n = 0;
-    while (days[k]) { n++; k = DP.addDays(k, -1); }
+    let n = 0, joker = true;
+    for (;;) {
+      if (days[k]) { n++; k = DP.addDays(k, -1); }
+      else if (joker && n > 0 && days[DP.addDays(k, -1)]) { joker = false; k = DP.addDays(k, -1); } /* ein freier Tag verzeiht */
+      else break;
+    }
     return n;
   }
   function comboCount() {
@@ -483,6 +555,62 @@
     }
     return out;
   }
+  /* Abzeichen: alles aus den gemessenen Tipps berechnet, nichts extra gespeichert. */
+  const BADGE_DEFS = [
+    ['first', '🌱', function (c) { return c.n >= 1; }],
+    ['hit1', '🎯', function (c) { return c.hits >= 1; }],
+    ['combo3', '🔥', function (c) { return c.maxCombo >= 3; }],
+    ['combo5', '⚡', function (c) { return c.maxCombo >= 5; }],
+    ['combo10', '🚀', function (c) { return c.maxCombo >= 10; }],
+    ['bold', '💎', function (c) { return c.bold; }],
+    ['ouch', '🤕', function (c) { return c.ouch; }],
+    ['honest', '🧭', function (c) { return c.n >= 10 && c.cal !== null && c.cal >= 85; }],
+    ['t10', '🔟', function (c) { return c.n >= 10; }],
+    ['t50', '🏅', function (c) { return c.n >= 50; }],
+    ['t100', '🏆', function (c) { return c.n >= 100; }],
+    ['d3', '📅', function (c) { return c.maxDays >= 3; }],
+    ['d7', '👑', function (c) { return c.maxDays >= 7; }],
+    ['full', '🃏', function (c) { return c.maxPerDay >= 5; }],
+    ['world', '🌍', function (c) { return c.topics >= 5; }]
+  ];
+  function badgeCtx(list) {
+    const rs = list.filter(function (r) { return r.resolved; }).sort(function (a, b) { return a.ts - b.ts; });
+    let combo = 0, maxCombo = 0, bold = false, ouch = false;
+    const perDay = {}, topics = {};
+    rs.forEach(function (r) {
+      const hit = DP.isHit(r.tip, r.outcome);
+      combo = hit ? combo + 1 : 0; if (combo > maxCombo) maxCombo = combo;
+      if (hit && r.conf === 100 && (r.level || 'l') === 'l') bold = true;
+      if (!hit && r.conf >= 90) ouch = true;
+      const k = DP.dayKey(new Date(r.ts)); perDay[k] = (perDay[k] || 0) + 1;
+      topics[r.claim.tpl] = 1;
+    });
+    const days = Object.keys(perDay).sort();
+    let maxDays = 0, run = 0, prev = null;
+    days.forEach(function (d) { run = prev && DP.addDays(prev, 1) === d ? run + 1 : 1; if (run > maxDays) maxDays = run; prev = d; });
+    const st = DP.stats(rs);
+    return { n: rs.length, hits: st.hits, cal: st.calibration, maxCombo: maxCombo, bold: bold, ouch: ouch, maxDays: maxDays,
+      maxPerDay: Math.max(0, Math.max.apply(null, days.map(function (d) { return perDay[d]; }).concat([0]))), topics: Object.keys(topics).length };
+  }
+  function earnedBadges(list) {
+    const c = badgeCtx(list);
+    return BADGE_DEFS.filter(function (b) { return b[2](c); }).map(function (b) { return b[0]; });
+  }
+  function badgeShelf() {
+    const t = T();
+    const have = earnedBadges(S.tips);
+    let h = '<details class="dark shelf"' + (have.length ? ' open' : '') + '><summary>' + esc(t.badges_title) + ' <span class="count">' + have.length + ' / ' + BADGE_DEFS.length + '</span></summary><div class="grid">';
+    BADGE_DEFS.forEach(function (b) {
+      const on = have.indexOf(b[0]) >= 0, txt = t.badges[b[0]];
+      h += '<div class="bdg' + (on ? ' on' : '') + '" title="' + esc(txt[1]) + '"><span class="e" aria-hidden="true">' + (on ? b[1] : '🔒') + '</span><b>' + esc(txt[0]) + '</b><small>' + esc(txt[1]) + '</small></div>';
+    });
+    return h + '</div></details>';
+  }
+  function newBadges(r) {
+    const before = earnedBadges(S.tips.filter(function (x) { return x.id !== r.id; }));
+    return earnedBadges(S.tips).filter(function (id) { return before.indexOf(id) < 0; });
+  }
+
   /* Töne: kleine Pieptöne aus dem Browser, abschaltbar. */
   let audio = null;
   function sfx(kind) {
@@ -548,7 +676,8 @@
     h += '<div class="hero"><b class="hero-n">' + signed(st.pts) + '</b><span class="hero-l">' + esc(t.stat_pts) + '</span>' +
       '<div class="rank"><div class="rank-top"><b>' + esc(rk.name) + '</b>' + (sk ? '<span class="flame">🔥 ' + esc(sk === 1 ? t.streak_1 : fill(t.streak_n, { n: sk })) + '</span>' : '') + '</div>' +
       '<div class="rank-bar" role="img" aria-label="' + esc(rk.name) + '"><i style="width:' + rk.pct + '%"></i></div>' +
-      '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + '</small></div>' +
+      '<small>' + esc(rk.next === null ? t.top_rank : fill(t.to_next, { n: rk.toNext, r: rk.nextName })) + '</small>' +
+      '<p class="lore">' + esc(t.rank_lore[rk.i]) + '</p></div>' +
       '<div class="hero-sub"><span>' + (st.total ? Math.round(st.hitRate * 100) + ' %' : '–') + ' ' + esc(t.stat_hit) + '</span>' +
       '<span>' + esc(t.stat_cal) + ' ' + (st.calibration === null ? '–' : st.calibration + ' %') + '</span></div></div>';
     h += '<div class="levels" role="group" aria-label="' + esc(t.lvl_title) + '"><span>' + esc(t.lvl_title) + '</span>' +
@@ -558,7 +687,9 @@
     if (left > 0) h += '<p class="hint">' + esc(fill(t.left, { n: left })) + '</p>';
     else h += '<p class="small" style="margin:14px 0 0;text-align:center">' + esc(t.goDone) + '</p>';
 
+    if (!S.tips.length) h += '<section class="story"><h2>' + esc(t.story_title) + '</h2><p>' + esc(t.story) + '</p></section>';
     h += rulesSheet();
+    h += badgeShelf();
 
     if (open.length) {
       h += '<details class=\"dark\"' + '' + '><summary>' + esc(t.open_title) + '</summary>';
@@ -653,6 +784,10 @@
     const all = resolvedTips();
     const total = all.reduce(function (a, x) { return a + (x.pts || 0); }, 0);
     const before = rankFor(total - (r.pts || 0)), after = rankFor(total);
+    newBadges(r).forEach(function (id) {
+      const b = BADGE_DEFS.filter(function (x) { return x[0] === id; })[0];
+      out.push('<span class="badge up">' + b[1] + ' ' + esc(t.badge_new) + ': ' + esc(t.badges[id][0]) + '</span>');
+    });
     if (after.i > before.i) out.push('<span class="badge up">⭐ ' + esc(fill(t.rankup, { r: after.name })) + '</span>');
     const combo = comboCount();
     if (hit && combo >= 2) out.push('<span class="badge">🔥 ' + esc(fill(t.combo_n, { n: combo })) + '</span>');
@@ -660,6 +795,7 @@
     const firstToday = all.filter(function (x) { return DP.dayKey(new Date(x.ts)) === k; }).length === 1;
     const sk = streakDays();
     if (firstToday && sk >= 2) out.push('<span class="badge">🔥 ' + esc(fill(t.streak_n, { n: sk })) + '</span>');
+    if (after.i > before.i) out.push('<span class="lore-line">' + esc(t.rank_lore[after.i]) + '</span>');
     return out.length ? '<div class="badges">' + out.join('') + '</div>' : '';
   }
 
@@ -709,7 +845,7 @@
   function celebrate(hit) {
     try { if (navigator.vibrate) navigator.vibrate(hit ? 40 : [70, 50, 70]); } catch (e) { /* egal */ }
     sfx(hit ? 'hit' : 'miss');
-    try { const rr = ui.result, tt = resolvedTips().reduce(function (a, x) { return a + (x.pts || 0); }, 0); if (rankFor(tt).i > rankFor(tt - (rr.pts || 0)).i) setTimeout(function () { sfx('up'); }, 450); } catch (e) { /* egal */ }
+    try { const rr = ui.result, tt = resolvedTips().reduce(function (a, x) { return a + (x.pts || 0); }, 0); if (rankFor(tt).i > rankFor(tt - (rr.pts || 0)).i || newBadges(rr).length) setTimeout(function () { sfx('up'); }, 450); } catch (e) { /* egal */ }
     if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const app = document.getElementById('app');
     if (!hit) { app.classList.add('shake'); setTimeout(function () { app.classList.remove('shake'); }, 500); return; }
