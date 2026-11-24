@@ -83,6 +83,10 @@ Nur Spielpunkte, nie echtes Geld. Nur messbare Behauptungen mit Datenquelle und 
 ## Schwierigkeit „Schwer“
 Grenzen liegen nahe am Üblichen (Monatsmittel der Stadt für Temperatur, typische Werte für Wind, Luft, Erdbeben, Druck). Wer das Klima kennt, hat einen Vorteil; volle Punkte. Leicht und Mittel behalten die groben Grenzen. Die Monatsmittel sind gerundete Näherungswerte (siehe NORMS in app.js).
 
+## Beta-Modus
+
+Unten auf der Seite gibt es den Knopf „Beta-Modus“. Er hebt das Tageslimit auf und zeigt auf dem Tipp-Bildschirm „Lösung ansehen“. Gedacht für die Testphase, wird vor dem offiziellen Start entfernt (Suche nach `S.beta` und `dailyLimit` in app.js).
+
 ## Almanach (Nebenspiel)
 
 Drei Fragen pro Tag, für alle am selben Tag gleich: Ein Ereignis aus Wikipedias „Was geschah am“ (api.wikimedia.org) mit Jahr, das stimmt oder um einige Jahre verschoben ist. Stimmt es oder nicht? Treffer: 4 Sonderpunkte, alle drei richtig: 4 extra (höchstens 16 am Tag). Nie Minuspunkte, zählt nicht zum Tageslimit und nicht zum Rang. Kinderfreundlich gefiltert (Krieg, Tod, Unglücke usw. werden aussortiert). Ohne Netz erscheint eine Meldung. Abzeichen „Zeitreisender“ (das 21.).

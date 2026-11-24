@@ -208,7 +208,7 @@
       pass_title: 'Weltreise-Pass', pass_help: 'Triff einmal in jeder Stadt, dann bekommst du den Stempel.',
       skin_title: 'Farbwelt', skins: { night: 'Nacht', dawn: 'Morgenrot', aurora: 'Polarlicht', storm: 'Gewitter', gold: 'Gold' }, skin_locked: 'Ab Rang {r}',
       you_tipped_w: 'Dein Tipp: {tip}, {conf}.',
-      alm_title: 'Almanach', alm_today: 'Heute {r} von {m} richtig: +{n} Sonderpunkte, schon in deinem Punktestand', alm_sub2: 'zählen zu deinem Punktestand', alm_back: 'Morgen wieder', alm_sub: 'Was geschah an diesem Tag? Nur Bonus, nie Minus.', alm_go: 'Spielen', alm_cont: 'Weiter', alm_done: 'Heute erledigt', alm_pts: 'Sonderpunkte', alm_q: 'Frage {i} von {n}', alm_true: 'Stimmt', alm_false: 'Stimmt nicht', alm_right: 'Richtig', alm_wrong: 'Knapp daneben', alm_nominus: 'Kein Abzug.', alm_real: 'Es war das Jahr {y}.', alm_next: 'Nächste Frage', alm_end: 'Fertig', alm_all: 'Alle drei richtig: {n} Extra-Punkte', alm_err: 'Der Almanach kommt aus Wikipedia und ist gerade nicht erreichbar. Versuch es später noch einmal.', alm_retry: 'Nochmal versuchen', alm_src: 'Quelle: Wikipedia, „Was geschah am“. Nur Spielpunkte.', alm_claim: 'Am {date}: {text}',
+      beta_off: 'Beta-Modus: aus', beta_on: 'Beta-Modus: an (unbegrenzt, Lösung ansehen)', beta_peek: 'Lösung ansehen (Beta)', beta_true: 'Stimmt.', beta_false: 'Stimmt nicht.', beta_nopeek: 'Noch nicht messbar.', alm_title: 'Almanach', alm_today: 'Heute {r} von {m} richtig: +{n} Sonderpunkte, schon in deinem Punktestand', alm_sub2: 'zählen zu deinem Punktestand', alm_back: 'Morgen wieder', alm_sub: 'Was geschah an diesem Tag? Nur Bonus, nie Minus.', alm_go: 'Spielen', alm_cont: 'Weiter', alm_done: 'Heute erledigt', alm_pts: 'Sonderpunkte', alm_q: 'Frage {i} von {n}', alm_true: 'Stimmt', alm_false: 'Stimmt nicht', alm_right: 'Richtig', alm_wrong: 'Knapp daneben', alm_nominus: 'Kein Abzug.', alm_real: 'Es war das Jahr {y}.', alm_next: 'Nächste Frage', alm_end: 'Fertig', alm_all: 'Alle drei richtig: {n} Extra-Punkte', alm_err: 'Der Almanach kommt aus Wikipedia und ist gerade nicht erreichbar. Versuch es später noch einmal.', alm_retry: 'Nochmal versuchen', alm_src: 'Quelle: Wikipedia, „Was geschah am“. Nur Spielpunkte.', alm_claim: 'Am {date}: {text}',
       daily_title: 'Frage des Tages', daily_sub: 'Für alle gleich, weltweit', daily_go: 'Heute mitmachen', daily_done: 'Heute erledigt', share: 'Teilen', share_copied: 'Kopiert. Jetzt einfügen und verschicken.',
       share_head: 'Daumenprobe · Frage des Tages #{n}', share_pts: '{p} Punkte. Schaffst du das auch?',
       ranks: ['Neuling', 'Schnupperer', 'Daumen-Lehrling', 'Daumenschnipper', 'Daumen-Kenner', 'Wetterprophet', 'Daumen-Profi', 'Seher', 'Orakel', 'Großes Orakel', 'Daumen-Legende', 'Daumenprobe-Meister'],
@@ -454,7 +454,7 @@
       pass_title: 'World pass', pass_help: 'Hit once in every city to earn its stamp.',
       skin_title: 'Theme', skins: { night: 'Night', dawn: 'Dawn', aurora: 'Aurora', storm: 'Storm', gold: 'Gold' }, skin_locked: 'From rank {r}',
       you_tipped_w: 'Your tip: {tip}, {conf}.',
-      alm_title: 'Almanac', alm_today: 'Today {r} of {m} right: +{n} bonus points, already in your score', alm_sub2: 'count toward your score', alm_back: 'Back tomorrow', alm_sub: 'What happened on this day? Bonus only, never minus.', alm_go: 'Play', alm_cont: 'Continue', alm_done: 'Done today', alm_pts: 'bonus points', alm_q: 'Question {i} of {n}', alm_true: 'True', alm_false: 'Not true', alm_right: 'Right', alm_wrong: 'Close', alm_nominus: 'No deduction.', alm_real: 'It was the year {y}.', alm_next: 'Next question', alm_end: 'Done', alm_all: 'All three right: {n} extra points', alm_err: 'The almanac comes from Wikipedia and cannot be reached right now. Please try again later.', alm_retry: 'Try again', alm_src: 'Source: Wikipedia, “On this day”. Play points only.', alm_claim: 'On {date}: {text}',
+      beta_off: 'Beta mode: off', beta_on: 'Beta mode: on (unlimited, see answer)', beta_peek: 'See answer (beta)', beta_true: 'True.', beta_false: 'Not true.', beta_nopeek: 'Not measurable yet.', alm_title: 'Almanac', alm_today: 'Today {r} of {m} right: +{n} bonus points, already in your score', alm_sub2: 'count toward your score', alm_back: 'Back tomorrow', alm_sub: 'What happened on this day? Bonus only, never minus.', alm_go: 'Play', alm_cont: 'Continue', alm_done: 'Done today', alm_pts: 'bonus points', alm_q: 'Question {i} of {n}', alm_true: 'True', alm_false: 'Not true', alm_right: 'Right', alm_wrong: 'Close', alm_nominus: 'No deduction.', alm_real: 'It was the year {y}.', alm_next: 'Next question', alm_end: 'Done', alm_all: 'All three right: {n} extra points', alm_err: 'The almanac comes from Wikipedia and cannot be reached right now. Please try again later.', alm_retry: 'Try again', alm_src: 'Source: Wikipedia, “On this day”. Play points only.', alm_claim: 'On {date}: {text}',
       daily_title: 'Daily claim', daily_sub: 'The same for everyone, worldwide', daily_go: 'Play today', daily_done: 'Done today', share: 'Share', share_copied: 'Copied. Paste it and send it.',
       share_head: 'Daumenprobe · Daily claim #{n}', share_pts: '{p} points. Can you do that too?',
       ranks: ['Rookie', 'Sniffer', 'Thumb Apprentice', 'Thumb Flicker', 'Thumb Expert', 'Weather Prophet', 'Thumb Pro', 'Seer', 'Oracle', 'Grand Oracle', 'Thumb Legend', 'Thumb Master'],
@@ -894,6 +894,8 @@
     });
   }
   /* Gezogene Behauptungen heute: Wegwerfen und Neuladen zählen mit, damit man sich keine leichten aussucht. */
+  /* Beta-Modus: unbegrenzt Fragen, Lösung ansehen. Kommt vor dem Start raus. */
+  function dailyLimit() { return S.beta ? 100000 : DAILY_LIMIT; }
   function todayCount() {
     const k = DP.dayKey();
     const drawn = (S.draws || []).filter(function (ts) { return DP.dayKey(new Date(ts)) === k; }).length;
@@ -1270,7 +1272,7 @@
   function viewHome() {
     const t = T();
     const st = DP.stats(resolvedTips());
-    const left = DAILY_LIMIT - todayCount();
+    const left = dailyLimit() - todayCount();
     const open = S.tips.filter(function (x) { return !x.resolved; });
     const today = DP.dayKey();
     let h = header();
@@ -1378,6 +1380,7 @@
       '<div class="thumbs">' +
       '<button class="thumb" data-act="tip" data-v="0"><span class="emoji" aria-hidden="true">' + ico('up', 'big down') + '</span>' + esc(t.no) + '</button>' +
       '<button class="thumb" data-act="tip" data-v="1"><span class="emoji" aria-hidden="true">' + ico('up', 'big') + '</span>' + esc(t.yes) + '</button></div>' +
+      (S.beta && !ui.practice && !ui.daily ? '<button class="chip" data-act="peek">' + esc(t.beta_peek) + '</button>' + (ui.msg ? '<p class="hint">' + esc(ui.msg) + '</p>' : '') : '') +
       '<button class="linkbtn" data-act="home">' + esc(ui.practice ? t.home : t.cancel) + '</button></main>';
   }
 
@@ -1630,7 +1633,7 @@
       (coachFor(r) ? '<p class="coach">' + esc(coachFor(r)) + '</p>' : '') +
       reportRow(r) +
       '<div class="spacer"></div>' +
-      (r.exam ? '<button class="btn" data-act="exam-next">' + esc(examRecs(r.exam).length >= 3 ? t.exam_eval : fill(t.exam_next, { i: examRecs(r.exam).length })) + '</button>' : r.duel ? '<button class="btn" data-act="duel-next">' + esc(duelRecs(r.duel).length >= 5 ? t.duel_eval : fill(t.duel_next, { i: duelRecs(r.duel).length })) + '</button>' : r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < DAILY_LIMIT ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
+      (r.exam ? '<button class="btn" data-act="exam-next">' + esc(examRecs(r.exam).length >= 3 ? t.exam_eval : fill(t.exam_next, { i: examRecs(r.exam).length })) + '</button>' : r.duel ? '<button class="btn" data-act="duel-next">' + esc(duelRecs(r.duel).length >= 5 ? t.duel_eval : fill(t.duel_next, { i: duelRecs(r.duel).length })) + '</button>' : r.daily ? '<button class="btn" data-act="share-daily">' + esc(t.share) + '</button>' : (todayCount() < dailyLimit() ? '<button class="btn" data-act="start">' + esc(t.next) + '</button>' : '')) +
       '<button class="btn ghost" data-act="home">' + esc(t.home) + '</button></main>';
   }
 
@@ -1800,6 +1803,7 @@
     const t = T();
     document.getElementById('foot').innerHTML =
       '<div class="links">' + esc(t.made_by) + ' <a href="https://dreierlabs.com/" rel="noopener"><b>Dreier Labs</b></a> · <a href="https://dreierlabs.com/impressum.html" rel="noopener">' + esc(t.imprint) + '</a> · ' +
+      '<button class="linkbtn betabtn" data-act="beta" aria-pressed="' + !!S.beta + '">' + esc(S.beta ? t.beta_on : t.beta_off) + '</button> · ' +
       '<details><summary>' + esc(t.privacy) + '</summary><p>' + esc(t.privacy_text) + '</p></details></div>' +
       '<p class="credit">' + esc(t.data_credit) + '</p>';
     window.scrollTo(0, 0);
@@ -1871,6 +1875,14 @@
       S.current = { claim: ui.claim, ts: Date.now(), daily: key };
       save(S); render();
     }
+    else if (act === 'beta') { S.beta = !S.beta; ui.msg = ''; save(S); render(); }
+    else if (act === 'peek') {
+      if (!S.beta || ui.busy || !ui.claim) return;
+      const c = ui.claim; ui.msg = '…'; render();
+      measure(c).then(function (m) {
+        ui.msg = (m.outcome ? T().beta_true : T().beta_false) + ' ' + measuredText(c, m.shown, S.lang); render();
+      }).catch(function () { ui.msg = T().beta_nopeek; render(); });
+    }
     else if (act === 'alm') { almOpen(); }
     else if (act === 'alm-a') { almAnswer(v === '1'); }
     else if (act === 'alm-next') { ui.almRes = null; if (almDone() >= (ui.almItems || []).length) { ui.view = 'home'; } render(); }
@@ -1900,8 +1912,8 @@
     else if (act === 'start') {
       ui.daily = null;
       if (firstRun()) { ui.practice = true; ui.claim = { tpl: 'practice' }; ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip'; render(); return; }
-      if (todayCount() >= DAILY_LIMIT) return;
-      ui.claim = newClaim(); ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip';
+      if (todayCount() >= dailyLimit()) return;
+      ui.msg = ''; ui.claim = newClaim(); ui.tip = null; ui.conf = null; ui.error = false; ui.busy = false; ui.view = 'tip';
       S.current = { claim: ui.claim, ts: Date.now() };
       S.draws = (S.draws || []).concat(Date.now());
       save(S); render();
