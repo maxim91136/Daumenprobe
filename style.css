@@ -692,3 +692,9 @@ body[data-theme="yes"] .slider::-moz-range-thumb, body[data-theme="no"] .slider:
 .alm-card .claim-big { font-size: clamp(1.4rem, 6vw, 2.1rem); }
 .daily.alm { background: linear-gradient(120deg, rgba(255,228,92,.16), rgba(255,122,26,.12)); border-color: rgba(255,228,92,.45); }
 .daily.alm .go { background: #ffe45c; border-color: #ffe45c; color: var(--night); }
+
+/* God Mode */
+.betabtn[aria-pressed="true"] { color: #ffd24a; font-weight: 700; }
+.betabtn.gold { animation: godglow 1.8s ease-out; }
+@keyframes godglow { 0% { text-shadow: 0 0 0 rgba(255,210,74,0); transform: scale(1); } 15% { text-shadow: 0 0 18px #ffd24a, 0 0 36px #ffb300; transform: scale(1.25); } 40% { text-shadow: 0 0 8px #ffd24a; } 55% { text-shadow: 0 0 22px #ffd24a, 0 0 40px #ffb300; } 100% { text-shadow: 0 0 0 rgba(255,210,74,0); transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .betabtn.gold { animation: none; text-shadow: 0 0 10px #ffd24a; } }

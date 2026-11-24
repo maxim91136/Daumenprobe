@@ -83,9 +83,9 @@ Nur Spielpunkte, nie echtes Geld. Nur messbare Behauptungen mit Datenquelle und 
 ## Schwierigkeit „Schwer“
 Grenzen liegen nahe am Üblichen (Monatsmittel der Stadt für Temperatur, typische Werte für Wind, Luft, Erdbeben, Druck). Wer das Klima kennt, hat einen Vorteil; volle Punkte. Leicht und Mittel behalten die groben Grenzen. Die Monatsmittel sind gerundete Näherungswerte (siehe NORMS in app.js).
 
-## Beta-Modus
+## God Mode
 
-Unten auf der Seite gibt es den Knopf „Beta-Modus“. Er hebt das Tageslimit auf und zeigt auf dem Tipp-Bildschirm „Lösung ansehen“. Gedacht für die Testphase, wird vor dem offiziellen Start entfernt (Suche nach `S.beta` und `dailyLimit` in app.js).
+Unten auf der Seite gibt es den Knopf „God Mode“. Er hebt das Tageslimit auf und zeigt auf dem Tipp-Bildschirm „Lösung ansehen“. Gedacht für die Testphase, wird vor dem offiziellen Start entfernt (Suche nach `S.beta` und `dailyLimit` in app.js).
 
 ## Almanach (Nebenspiel)
 
