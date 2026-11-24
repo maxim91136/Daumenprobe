@@ -9,13 +9,14 @@ Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
 - Eine statische Seite, kein Server, kein Konto, keine Tracker. Spielstand nur im Browser (localStorage). Installierbar als App (PWA, Offline-Hülle).
 - Deutsch und Englisch.
 - Für die Allgemeinheit gedacht, auch für Kinder: nichts Kritisches (kein Geld, keine Finanzthemen), keine Altersabfrage. Die drei Schwierigkeitsstufen ändern nur Bedienung und Punkte, schalten aber keine Inhalte frei.
-- 26 Behauptungstypen in 8 Kategorien (Wetter und Luft, Erde, Weltraum, Himmel, Zeit, Wissen, Geschichte, Sport), 20 Städte, jede Frage wird aus Vorlage, Stadt und Schwelle frisch gebaut (kein fester Katalog):
+- 36 Behauptungstypen in 9 Kategorien (Wetter und Luft, Erde, Weltraum, Himmel, Zeit, Wissen, Geschichte, Sport, Geografie), 20 Städte. Rund 29.000 mögliche Formulierungen, den größten Teil machen die Wikipedia-Vergleiche aus., jede Frage wird aus Vorlage, Stadt und Schwelle frisch gebaut (kein fester Katalog):
   - Wetter, Open-Meteo: Temperatur, Tag/Nacht, Regen, Wind, Windrichtung, Luftdruck, Luftfeuchtigkeit, Bewölkung, „wo ist es wärmer" (Stadtvergleich), Tageslänge (Sonnenaufgang bis Sonnenuntergang, Stadtvergleich)
   - Luftqualität, Open-Meteo (EU-Luftindex)
   - Erdbeben, USGS: Anzahl und Stärke der letzten 24 Stunden
   - Polarlicht-Index (Kp), NOAA SWPC: liest das alte und das neue JSON-Format, neues Format noch nicht live bestätigt
   - Wikipedia-Vergleich, Wikimedia Pageviews: „Welcher Artikel wurde vorgestern öfter aufgerufen?“ Feste, kinderfreundliche Titelliste (deutsche Wikipedia, nur menschliche Aufrufe), Tag = vorgestern nach UTC. Gegen eine nachgestellte Antwort getestet, die echte Schnittstelle ist noch nicht live bestätigt, die Titel sind nicht gegen die Wikipedia geprüft.
   - Geschichte und Sport laufen über denselben Wikipedia-Aufrufe-Vergleich mit eigenen, kinderfreundlichen Titellisten (keine Kriege, keine Personen der jüngeren Gewaltgeschichte). Sport nutzt keine Ergebnisse oder Lizenzdaten, nur Aufrufzahlen von Sportarten, Turnieren und Vereinen.
+  - Wikipedia-Vergleiche gibt es in drei Formen je Thema (Natur, Geschichte, Sport, Geografie mit Ländern und Städten): „öfter aufgerufen“, „mehr als 2-, 3- oder 5-mal so oft aufgerufen“ und „Artikel ist länger“ (Seitenlänge in Bytes, de.wikipedia.org mit origin=*). Ein Titel, der bei der Abfrage nicht existiert (404 oder fehlende Seite), wird im lokalen Speicher als „schlechter Titel“ vermerkt und danach nicht mehr gezogen.
   - ISS im Sonnenlicht und ISS östlich von Greenwich (wheretheiss.at), Sonnenwind-Geschwindigkeit (NOAA SWPC, 5-Minuten-Werte), Wikipedia-Sprachvergleich „welche Sprache hat mehr Artikel“ (Statistik der jeweiligen Wikipedia, CORS über origin=*). Alle vier gegen nachgestellte Antworten getestet, nicht live bestätigt.
   - ISS-Position, wheretheiss.at
   - Mond (lokal berechnet)

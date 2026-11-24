@@ -129,6 +129,7 @@
         clock: 'In {city} ist es jetzt {v} Uhr.',
         aurora: 'Der Kp-Index liegt gerade bei {v}.',
         wiki: 'Vorgestern: „{X}“ {a} Aufrufe, „{Y}“ {b} Aufrufe.',
+        wikilen: 'Länge: „{X}“ {a} Bytes, „{Y}“ {b} Bytes.',
         isssun: 'Die ISS ist {v}.', isseast: 'Die ISS ist bei {v}° Länge.', solarwind: 'Der Sonnenwind weht mit {v} km/s.',
         wikisize: 'Artikel: {X} {a}, {Y} {b}.',
         moon: 'Der Mond ist zu {v} % beleuchtet.',
@@ -226,6 +227,8 @@
         clock: 'In {city} ist es gerade später als {H} Uhr (Ortszeit).',
         aurora: 'Der Kp-Index (Maß für Polarlicht-Chancen) liegt gerade über {K}.',
         wiki: 'Auf der deutschen Wikipedia wurde „{X}“ vorgestern öfter aufgerufen als „{Y}“.',
+        wikix: 'Auf der deutschen Wikipedia wurde „{X}“ vorgestern mehr als {F}-mal so oft aufgerufen wie „{Y}“.',
+        wikilen: 'Auf der deutschen Wikipedia ist der Artikel „{X}“ länger als der Artikel „{Y}“.',
         isssun: 'Die ISS fliegt gerade im Sonnenlicht.',
         isseast: 'Die ISS fliegt gerade östlich von Greenwich (Längengrad über 0°).',
         solarwind: 'Der Sonnenwind, der Teilchenstrom von der Sonne, weht gerade schneller als {S} km/s.',
@@ -253,6 +256,8 @@
         clock: 'Stimmt, wenn die Uhrzeit vor Ort jetzt nach {H}:00 Uhr liegt. Das Gerät kennt die Zeitzone der Stadt.',
         aurora: 'Stimmt, wenn der Kp-Index der NOAA (0 bis 9, misst die Unruhe im Magnetfeld der Erde) im jüngsten Wert über {K} liegt. Ab 5 gibt es Polarlicht weit im Süden.',
         wiki: 'Stimmt, wenn der Artikel „{X}“ am vorletzten Tag (nach UTC) mehr Aufrufe hatte als „{Y}“. Gezählt werden Aufrufe durch Menschen auf der deutschen Wikipedia (Wikimedia Pageviews). Bei Gleichstand stimmt es nicht.',
+        wikix: 'Stimmt, wenn der Artikel „{X}“ am vorletzten Tag (nach UTC) mehr als {F}-mal so viele Aufrufe hatte wie „{Y}“. Gezählt werden Aufrufe durch Menschen auf der deutschen Wikipedia (Wikimedia Pageviews).',
+        wikilen: 'Stimmt, wenn der Artikel „{X}“ auf der deutschen Wikipedia jetzt mehr Bytes (Textmenge, Seitenlänge) hat als „{Y}“. Gleichstand zählt als nein.',
         isssun: 'Stimmt, wenn wheretheiss.at die ISS als „daylight“ oder „visible“ meldet, also nicht im Erdschatten.',
         isseast: 'Stimmt, wenn der gemeldete Längengrad der ISS größer als 0° ist (wheretheiss.at). Östlich von Greenwich liegen Europa, Afrika, Asien und Australien, westlich Amerika.',
         solarwind: 'Stimmt, wenn die jüngste 5-Minuten-Messung der NOAA (Satellit nahe der Sonne-Erde-Linie) mehr als {S} km pro Sekunde zeigt. Üblich sind 300 bis 500.',
@@ -366,6 +371,7 @@
         clock: 'In {city} it is {v} right now.',
         aurora: 'The Kp index is {v} right now.',
         wiki: 'Day before yesterday: “{X}” {a} views, “{Y}” {b} views.',
+        wikilen: 'Length: “{X}” {a} bytes, “{Y}” {b} bytes.',
         isssun: 'The ISS is {v}.', isseast: 'The ISS is at {v}° longitude.', solarwind: 'The solar wind blows at {v} km/s.',
         wikisize: 'Articles: {X} {a}, {Y} {b}.',
         moon: 'The moon is {v} % lit.',
@@ -465,6 +471,8 @@
         clock: 'In {city} it is later than {H}:00 local time right now.',
         aurora: 'The Kp index (a measure of aurora chances) is above {K} right now.',
         wiki: 'On the German Wikipedia, “{X}” was viewed more often than “{Y}” the day before yesterday.',
+        wikix: 'On the German Wikipedia, “{X}” was viewed more than {F} times as often as “{Y}” the day before yesterday.',
+        wikilen: 'On the German Wikipedia, the article “{X}” is longer than the article “{Y}”.',
         isssun: 'The ISS is in sunlight right now.',
         isseast: 'The ISS is east of Greenwich right now (longitude above 0°).',
         solarwind: 'The solar wind, the stream of particles from the Sun, blows faster than {S} km/s right now.',
@@ -492,6 +500,8 @@
         clock: 'True if the local time in {city} is after {H}:00 right now. Your device knows the time zone of the city.',
         aurora: 'True if the NOAA Kp index (0 to 9, measures how restless Earth\'s magnetic field is) is above {K} in its latest value. From 5 up, aurora reaches far south.',
         wiki: 'True if the article “{X}” had more views than “{Y}” on the day before yesterday (UTC). Human views on the German Wikipedia are counted (Wikimedia Pageviews). A tie counts as false.',
+        wikix: 'True if the article “{X}” had more than {F} times as many views as “{Y}” on the day before yesterday (UTC). Human views on the German Wikipedia are counted (Wikimedia Pageviews).',
+        wikilen: 'True if the article “{X}” on the German Wikipedia currently has more bytes (amount of text, page length) than “{Y}”. A tie counts as false.',
         isssun: 'True if wheretheiss.at reports the ISS as “daylight” or “visible”, so not in Earth’s shadow.',
         isseast: 'True if the reported longitude of the ISS is greater than 0° (wheretheiss.at). East of Greenwich are Europe, Africa, Asia and Australia, west of it the Americas.',
         solarwind: 'True if the latest 5-minute NOAA measurement (a satellite on the Sun–Earth line) shows more than {S} km per second. Usual values are 300 to 500.',
@@ -520,12 +530,9 @@
     };
   }
   /* Gleiche Zufallsfolge für alle mit demselben Startwort: Tagesfrage und Duell. Nur sofort messbare Themen. */
-  ['de', 'en'].forEach(function (lg) {
-    ['claims', 'rules', 'measure_msg'].forEach(function (k) { I18N[lg][k].wikihist = I18N[lg][k].wiki; I18N[lg][k].wikisport = I18N[lg][k].wiki; });
-  });
   const SHARED_POOL = ['temp', 'isday', 'rain', 'wind', 'iss', 'quake', 'quakemax', 'aqi', 'winddir', 'daylen', 'moon', 'pressure', 'humidity', 'cloud', 'warmer', 'sunhigh', 'aurora', 'wiki', 'wikihist', 'wikisport', 'isssun', 'isseast', 'solarwind', 'wikisize'];
   /* Erst die Kategorie, dann das Thema: Wetter, Luft, Erde, Weltraum, Himmel, Zeit wechseln sich ab. */
-  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'w', quake: 'erde', quakemax: 'erde', iss: 'raum', wikihist: 'geschichte', wikisport: 'sport', aurora: 'raum', isssun: 'raum', isseast: 'raum', solarwind: 'raum', wikisize: 'wissen', wiki: 'wissen', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
+  const CAT_OF = { temp: 'w', isday: 'w', rain: 'w', wind: 'w', cloud: 'w', humidity: 'w', pressure: 'w', winddir: 'w', warmer: 'w', tomorrow: 'w', aqi: 'w', quake: 'erde', quakemax: 'erde', iss: 'raum', aurora: 'raum', isssun: 'raum', isseast: 'raum', solarwind: 'raum', wikisize: 'wissen', moon: 'himmel', daylen: 'himmel', sunhigh: 'himmel', clock: 'zeit' };
   function balanced(pool, used) {
     const cats = {};
     pool.forEach(function (t) { (cats[CAT_OF[t]] = cats[CAT_OF[t]] || []).push(t); });
@@ -632,14 +639,6 @@
       while (y === x) y = pick(WIKI_LANGS);
       return { tpl: 'wikisize', x: x, y: y };
     },
-    wikihist: function () { const x = pick(WIKI_HIST); let y = pick(WIKI_HIST); while (y === x) y = pick(WIKI_HIST); return { tpl: 'wikihist', x: x, y: y }; },
-    wikisport: function () { const x = pick(WIKI_SPORT); let y = pick(WIKI_SPORT); while (y === x) y = pick(WIKI_SPORT); return { tpl: 'wikisport', x: x, y: y }; },
-    wiki: function () {
-      const g = HARD ? pick(WIKI_GROUPS) : [].concat.apply([], WIKI_GROUPS);
-      const x = pick(g); let y = pick(g);
-      while (y === x) y = pick(g);
-      return { tpl: 'wiki', x: x, y: y };
-    },
     clock: function () { return { tpl: 'clock', city: pick(foreign()).id, H: pick([6, 12, 18, 21]) }; },
     moon: function () { return { tpl: 'moon' }; },
     tomorrow: function () {
@@ -655,23 +654,66 @@
   };
   /* Wikipedia-Vergleich: feste, kinderfreundliche Liste (deutsche Titel, Unterstrich statt Leerzeichen). Nur diese Titel werden abgefragt. */
   const WIKI_GROUPS = [
-    ['Hauskatze', 'Haushund', 'Pferd', 'Löwe', 'Eisbär', 'Braunbär', 'Pinguine', 'Blauwal', 'Weißer_Hai', 'Elefanten'],
+    ['Hauskatze', 'Haushund', 'Pferd', 'Löwe', 'Eisbär', 'Braunbär', 'Pinguine', 'Blauwal', 'Weißer_Hai', 'Elefanten', 'Tiger', 'Rotfuchs', 'Gorilla', 'Honigbiene'],
     ['Mond', 'Sonne', 'Mars_(Planet)', 'Venus_(Planet)', 'Jupiter_(Planet)', 'Saturn_(Planet)', 'Erde', 'Merkur_(Planet)', 'Milchstraße', 'Komet'],
     ['Mount_Everest', 'Alpen', 'Rhein', 'Donau', 'Nordsee', 'Ostsee', 'Sahara', 'Vulkan', 'Regenwald'],
-    ['Pizza', 'Schokolade', 'Kaffee', 'Tee', 'Brot', 'Apfel', 'Banane', 'Käse', 'Honig', 'Speiseeis'],
-    ['Fußball', 'Tennis', 'Schach', 'Basketball', 'Handball', 'Schwimmsport', 'Radsport']
+    ['Pizza', 'Schokolade', 'Kaffee', 'Tee', 'Brot', 'Apfel', 'Banane', 'Käse', 'Honig', 'Speiseeis']
   ];
-  const WIKI_HIST = ['Römisches_Reich', 'Mittelalter', 'Steinzeit', 'Wikinger', 'Dinosaurier', 'Pharao', 'Apollo_11', 'Berliner_Mauer', 'Albert_Einstein', 'Leonardo_da_Vinci', 'Isaac_Newton', 'Marie_Curie', 'Christoph_Kolumbus', 'Johannes_Gutenberg', 'Olympische_Spiele', 'Pyramiden_von_Gizeh', 'Alexander_der_Große', 'Napoleon_Bonaparte'];
-  const WIKI_SPORT = ['Fußball-Weltmeisterschaft', 'UEFA_Champions_League', 'FC_Bayern_München', 'Borussia_Dortmund', 'Real_Madrid', 'FC_Barcelona', 'Formel_1', 'Tour_de_France', 'Wimbledon_Championships', 'Eishockey', 'Skispringen', 'Biathlon', 'Tischtennis', 'Rugby', 'Judo', 'Basketball', 'Handball', 'Radsport'];
-  const WIKI_ALL = [].concat.apply([], WIKI_GROUPS).concat(WIKI_HIST, WIKI_SPORT);
-  const WIKI_TPL = { wiki: 1, wikihist: 1, wikisport: 1 };
+  /* Themen für die Wikipedia-Vergleiche: je Thema mehrere Gruppen; verglichen wird nur innerhalb einer Gruppe. Nur diese Titel werden abgefragt. */
+  const WIKI_THEMES = {
+    natur: { cat: 'wissen', tpl: ['wiki', 'wikixnatur', 'wikilnatur'], groups: WIKI_GROUPS },
+    hist: { cat: 'geschichte', tpl: ['wikihist', 'wikixhist', 'wikilhist'], groups: [['Römisches_Reich', 'Mittelalter', 'Steinzeit', 'Wikinger', 'Dinosaurier', 'Pharao', 'Apollo_11', 'Berliner_Mauer', 'Albert_Einstein', 'Leonardo_da_Vinci', 'Isaac_Newton', 'Marie_Curie', 'Christoph_Kolumbus', 'Johannes_Gutenberg', 'Olympische_Spiele', 'Pyramiden_von_Gizeh', 'Alexander_der_Große', 'Napoleon_Bonaparte', 'Ritter', 'Kolosseum', 'Eiszeit', 'Dampfmaschine', 'Buchdruck', 'Mumie', 'Piraterie', 'Antike', 'Renaissance', 'Industrielle_Revolution']] },
+    sport: { cat: 'sport', tpl: ['wikisport', 'wikixsport', 'wikilsport'], groups: [['Fußball-Weltmeisterschaft', 'UEFA_Champions_League', 'FC_Bayern_München', 'Borussia_Dortmund', 'Real_Madrid', 'FC_Barcelona', 'Formel_1', 'Tour_de_France', 'Wimbledon_Championships', 'Eishockey', 'Skispringen', 'Biathlon', 'Tischtennis', 'Rugby', 'Judo', 'Basketball', 'Handball', 'Radsport', 'Leichtathletik', 'Volleyball', 'Badminton', 'Rudern', 'Segeln', 'Turnen', 'Skateboard', 'Surfen', 'Bogenschießen', 'Olympische_Sommerspiele', 'Olympische_Winterspiele']] },
+    geo: { cat: 'geografie', tpl: ['wikigeo', 'wikixgeo', 'wikilgeo'], groups: [
+      ['Deutschland', 'Frankreich', 'Italien', 'Spanien', 'Portugal', 'Österreich', 'Schweiz', 'Polen', 'Norwegen', 'Schweden', 'Finnland', 'Island', 'Irland', 'Griechenland', 'Türkei', 'Ägypten', 'Marokko', 'Kenia', 'Südafrika', 'Brasilien', 'Argentinien', 'Chile', 'Mexiko', 'Kanada', 'Japan', 'China', 'Indien', 'Thailand', 'Indonesien', 'Australien', 'Neuseeland', 'Peru', 'Kuba', 'Niederlande', 'Belgien', 'Dänemark'],
+      ['Berlin', 'Hamburg', 'München', 'Köln', 'Frankfurt_am_Main', 'Stuttgart', 'Wien', 'Zürich', 'Paris', 'London', 'Rom', 'Madrid', 'Barcelona', 'Amsterdam', 'Prag', 'Budapest', 'Athen', 'Istanbul', 'Moskau', 'Tokio', 'Peking', 'Kairo', 'Sydney', 'New_York_City', 'Rio_de_Janeiro', 'Venedig', 'Lissabon', 'Kopenhagen', 'Oslo', 'Stockholm']] }
+  };
+  /* tpl-Name -> { theme, mode: 'v' Aufrufe, 'x' Verhältnis, 'l' Länge } */
+  const WIKI_TPL = {};
+  Object.keys(WIKI_THEMES).forEach(function (th) {
+    WIKI_THEMES[th].tpl.forEach(function (name, mi) { WIKI_TPL[name] = { theme: th, mode: ['v', 'x', 'l'][mi] }; });
+  });
+  ['de', 'en'].forEach(function (lg) {
+    ['claims', 'rules', 'measure_msg'].forEach(function (k) {
+      Object.keys(WIKI_TPL).forEach(function (n) {
+        const mode = WIKI_TPL[n].mode;
+        I18N[lg][k][n] = I18N[lg][k][mode === 'v' ? 'wiki' : mode === 'x' ? 'wikix' : 'wikilen'] || I18N[lg][k].wiki;
+      });
+    });
+  });
+  Object.keys(WIKI_TPL).forEach(function (n) {
+    CAT_OF[n] = WIKI_THEMES[WIKI_TPL[n].theme].cat;
+    const lv = WIKI_TPL[n].mode === 'v' ? ['s', 'm', 'l'] : ['m', 'l'];
+    lv.forEach(function (k) { if (POOLS[k].indexOf(n) < 0) POOLS[k].push(n); });
+    if (SHARED_POOL.indexOf(n) < 0) SHARED_POOL.push(n);
+  });
+  const WIKI_ALL = [];
+  Object.keys(WIKI_THEMES).forEach(function (th) { WIKI_THEMES[th].groups.forEach(function (g) { g.forEach(function (t) { if (WIKI_ALL.indexOf(t) < 0) WIKI_ALL.push(t); }); }); });
+  function wikiGroupOf(theme, x, y) {
+    if (theme === 'natur') { const all = [].concat.apply([], WIKI_THEMES.natur.groups); return all.indexOf(x) >= 0 && all.indexOf(y) >= 0; }
+    return WIKI_THEMES[theme].groups.some(function (g) { return g.indexOf(x) >= 0 && g.indexOf(y) >= 0; }); }
+  function wikiMaker(name) {
+    const m = WIKI_TPL[name];
+    return function () {
+      const gs = WIKI_THEMES[m.theme].groups;
+      const g0 = m.theme === 'natur' && !HARD ? [].concat.apply([], gs) : gs.length > 1 ? pick(gs) : gs[0];
+      const g = g0.filter(function (t) { return !(S.badTitles && S.badTitles[t]); });
+      const x = pick(g); let y = pick(g);
+      while (y === x) y = pick(g);
+      const c = { tpl: name, x: x, y: y };
+      if (m.mode === 'x') c.F = pick([2, 3, 5]);
+      return c;
+    };
+  }
+  Object.keys(WIKI_TPL).forEach(function (n) { MAKERS[n] = wikiMaker(n); });
   const WIKILANG = {
-    de: { en: 'Englisch', de: 'Deutsch', fr: 'Französisch', es: 'Spanisch', it: 'Italienisch', nl: 'Niederländisch', sv: 'Schwedisch', pl: 'Polnisch', ru: 'Russisch', ja: 'Japanisch', pt: 'Portugiesisch', ar: 'Arabisch' },
-    en: { en: 'English', de: 'German', fr: 'French', es: 'Spanish', it: 'Italian', nl: 'Dutch', sv: 'Swedish', pl: 'Polish', ru: 'Russian', ja: 'Japanese', pt: 'Portuguese', ar: 'Arabic' }
+    de: { en: 'Englisch', de: 'Deutsch', fr: 'Französisch', es: 'Spanisch', it: 'Italienisch', nl: 'Niederländisch', sv: 'Schwedisch', pl: 'Polnisch', ru: 'Russisch', ja: 'Japanisch', pt: 'Portugiesisch', ar: 'Arabisch', uk: 'Ukrainisch', zh: 'Chinesisch', fi: 'Finnisch', da: 'Dänisch', cs: 'Tschechisch', hu: 'Ungarisch', tr: 'Türkisch', ko: 'Koreanisch', id: 'Indonesisch', vi: 'Vietnamesisch' },
+    en: { en: 'English', de: 'German', fr: 'French', es: 'Spanish', it: 'Italian', nl: 'Dutch', sv: 'Swedish', pl: 'Polish', ru: 'Russian', ja: 'Japanese', pt: 'Portuguese', ar: 'Arabic', uk: 'Ukrainian', zh: 'Chinese', fi: 'Finnish', da: 'Danish', cs: 'Czech', hu: 'Hungarian', tr: 'Turkish', ko: 'Korean', id: 'Indonesian', vi: 'Vietnamese' }
   };
   const WIKI_LANGS = Object.keys(WIKILANG.en);
   function wikiDay() { const d = new Date(Date.now() - 2 * 864e5); return d.getUTCFullYear() + String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCDate()).padStart(2, '0'); }
-  const NOCITY = { wikihist: 1, wikisport: 1, wiki: 1, wikisize: 1, isssun: 1, isseast: 1, solarwind: 1, iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
+  const NOCITY = { wikisize: 1, isssun: 1, isseast: 1, solarwind: 1, iss: 1, quake: 1, quakemax: 1, moon: 1, aurora: 1 };
+  Object.keys(WIKI_TPL).forEach(function (n) { NOCITY[n] = 1; });
 
   /* Abwechslung: heute noch nicht gespielte Themen zuerst, und keine Stadt aus den letzten drei Behauptungen. */
   function firstRun() { return !S.onbDone && !S.tips.length; }
@@ -695,7 +737,7 @@
     if ((c.tpl === 'daylen' || c.tpl === 'warmer' || c.tpl === 'sunhigh') && !cityById(c.city2)) return false;
     if (c.tpl === 'wikisize' && (WIKI_LANGS.indexOf(c.x) < 0 || WIKI_LANGS.indexOf(c.y) < 0 || c.x === c.y)) return false;
     if (c.tpl === 'solarwind' && !(c.S > 0 && c.S < 2000)) return false;
-    if (WIKI_TPL[c.tpl] && (WIKI_ALL.indexOf(c.x) < 0 || WIKI_ALL.indexOf(c.y) < 0 || c.x === c.y)) return false;
+    if (WIKI_TPL[c.tpl] && (!wikiGroupOf(WIKI_TPL[c.tpl].theme, c.x, c.y) || c.x === c.y || (WIKI_TPL[c.tpl].mode === 'x' && [2, 3, 5].indexOf(c.F) < 0))) return false;
     if (c.tpl === 'winddir' && ['N', 'E', 'S', 'W'].indexOf(c.D) < 0) return false;
     if (c.tpl === 'tomorrow' && !(/^\d{4}-\d{2}-\d{2}$/.test(c.created) && /^\d{4}-\d{2}-\d{2}$/.test(c.due))) return false;
     return true;
@@ -707,7 +749,7 @@
   function claimVars(claim, lang) {
     const c = claim.city ? cityById(claim.city) : null;
     const c2 = claim.city2 ? cityById(claim.city2) : null;
-    return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A, P: claim.P, H: claim.H, K: claim.K, S: claim.S, P: claim.P, H: claim.H,
+    return { city: c ? c[lang] : '', city2: c2 ? c2[lang] : '', T: claim.T, W: claim.W, N: claim.N, A: claim.A, P: claim.P, H: claim.H, K: claim.K, S: claim.S, F: claim.F, P: claim.P, H: claim.H,
       X: claim.tpl === 'wikisize' ? WIKILANG[lang][claim.x] : claim.x ? String(claim.x).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined, Y: claim.tpl === 'wikisize' ? WIKILANG[lang][claim.y] : claim.y ? String(claim.y).replace(/_\([^)]*\)/, '').replace(/_/g, ' ') : undefined,
       M: claim.M === undefined ? undefined : num(claim.M, lang, 1), D: claim.D ? I18N[lang].dir[claim.D] : undefined };
   }
@@ -754,12 +796,23 @@
     if (claim.tpl === 'quake' || claim.tpl === 'quakemax') return fetchJson('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson');
     if (claim.tpl === 'aurora') return fetchJson('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json');
     if (WIKI_TPL[claim.tpl]) {
+      const isLen = WIKI_TPL[claim.tpl].mode === 'l';
       const day = wikiDay();
+      const bad = function (t, e) { S.badTitles = S.badTitles || {}; S.badTitles[t] = 1; save(S); throw e; };
       const views = function (t) {
         return fetchJson('https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/de.wikipedia/all-access/user/' + encodeURIComponent(t) + '/daily/' + day + '/' + day)
-          .then(function (j) { return j && j.items && j.items[0] ? j.items[0].views : null; });
+          .then(function (j) { return j && j.items && j.items[0] ? j.items[0].views : null; }, function (e) { if (/404/.test(String(e && e.message))) bad(t, e); throw e; });
       };
-      return Promise.all([views(claim.x), views(claim.y)]).then(function (r) { return { a: r[0], b: r[1] }; });
+      const len = function (t) {
+        return fetchJson('https://de.wikipedia.org/w/api.php?action=query&prop=info&redirects=1&format=json&origin=*&titles=' + encodeURIComponent(t))
+          .then(function (j) {
+            const pg = j && j.query && j.query.pages ? Object.keys(j.query.pages).map(function (k) { return j.query.pages[k]; })[0] : null;
+            if (!pg || pg.missing !== undefined) bad(t, new Error('missing'));
+            return typeof pg.length === 'number' ? pg.length : null;
+          });
+      };
+      const f = isLen ? len : views;
+      return Promise.all([f(claim.x), f(claim.y)]).then(function (r) { return { a: r[0], b: r[1] }; });
     }
     if (claim.tpl === 'moon') return Promise.resolve({ now: Date.now() });
     if (claim.tpl === 'sunhigh') { const a = cityById(claim.city), b = cityById(claim.city2); return Promise.resolve({ now: Date.now(), a: { lat: a.lat, lon: a.lon }, b: { lat: b.lat, lon: b.lon } }); }

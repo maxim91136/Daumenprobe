@@ -287,8 +287,14 @@
       return { outcome: b > a, shown: { today: a, tomorrow: b } };
     }
   };
-  L.measure.wikihist = L.measure.wiki;
-  L.measure.wikisport = L.measure.wiki;
+  /* Wikipedia-Vergleiche: Aufrufe (wiki…), Verhältnis (wikix…), Länge (wikil…) je Thema natur, hist, sport, geo */
+  ['wikihist', 'wikisport', 'wikigeo', 'wikilnatur', 'wikilhist', 'wikilsport', 'wikilgeo'].forEach(function (n) { L.measure[n] = L.measure.wiki; });
+  ['wikixnatur', 'wikixhist', 'wikixsport', 'wikixgeo'].forEach(function (n) {
+    L.measure[n] = function (claim, data) {
+      if (!data || typeof data.a !== 'number' || typeof data.b !== 'number' || !isFinite(data.a) || !isFinite(data.b) || !(claim.F > 0)) return null;
+      return { outcome: data.a > claim.F * data.b, shown: { a: data.a, b: data.b } };
+    };
+  });
 
   /* Sicherungsdatei: prüft und führt Spielstände zusammen (ohne Doppelte). */
   L.mergeState = function (current, incoming) {
