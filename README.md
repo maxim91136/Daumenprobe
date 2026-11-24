@@ -31,7 +31,7 @@ Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
   | Daneben | -5 | -6 | -8 | -11 | -17 | -30 |
 
   Treffer wachsen gleichmäßig, die Strafe wächst von Stufe zu Stufe schneller (logarithmische Regel, bei 100 % gedeckelt). Wer seine Sicherheit ehrlich einschätzt, steht auf Dauer am besten da: bei jeder wahren Trefferquote lohnt sich die dazu passende Stufe. Zwischenwerte (75 %) werden gerade verbunden. Alte Tipps wurden einmalig auf diese Tabelle umgerechnet (Punkte-Version 2).
-- Stufen: Leicht (Wörter, halbe Punkte, kein Minus), Mittel (Wörter, drei Viertel der Punkte, Minus höchstens -8) und Schwer (Prozent, volle Punkte).
+- Stufen: Leicht (Wörter, halbe Punkte, kein Minus), Mittel (Wörter, Treffer drei Viertel, Daneben sechs Zehntel; ehrliches Melden lohnt sich auch hier) und Schwer (Prozent, volle Punkte).
 - Regelwerk im Spiel („So geht's“): Frage, Tipp, Sicherheit, Messung, einmal pro Frage zurück vor dem Messen, Punktetabelle, zehn Behauptungen pro Tag, Verwerfen zählt als Versuch, Messregel vorab, Tagesfrage/Duell/Prüfung zählen nicht zu den zehn, nur Spielpunkte.
 - Zwei Werte: Trefferquote und Kalibrierung („stimmt meine Sicherheit?", ab 5 Tipps).
 

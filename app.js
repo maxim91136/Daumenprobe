@@ -131,7 +131,7 @@
       },
       lv: {
         s: { how3: 'Sag, wie sicher du bist: geraten, ziemlich sicher oder ganz sicher.', goal: 'Treffer bringen halbe Punkte. Daneben kostet dich nichts.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer.' },
-        m: { how3: 'Sag, wie sicher du bist: von geraten bis ganz sicher.', goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer zählen dreiviertel, Daneben kostet höchstens 8.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer, aber ein Daneben kostet auch mehr.' }
+        m: { how3: 'Sag, wie sicher du bist: von geraten bis ganz sicher.', goal: 'Es gewinnt, wer die meisten Punkte hat. Treffer zählen dreiviertel, Daneben kostet sechs Zehntel.', hint: 'Je sicherer du bist, desto mehr Punkte gibt ein Treffer, aber ein Daneben kostet auch mehr.' }
       },
       badges_title: 'Abzeichen', badge_new: 'Neues Abzeichen', locked: 'Noch gesperrt',
       badges: {
@@ -353,7 +353,7 @@
       },
       lv: {
         s: { how3: 'Say how sure you are: a guess, pretty sure or totally sure.', goal: 'Hits earn half points. A miss costs you nothing.', hint: 'The surer you are, the more a hit is worth.' },
-        m: { how3: 'Say how sure you are: from a guess to totally sure.', goal: 'The one with the most points wins. Hits count three quarters, a miss costs 8 at most.', hint: 'The surer you are, the more a hit is worth, but a miss costs more too.' }
+        m: { how3: 'Say how sure you are: from a guess to totally sure.', goal: 'The one with the most points wins. Hits count three quarters, a miss costs six tenths.', hint: 'The surer you are, the more a hit is worth, but a miss costs more too.' }
       },
       badges_title: 'Badges', badge_new: 'New badge', locked: 'Locked',
       badges: {
@@ -686,17 +686,17 @@
   let memory = null;
   /* Einmalig: alte Tipps nach der neuen Punktetabelle umrechnen (Punkte-Version 2). */
   function rescore(st, raw) {
-    if (raw && raw.scoreV >= 2) return;
+    if (raw && raw.scoreV >= 3) return;
     st.tips.forEach(function (t) {
-      if (t && t.resolved && typeof t.pts === 'number' && typeof t.conf === 'number') t.pts = DP.points(t.tip, t.conf, t.outcome, t.level || 'l');
+      if (t && t.resolved && typeof t.pts === 'number' && typeof t.conf === 'number') t.pts = t.free ? 0 : DP.points(t.tip, t.conf, t.outcome, t.level || 'l');
     });
     Object.keys(st.duels || {}).forEach(function (k) {
       const recs = st.tips.filter(function (t) { return t.duel === k && t.resolved; });
       if (recs.length && typeof st.duels[k].pts === 'number') st.duels[k].pts = recs.reduce(function (a, r) { return a + (r.pts || 0); }, 0);
     });
-    st.scoreV = 2;
+    st.scoreV = 3;
   }
-  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', scoreV: 2, lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
+  function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 'l', scoreV: 3, lang: null, tips: [], reports: [], lastExport: null, draws: [], current: null }; }
   function load() {
     try {
       const raw = localStorage.getItem(KEY);

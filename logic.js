@@ -15,7 +15,7 @@
      Treffer wachsen gleichmäßig, die Strafe wächst von Stufe zu Stufe schneller (logarithmische Regel,
      bis 90 % im Kern ehrlich, bei 100 % gedeckelt). Münzwerfen bringt im Schnitt 0 oder weniger. Wer seine
      Sicherheit ehrlich einschätzt, steht auf Dauer am besten da. Zwischenwerte (75 %) werden gerade verbunden.
-     level: Schwierigkeit zählt. 'l' (schwer, Standard) volle Punkte. 'm' (mittel) drei Viertel, Daneben höchstens -8.
+     level: Schwierigkeit zählt. 'l' (schwer, Standard) volle Punkte. 'm' (mittel) Treffer drei Viertel, Daneben sechs Zehntel (so lohnt sich ehrliches Melden auch hier).
      's' (leicht) die Hälfte, Daneben kostet nichts. */
   const HIT = { 50: 5, 60: 6, 70: 7, 80: 8, 90: 9, 100: 10 };
   const MISS = { 50: -5, 60: -6, 70: -8, 80: -11, 90: -17, 100: -30 };
@@ -29,7 +29,7 @@
     const isHit = L.isHit(tip, outcome);
     const raw = Math.round(isHit ? tab(HIT, conf) : tab(MISS, conf));
     if (level === 's') return isHit ? Math.round(raw * 0.5) : 0;
-    if (level === 'm') return isHit ? Math.round(raw * 0.75) : Math.max(Math.round(raw * 0.75), -8);
+    if (level === 'm') return isHit ? Math.round(raw * 0.75) : Math.round(raw * 0.6);
     return raw;
   };
 
