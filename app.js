@@ -1575,7 +1575,7 @@
     const t = T();
     const kind = t['rep_' + x.k] || x.k;
     const body = [x.text, '', kind, x.tpl + ' | ' + JSON.stringify(x.claim) + ' | ' + JSON.stringify(x.shown), new Date(x.ts).toISOString()].join('\n');
-    return '<a class="chip" href="mailto:storm81la@gmail.com?subject=' + encodeURIComponent(t.rep_mail_sub) + '&body=' + encodeURIComponent(body) + '">' + esc(t.rep_send) + '</a>';
+    return '<a class="chip" href="mailto:kontakt@daumenprobe.com?subject=' + encodeURIComponent(t.rep_mail_sub) + '&body=' + encodeURIComponent(body) + '">' + esc(t.rep_send) + '</a>';
   }
   function reportDone(x) { return '<p class="report done">' + esc(T().rep_thanks) + ' ' + reportMail(x) + '<small class="rep-hint">' + esc(T().rep_mail_hint) + '</small></p>'; }
   function reportRow(r) {
