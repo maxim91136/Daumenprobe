@@ -227,11 +227,11 @@
       let rows;
       if (Array.isArray(data[0])) {
         const head = data[0].map(function (h) { return String(h).toLowerCase(); });
-        const si = head.indexOf('speed'), ti = head.findIndex(function (h) { return /time/.test(h); });
+        const si = head.findIndex(function (h) { return h === 'speed' || h === 'proton_speed'; }), ti = head.findIndex(function (h) { return /time/.test(h); });
         if (si < 0) return null;
         rows = data.slice(1).map(function (r) { return { t: ti >= 0 ? String(r[ti]) : '', v: Number(r[si]) }; });
       } else {
-        rows = data.map(function (o) { return { t: o && o.time_tag ? String(o.time_tag) : '', v: o ? Number(o.speed) : NaN }; });
+        rows = data.map(function (o) { return { t: o && o.time_tag ? String(o.time_tag) : '', v: o ? Number(o.speed != null ? o.speed : o.proton_speed) : NaN }; });
       }
       rows = rows.filter(function (r) { return isFinite(r.v) && r.v > 0; });
       if (!rows.length) return null;

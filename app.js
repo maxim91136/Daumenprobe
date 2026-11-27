@@ -262,7 +262,7 @@
         wikilen: 'Stimmt, wenn der Artikel „{X}“ auf der deutschen Wikipedia jetzt mehr Bytes (Textmenge, Seitenlänge) hat als „{Y}“. Gleichstand zählt als nein.',
         isssun: 'Stimmt, wenn wheretheiss.at die ISS als „daylight“ oder „visible“ meldet, also nicht im Erdschatten.',
         isseast: 'Stimmt, wenn der gemeldete Längengrad der ISS größer als 0° ist (wheretheiss.at). Östlich von Greenwich liegen Europa, Afrika, Asien und Australien, westlich Amerika.',
-        solarwind: 'Stimmt, wenn die jüngste 5-Minuten-Messung der NOAA (Satellit nahe der Sonne-Erde-Linie) mehr als {S} km pro Sekunde zeigt. Üblich sind 300 bis 500.',
+        solarwind: 'Stimmt, wenn die jüngste Messung der NOAA (Satellit nahe der Sonne-Erde-Linie) mehr als {S} km pro Sekunde zeigt. Üblich sind 300 bis 500.',
         wikisize: 'Stimmt, wenn die Wikipedia auf {X} laut ihrer eigenen Statistik jetzt mehr Artikel hat als die auf {Y}. Gleichstand zählt als nein.',
         moon: 'Stimmt, wenn der Mond jetzt zu mehr als 50 % beleuchtet ist. Das wird aus dem Mondalter gerechnet, nicht gemessen.',
         temp: 'Stimmt, wenn die gemessene Temperatur über {T} °C liegt (Open-Meteo, aktueller Wert).',
@@ -508,7 +508,7 @@
         wikilen: 'True if the article “{X}” on the German Wikipedia currently has more bytes (amount of text, page length) than “{Y}”. A tie counts as false.',
         isssun: 'True if wheretheiss.at reports the ISS as “daylight” or “visible”, so not in Earth’s shadow.',
         isseast: 'True if the reported longitude of the ISS is greater than 0° (wheretheiss.at). East of Greenwich are Europe, Africa, Asia and Australia, west of it the Americas.',
-        solarwind: 'True if the latest 5-minute NOAA measurement (a satellite on the Sun–Earth line) shows more than {S} km per second. Usual values are 300 to 500.',
+        solarwind: 'True if the latest NOAA measurement (a satellite on the Sun–Earth line) shows more than {S} km per second. Usual values are 300 to 500.',
         wikisize: 'True if the Wikipedia in {X} has more articles than the one in {Y} according to its own statistics right now. A tie counts as false.',
         moon: 'True if the moon is more than 50 % lit right now. This is calculated from the moon age, not measured.',
         temp: 'True if the measured temperature is above {T} °C (Open-Meteo, current value).',
@@ -789,7 +789,7 @@
   }
   function getData(claim) {
     if (claim.tpl === 'iss' || claim.tpl === 'isssun' || claim.tpl === 'isseast') return fetchJson('https://api.wheretheiss.at/v1/satellites/25544');
-    if (claim.tpl === 'solarwind') return fetchJson('https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json');
+    if (claim.tpl === 'solarwind') return fetchJson('https://services.swpc.noaa.gov/products/summary/solar-wind-speed.json');
     if (claim.tpl === 'wikisize') {
       const arts = function (code) {
         return fetchJson('https://' + code + '.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=statistics&format=json&origin=*')
