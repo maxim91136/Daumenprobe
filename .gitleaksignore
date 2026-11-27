@@ -1,0 +1,2 @@
+# Fehlalarm: 'KEY' war nur der Name des localStorage-Eintrags (daumenprobe.v1), kein Schlüssel. Variable ist umbenannt; der alte Commit bleibt im Verlauf.
+48ce675765bf60c66812da21d4751bb02871cdab:app.js:generic-api-key:5

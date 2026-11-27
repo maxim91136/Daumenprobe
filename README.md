@@ -4,6 +4,10 @@ Erst tippen, dann messen. Man bekommt eine Behauptung über die Wirklichkeit, ti
 
 Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
 
+## Tests
+
+Die reine Spiellogik (`logic.js`) hat Tests mit Node, ohne Installation: `node --test tests/logic.test.js`.
+
 ## Stand
 
 - Eine statische Seite, kein Server, kein Konto, keine Tracker. Spielstand nur im Browser (localStorage). Installierbar als App (PWA, Offline-Hülle).

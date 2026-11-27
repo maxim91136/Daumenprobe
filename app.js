@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   const DP = window.DP;
-  const KEY = 'daumenprobe.v1';
+  const STORAGE_ID = 'daumenprobe.v1';
   const DAILY_LIMIT = 10;
 
   const CITIES = [
@@ -870,7 +870,7 @@
   function blank() { return { v: 1, skin: 'night', exams: [], examActive: null, examDay: null, duels: {}, duelActive: null, level: 's', scoreV: 3, lang: null, tips: [], reports: [], lastExport: null, draws: [], alm: { pts: 0, days: {} }, current: null }; }
   function load() {
     try {
-      const raw = localStorage.getItem(KEY);
+      const raw = localStorage.getItem(STORAGE_ID);
       if (raw) {
         const s = JSON.parse(raw);
         if (s && Array.isArray(s.tips)) { const st = Object.assign(blank(), s); rescore(st, s); return st; }
@@ -880,7 +880,7 @@
   }
   function save(s) {
     memory = s;
-    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* nur im Speicher weiter */ }
+    try { localStorage.setItem(STORAGE_ID, JSON.stringify(s)); } catch (e) { /* nur im Speicher weiter */ }
   }
 
   let S = load();
