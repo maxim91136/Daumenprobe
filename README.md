@@ -2,7 +2,7 @@
 
 Erst tippen, dann messen. Man bekommt eine Behauptung über die Wirklichkeit, tippt „stimmt" oder „stimmt nicht", sagt, wie sicher man ist, und danach wird live aus offenen Daten gemessen. Punkte gibt es nur als Spielpunkte, nie Geld.
 
-Status: privat in Entwicklung, noch nicht öffentlich. Teil von Dreier Labs.
+Status: öffentlich und live unter https://daumenprobe.com, Testphase vor dem offiziellen Start. Der Quellcode in diesem Repo ist öffentlich. Der God Mode (siehe unten) ist noch eingebaut und wird vor dem offiziellen Start entfernt. Teil von Dreier Labs.
 
 ## Tests
 
